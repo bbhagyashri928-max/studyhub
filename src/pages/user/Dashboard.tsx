@@ -443,6 +443,36 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
           {/* Interactive Game Quests: C and C++ */}
           <div className="space-y-3">
+            {/* freeCodeCamp Style Step-by-Step Interactive Workspace Card */}
+            <div className="rounded-2xl bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-transparent border border-emerald-500/40 p-4.5 flex items-center justify-between gap-3 shadow-soft-sm hover:border-emerald-400 transition-all">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-navy-950 flex items-center justify-center font-black text-xl shadow-xs flex-shrink-0">
+                  ⚡
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-extrabold text-sm text-navy-950 dark:text-white">
+                      Step-by-Step Code Projects
+                    </h4>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+                      freeCodeCamp Style
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Build real C & C++ projects step by step with live automated tests
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onNavigate('step-learn')}
+                className="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition-all flex-shrink-0 shadow-md active:scale-95"
+              >
+                <span>Start Step 1</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
             {/* C Game Quest Card */}
             <div className="rounded-2xl bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-transparent border border-teal-500/30 p-4 flex items-center justify-between gap-3 shadow-soft-sm hover:border-teal-400 transition-all">
               <div className="flex items-center gap-3">

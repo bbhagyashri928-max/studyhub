@@ -18,6 +18,7 @@ interface StageModalReaderProps {
   onClose: () => void;
   onNavigateStage: (nextStage: Stage) => void;
   onProgressUpdated: () => void;
+  onNavigateToStepLearn?: () => void;
 }
 
 export const StageModalReader: React.FC<StageModalReaderProps> = ({
@@ -27,7 +28,8 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
   userId,
   onClose,
   onNavigateStage,
-  onProgressUpdated
+  onProgressUpdated,
+  onNavigateToStepLearn
 }) => {
   const [activeTab, setActiveTab] = useState<'concept' | 'game' | 'lab'>('concept');
   const [selectedQuizOption, setSelectedQuizOption] = useState<number | null>(null);
@@ -101,6 +103,15 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {onNavigateToStepLearn && (
+              <button
+                onClick={onNavigateToStepLearn}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-xs font-bold transition-all shadow-xs"
+                title="Open freeCodeCamp-style step by step coding workspace"
+              >
+                <span>⚡ Step-by-Step Code Mode</span>
+              </button>
+            )}
             <button
               onClick={onClose}
               className="p-1.5 rounded-xl text-slate-400 hover:text-navy-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-navy-800 transition-colors"

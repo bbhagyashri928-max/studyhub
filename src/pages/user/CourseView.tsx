@@ -604,6 +604,10 @@ export const CourseView: React.FC<CourseViewProps> = ({ courseId, onNavigate, on
           courseId={courseId}
           userId={userId}
           onClose={() => setActiveStageData(null)}
+          onNavigateToStepLearn={() => {
+            setActiveStageData(null);
+            onNavigate('step-learn');
+          }}
           onNavigateStage={(nextStage) => {
             setActiveStageData({
               stage: nextStage,

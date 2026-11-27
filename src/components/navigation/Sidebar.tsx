@@ -99,6 +99,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Dashboard</span>
           </button>
 
+          {/* Step-by-Step Code Projects (freeCodeCamp style) */}
+          <button
+            onClick={() => handleItemClick('step-learn')}
+            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+              currentRoute === 'step-learn'
+                ? 'bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30'
+                : 'text-slate-300 hover:bg-[#13223B] hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-black text-[10px]">
+                ⚡
+              </span>
+              <span>Step-by-Step Coding</span>
+            </div>
+            <span className="text-[9px] font-bold uppercase bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30">
+              fCC
+            </span>
+          </button>
+
           {/* 2. C Programming (Collapsible Dropdown matching Reference Screenshot) */}
           <div className="space-y-1">
             <button

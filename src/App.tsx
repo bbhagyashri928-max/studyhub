@@ -20,6 +20,7 @@ import { Profile } from '@/pages/user/Profile';
 import { Settings } from '@/pages/user/Settings';
 import { CGameView } from '@/pages/user/CGameView';
 import { CppGameView } from '@/pages/user/CppGameView';
+import { FccStepWorkspace } from '@/components/fcc-learn/FccStepWorkspace';
 
 // Admin Pages
 import { AdminOverview } from '@/pages/admin/AdminOverview';
@@ -110,6 +111,15 @@ export const AppContent: React.FC = () => {
 
   // Render current active screen
   const renderCurrentView = () => {
+    // Full-screen distraction-free step learning mode (freeCodeCamp style)
+    if (currentRoute === 'step-learn' || currentRoute === 'fcc-steps') {
+      return (
+        <FccStepWorkspace
+          onNavigateBack={() => handleNavigate('dashboard')}
+        />
+      );
+    }
+
     // 1. Interactive Topic Reader for specific Unit
     if (currentRoute === 'unit-reader' && activeUnitId) {
       const unit = db.getUnit(activeUnitId);
