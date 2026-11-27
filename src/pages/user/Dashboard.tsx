@@ -18,30 +18,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { 
     cProgress, 
     cppProgress, 
-    otherProgress,
     getCProgressPercentage, 
     getCppProgressPercentage, 
-    getOtherProgressPercentage,
     getOverallProgressPercentage 
   } = useProgress();
 
   const cCourse = db.getCourse('c');
   const cppCourse = db.getCourse('cpp');
-  const otherCourse = db.getCourse('other');
   const cPercent = getCProgressPercentage();
   const cppPercent = getCppProgressPercentage();
-  const otherPercent = getOtherProgressPercentage();
   const overallPercent = Math.max(getOverallProgressPercentage(), 75); // 75% baseline to match design aesthetic
 
   // Find last visited topic for 1-click continue
-  const lastTopicId = cProgress.lastVisitedTopicId || cppProgress.lastVisitedTopicId || otherProgress.lastVisitedTopicId;
+  const lastTopicId = cProgress.lastVisitedTopicId || cppProgress.lastVisitedTopicId;
   const lastTopicData = lastTopicId ? db.getTopic(lastTopicId) : null;
 
-  const totalCompletedUnits = Math.max(
-    cProgress.completedUnitIds.length + cppProgress.completedUnitIds.length + otherProgress.completedUnitIds.length,
-    8
-  );
-  const totalCompletedPracticals = cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length + otherProgress.completedPracticalIds.length;
+  const totalCompletedUnits = cProgress.completedUnitIds.length + cppProgress.completedUnitIds.length;
+  const totalCompletedPracticals = cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length;
 
   return (
     <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-in fade-in duration-200">
@@ -148,7 +141,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               {/* Courses Pill */}
               <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12233D] border border-[#20375E] text-xs font-semibold text-slate-200">
                 <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-                <span>12 Courses</span>
+                <span>2 Courses • 10 Units</span>
               </div>
 
               {/* Progress Pill */}
@@ -206,7 +199,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   Total Courses
                 </span>
                 <span className="text-2xl font-black text-white">
-                  12
+                  2
                 </span>
               </div>
             </div>

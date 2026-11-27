@@ -5,7 +5,6 @@ import {
 } from '@/types';
 import { cCourse, cUnits, cQuizzes, cPracticals } from '@/courses/c';
 import { cppCourse, cppUnits, cppQuizzes, cppPracticals } from '@/courses/cpp';
-import { otherCourse, otherUnits, otherQuizzes, otherPracticals } from '@/courses/other';
 import { buildMasterStageSeed } from './stageSeedData';
 
 // Storage keys
@@ -41,7 +40,7 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
     status: 'ACTIVE',
     streakDays: 7,
     lastActiveDate: new Date().toISOString().split('T')[0],
-    enrolledCourses: ['c', 'cpp', 'other'],
+    enrolledCourses: ['c', 'cpp'],
     createdAt: '2024-09-01T08:00:00Z',
     passwordHash: 'student123'
   },
@@ -56,7 +55,7 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
     status: 'ACTIVE',
     streakDays: 7,
     lastActiveDate: new Date().toISOString().split('T')[0],
-    enrolledCourses: ['c', 'cpp', 'other'],
+    enrolledCourses: ['c', 'cpp'],
     createdAt: '2024-09-05T10:15:00Z',
     passwordHash: 'student123'
   },
@@ -71,7 +70,7 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
     status: 'ACTIVE',
     streakDays: 14,
     lastActiveDate: new Date().toISOString().split('T')[0],
-    enrolledCourses: ['c', 'cpp', 'other'],
+    enrolledCourses: ['c', 'cpp'],
     createdAt: '2024-08-01T00:00:00Z',
     passwordHash: 'admin123'
   }
@@ -82,22 +81,12 @@ export const SEED_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 'ann-1',
     title: 'Welcome to CODEVERSE Academy Fall Semester',
-    content: 'All C, C++, and Systems & Essentials curriculum modules, interactive practical labs, and unit certification quizzes are now live.',
+    content: 'All C and C++ curriculum modules, interactive practical labs, and unit certification quizzes are now live.',
     category: 'academic',
     author: 'Prof. Elena Vance',
     targetCourse: 'all',
     isImportant: true,
     createdAt: '2024-11-20T09:00:00Z'
-  },
-  {
-    id: 'ann-2',
-    title: 'New: Systems & Academy Essentials Module Launched',
-    content: 'Master tools not covered in C/C++ alone: GDB & Valgrind memory debugging, Makefiles & CMake, POSIX system calls, and Data Structures.',
-    category: 'feature',
-    author: 'Department of Systems Software',
-    targetCourse: 'other',
-    isImportant: true,
-    createdAt: '2024-11-26T10:00:00Z'
   },
   {
     id: 'ann-3',
@@ -167,11 +156,12 @@ function saveToStorage<T>(key: string, data: T): void {
 export const db = {
   // Initialization
   init: () => {
-    const DB_VERSION = 'codeverse_cpp_unit5_syllabus_v6';
+    const DB_VERSION = 'codeverse_c_cpp_exclusive_v11';
     if (localStorage.getItem('codeverse_curriculum_version') !== DB_VERSION) {
-      saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits, ...otherUnits]);
-      saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes, ...otherQuizzes]);
-      saveToStorage(KEYS.COURSES, [cCourse, cppCourse, otherCourse]);
+      saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits]);
+      saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes]);
+      saveToStorage(KEYS.COURSES, [cCourse, cppCourse]);
+      saveToStorage(KEYS.PRACTICALS, [...cPracticals, ...cppPracticals]);
       saveToStorage(KEYS.STAGES, buildMasterStageSeed());
       localStorage.setItem('codeverse_curriculum_version', DB_VERSION);
     }
@@ -195,19 +185,19 @@ export const db = {
     }
     // Check and seed courses
     if (!localStorage.getItem(KEYS.COURSES)) {
-      saveToStorage(KEYS.COURSES, [cCourse, cppCourse, otherCourse]);
+      saveToStorage(KEYS.COURSES, [cCourse, cppCourse]);
     }
     // Check and seed units
     if (!localStorage.getItem(KEYS.UNITS)) {
-      saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits, ...otherUnits]);
+      saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits]);
     }
     // Check and seed practicals
     if (!localStorage.getItem(KEYS.PRACTICALS)) {
-      saveToStorage(KEYS.PRACTICALS, [...cPracticals, ...cppPracticals, ...otherPracticals]);
+      saveToStorage(KEYS.PRACTICALS, [...cPracticals, ...cppPracticals]);
     }
     // Check and seed quizzes
     if (!localStorage.getItem(KEYS.QUIZZES)) {
-      saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes, ...otherQuizzes]);
+      saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes]);
     }
     // Check and seed announcements
     if (!localStorage.getItem(KEYS.ANNOUNCEMENTS)) {
@@ -243,18 +233,6 @@ export const db = {
           lastVisitedCourseId: 'cpp',
           streakDays: 4,
           lastActiveDate: new Date().toISOString().split('T')[0]
-        },
-        {
-          userId: 'user-student-1',
-          courseId: 'other',
-          completedTopicIds: ['other-u1-t1'],
-          completedUnitIds: [],
-          completedPracticalIds: ['other-pr-1'],
-          lastVisitedTopicId: 'other-u1-t1',
-          lastVisitedUnitId: 'other-unit-1',
-          lastVisitedCourseId: 'other',
-          streakDays: 4,
-          lastActiveDate: new Date().toISOString().split('T')[0]
         }
       ];
       saveToStorage(KEYS.PROGRESS, initialProgress);
@@ -280,16 +258,6 @@ export const db = {
           itemTitle: 'Prime Number Verification',
           courseId: 'c',
           category: 'Loops',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'bm-3',
-          userId: 'user-student-1',
-          type: 'topic',
-          itemId: 'other-u2-t2',
-          itemTitle: 'Valgrind & Memcheck: Eliminating Memory Leaks',
-          courseId: 'other',
-          subtitle: 'Unit 2: Debugging & Tooling',
           createdAt: new Date().toISOString()
         }
       ];
@@ -330,7 +298,7 @@ export const db = {
 
   // COURSES
   getCourses: (): Course[] => {
-    return loadFromStorage(KEYS.COURSES, [cCourse, cppCourse, otherCourse]);
+    return loadFromStorage(KEYS.COURSES, [cCourse, cppCourse]);
   },
   getCourse: (id: CourseId): Course | undefined => {
     const courses = db.getCourses();
@@ -339,7 +307,7 @@ export const db = {
 
   // UNITS
   getUnits: (courseId?: CourseId): Unit[] => {
-    const units = loadFromStorage<Unit[]>(KEYS.UNITS, [...cUnits, ...cppUnits, ...otherUnits]);
+    const units = loadFromStorage<Unit[]>(KEYS.UNITS, [...cUnits, ...cppUnits]);
     if (courseId) return units.filter(u => u.courseId === courseId);
     return units;
   },
@@ -393,7 +361,7 @@ export const db = {
 
   // PRACTICALS
   getPracticals: (courseId?: CourseId, category?: string): PracticalProgram[] => {
-    let practicals = loadFromStorage<PracticalProgram[]>(KEYS.PRACTICALS, [...cPracticals, ...cppPracticals, ...otherPracticals]);
+    let practicals = loadFromStorage<PracticalProgram[]>(KEYS.PRACTICALS, [...cPracticals, ...cppPracticals]);
     if (courseId) practicals = practicals.filter(p => p.courseId === courseId);
     if (category && category !== 'All') practicals = practicals.filter(p => p.category === category);
     return practicals;
@@ -419,7 +387,7 @@ export const db = {
 
   // QUIZZES
   getQuizzes: (courseId?: CourseId): Quiz[] => {
-    const quizzes = loadFromStorage<Quiz[]>(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes, ...otherQuizzes]);
+    const quizzes = loadFromStorage<Quiz[]>(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes]);
     if (courseId) return quizzes.filter(q => q.courseId === courseId);
     return quizzes;
   },
@@ -556,10 +524,8 @@ export const db = {
     const activeStudents = students.filter(u => u.status === 'ACTIVE');
     const cUnitsCount = db.getUnits('c').length;
     const cppUnitsCount = db.getUnits('cpp').length;
-    const otherUnitsCount = db.getUnits('other').length;
     const cPracticalsCount = db.getPracticals('c').length;
     const cppPracticalsCount = db.getPracticals('cpp').length;
-    const otherPracticalsCount = db.getPracticals('other').length;
     const attempts = loadFromStorage<QuizAttempt[]>(KEYS.QUIZ_ATTEMPTS, []);
     const progressList = loadFromStorage<StudentProgress[]>(KEYS.PROGRESS, []);
 
@@ -573,9 +539,8 @@ export const db = {
       activeStudents: activeStudents.length,
       cEnrollments: students.filter(s => s.enrolledCourses.includes('c')).length,
       cppEnrollments: students.filter(s => s.enrolledCourses.includes('cpp')).length,
-      otherEnrollments: students.filter(s => s.enrolledCourses.includes('other')).length,
-      totalUnits: cUnitsCount + cppUnitsCount + otherUnitsCount,
-      totalPracticals: cPracticalsCount + cppPracticalsCount + otherPracticalsCount,
+      totalUnits: cUnitsCount + cppUnitsCount,
+      totalPracticals: cPracticalsCount + cppPracticalsCount,
       totalPracticalCompletions,
       totalQuizAttempts: attempts.length,
       recentUsers: students.slice(-5).reverse(),

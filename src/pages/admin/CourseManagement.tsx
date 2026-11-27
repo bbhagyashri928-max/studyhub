@@ -99,16 +99,6 @@ export const CourseManagement: React.FC = () => {
           >
             C++ Programming ({db.getUnits('cpp').length} Units)
           </button>
-          <button
-            onClick={() => handleCourseSwitch('other')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-              selectedCourse === 'other'
-                ? 'bg-lavender-600 text-white shadow-sm'
-                : 'text-slate-600 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white'
-            }`}
-          >
-            Systems & Tools ({db.getUnits('other').length} Units)
-          </button>
         </div>
       </div>
 

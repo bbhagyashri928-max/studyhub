@@ -13,14 +13,12 @@ export const AnalyticsReports: React.FC = () => {
   const stats = db.getGlobalStats();
   const cUnits = db.getUnits('c');
   const cppUnits = db.getUnits('cpp');
-  const otherUnits = db.getUnits('other');
   const users = db.getUsers().filter(u => u.role === 'STUDENT');
 
   // Compute average unit completion rate across courses
   const unitPerformanceData = [
     ...cUnits.map(u => ({ name: `C: U${u.unitNumber}`, course: 'C', enrollments: stats.cEnrollments, passRate: 85 + (u.unitNumber * 2) % 15 })),
     ...cppUnits.map(u => ({ name: `C++: U${u.unitNumber}`, course: 'C++', enrollments: stats.cppEnrollments, passRate: 78 + (u.unitNumber * 3) % 18 })),
-    ...otherUnits.map(u => ({ name: `Sys: U${u.unitNumber}`, course: 'Systems', enrollments: stats.activeStudents, passRate: 82 + (u.unitNumber * 2) % 16 }))
   ];
 
   // Daily platform activity trends
@@ -36,8 +34,7 @@ export const AnalyticsReports: React.FC = () => {
 
   const enrollmentRatio = [
     { name: 'C Language Candidates', value: stats.cEnrollments, color: '#24B8A6' },
-    { name: 'C++ Modern OOP Candidates', value: stats.cppEnrollments, color: '#F08068' },
-    { name: 'Systems & Essentials', value: stats.activeStudents, color: '#AAA2D5' }
+    { name: 'C++ Modern OOP Candidates', value: stats.cppEnrollments, color: '#F08068' }
   ];
 
   return (
@@ -164,7 +161,6 @@ export const AnalyticsReports: React.FC = () => {
                 <th className="p-3">Candidate</th>
                 <th className="p-3">C Lessons Done</th>
                 <th className="p-3">C++ Lessons Done</th>
-                <th className="p-3">Systems Done</th>
                 <th className="p-3">Total Practicals</th>
                 <th className="p-3">Streak</th>
                 <th className="p-3 text-right">Academic Status</th>
@@ -174,15 +170,13 @@ export const AnalyticsReports: React.FC = () => {
               {users.map(u => {
                 const cP = db.getProgress(u.id, 'c');
                 const cppP = db.getProgress(u.id, 'cpp');
-                const otherP = db.getProgress(u.id, 'other');
-                const totalPracticals = cP.completedPracticalIds.length + cppP.completedPracticalIds.length + otherP.completedPracticalIds.length;
+                const totalPracticals = cP.completedPracticalIds.length + cppP.completedPracticalIds.length;
 
                 return (
                   <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-navy-800/40 transition-colors">
                     <td className="p-3 font-bold">{u.fullName} ({u.studentId})</td>
                     <td className="p-3 text-teal-600 font-bold">{cP.completedTopicIds.length} / 24</td>
                     <td className="p-3 text-coral-600 font-bold">{cppP.completedTopicIds.length} / 24</td>
-                    <td className="p-3 text-lavender-600 font-bold">{otherP.completedTopicIds.length} / 24</td>
                     <td className="p-3 font-semibold">{totalPracticals} Programs</td>
                     <td className="p-3">{u.streakDays} Days</td>
                     <td className="p-3 text-right">

@@ -108,14 +108,6 @@ export const PracticalManagement: React.FC = () => {
             >
               C++ Lab ({db.getPracticals('cpp').length})
             </button>
-            <button
-              onClick={() => handleCourseSwitch('other')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                courseFilter === 'other' ? 'bg-lavender-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-navy-900'
-              }`}
-            >
-              Systems Lab ({db.getPracticals('other').length})
-            </button>
           </div>
 
           <button

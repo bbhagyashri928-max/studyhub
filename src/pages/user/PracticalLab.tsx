@@ -20,7 +20,7 @@ export const PracticalLab: React.FC<PracticalLabProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   
-  const { cProgress, cppProgress, otherProgress, togglePracticalCompletion, toggleBookmark, isBookmarked } = useProgress();
+  const { cProgress, cppProgress, togglePracticalCompletion, toggleBookmark, isBookmarked } = useProgress();
 
   const allPracticals = db.getPracticals(courseFilter);
   const categories = ['All', ...Array.from(new Set(allPracticals.map(p => p.category)))];
@@ -42,7 +42,7 @@ export const PracticalLab: React.FC<PracticalLabProps> = ({
   const activeProgram: PracticalProgram | undefined = 
     filteredPracticals.find(p => p.id === activeProgramId) || filteredPracticals[0] || allPracticals[0];
 
-  const currentProgress = courseFilter === 'c' ? cProgress : courseFilter === 'cpp' ? cppProgress : otherProgress;
+  const currentProgress = courseFilter === 'c' ? cProgress : cppProgress;
   const isCompleted = activeProgram ? currentProgress.completedPracticalIds.includes(activeProgram.id) : false;
   const isBookmarkedCurrent = activeProgram ? isBookmarked(activeProgram.id) : false;
 
@@ -93,19 +93,6 @@ export const PracticalLab: React.FC<PracticalLabProps> = ({
             }`}
           >
             C++ Practical Lab
-          </button>
-          <button
-            onClick={() => {
-              setCourseFilter('other');
-              setSelectedCategory('All');
-            }}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-              courseFilter === 'other'
-                ? 'bg-lavender-600 text-white shadow-sm'
-                : 'text-slate-600 dark:text-slate-400 hover:text-navy-900 dark:hover:text-white'
-            }`}
-          >
-            Systems Lab (Other)
           </button>
         </div>
       </div>

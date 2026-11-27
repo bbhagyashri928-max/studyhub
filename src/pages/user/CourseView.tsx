@@ -25,15 +25,13 @@ export const CourseView: React.FC<CourseViewProps> = ({ courseId, onNavigate, on
   const { 
     cProgress, 
     cppProgress, 
-    otherProgress, 
     getCProgressPercentage, 
-    getCppProgressPercentage, 
-    getOtherProgressPercentage 
+    getCppProgressPercentage 
   } = useProgress();
 
   const [activeTab, setActiveTab] = useState<'units' | 'overview' | 'achievements'>('units');
   const [selectedUnitId, setSelectedUnitId] = useState<string>(() => {
-    return courseId === 'c' ? 'c-unit-1' : courseId === 'cpp' ? 'cpp-unit-1' : 'other-unit-1';
+    return courseId === 'c' ? 'c-unit-1' : 'cpp-unit-1';
   });
   const [isUnitDetailCollapsed, setIsUnitDetailCollapsed] = useState<boolean>(false);
   const [activeStageData, setActiveStageData] = useState<{ stage: Stage; allTopicStages: Stage[] } | null>(null);
@@ -42,12 +40,10 @@ export const CourseView: React.FC<CourseViewProps> = ({ courseId, onNavigate, on
   const course = db.getCourse(courseId);
   const units = db.getUnits(courseId);
   const practicals = db.getPracticals(courseId);
-  const progress = courseId === 'c' ? cProgress : courseId === 'cpp' ? cppProgress : otherProgress;
+  const progress = courseId === 'c' ? cProgress : cppProgress;
   const progressPercent = courseId === 'c' 
     ? getCProgressPercentage() 
-    : courseId === 'cpp' 
-    ? getCppProgressPercentage() 
-    : getOtherProgressPercentage();
+    : getCppProgressPercentage();
 
   // Find currently selected unit
   const selectedUnit = units.find(u => u.id === selectedUnitId) || units[0];

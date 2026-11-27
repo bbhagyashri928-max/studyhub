@@ -81,9 +81,7 @@ export const AppContent: React.FC = () => {
     if (route.startsWith('practical-lab')) {
       if (route.includes('course=cpp')) {
         setPracticalLabCourse('cpp');
-      } else if (route.includes('course=other')) {
-        setPracticalLabCourse('other');
-      } else if (route.includes('course=c')) {
+      } else {
         setPracticalLabCourse('c');
       }
       setCurrentRoute('practical-lab');
@@ -171,14 +169,6 @@ export const AppContent: React.FC = () => {
         return (
           <CourseView
             courseId="cpp"
-            onNavigate={handleNavigate}
-            onOpenUnit={handleOpenUnit}
-          />
-        );
-      case 'course-other':
-        return (
-          <CourseView
-            courseId="other"
             onNavigate={handleNavigate}
             onOpenUnit={handleOpenUnit}
           />

@@ -86,14 +86,6 @@ export const QuizManagement: React.FC = () => {
           >
             C++ Quizzes ({db.getQuizzes('cpp').length})
           </button>
-          <button
-            onClick={() => handleCourseSwitch('other')}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
-              courseFilter === 'other' ? 'bg-lavender-600 text-white shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:text-navy-900'
-            }`}
-          >
-            Systems Quizzes ({db.getQuizzes('other').length})
-          </button>
         </div>
       </div>
 

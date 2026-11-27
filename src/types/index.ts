@@ -1,5 +1,5 @@
 export type UserRole = 'STUDENT' | 'ADMIN';
-export type CourseId = 'c' | 'cpp' | 'other';
+export type CourseId = 'c' | 'cpp';
 
 export interface UserProfile {
   id: string;
@@ -143,7 +143,7 @@ export interface Announcement {
   content: string;
   category: 'academic' | 'feature' | 'urgent' | 'tip';
   author: string;
-  targetCourse: 'all' | 'c' | 'cpp' | 'other';
+  targetCourse: 'all' | 'c' | 'cpp';
   createdAt: string;
   isImportant?: boolean;
 }

@@ -15,7 +15,6 @@ interface GlobalSearchResult {
 interface ProgressContextType {
   cProgress: StudentProgress;
   cppProgress: StudentProgress;
-  otherProgress: StudentProgress;
   bookmarks: Bookmark[];
   quizAttempts: QuizAttempt[];
   toggleTopicCompletion: (courseId: CourseId, topicId: string, unitId: string) => void;
@@ -26,7 +25,6 @@ interface ProgressContextType {
   submitQuizAttempt: (attempt: Omit<QuizAttempt, 'id' | 'userId' | 'completedAt'>) => void;
   getCProgressPercentage: () => number;
   getCppProgressPercentage: () => number;
-  getOtherProgressPercentage: () => number;
   getOverallProgressPercentage: () => number;
   searchAll: (query: string) => GlobalSearchResult[];
   refreshData: () => void;
@@ -40,7 +38,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [cProgress, setCProgress] = useState<StudentProgress>(() => db.getProgress(userId, 'c'));
   const [cppProgress, setCppProgress] = useState<StudentProgress>(() => db.getProgress(userId, 'cpp'));
-  const [otherProgress, setOtherProgress] = useState<StudentProgress>(() => db.getProgress(userId, 'other'));
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => db.getBookmarks(userId));
   const [quizAttempts, setQuizAttempts] = useState<QuizAttempt[]>(() => db.getQuizAttempts(userId));
 
@@ -48,7 +45,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (!currentUser) return;
     setCProgress(db.getProgress(currentUser.id, 'c'));
     setCppProgress(db.getProgress(currentUser.id, 'cpp'));
-    setOtherProgress(db.getProgress(currentUser.id, 'other'));
     setBookmarks(db.getBookmarks(currentUser.id));
     setQuizAttempts(db.getQuizAttempts(currentUser.id));
   }, [currentUser]);
@@ -62,15 +58,13 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [refreshData]);
 
   const getProgressState = (courseId: CourseId) => {
-    if (courseId === 'c') return cProgress;
     if (courseId === 'cpp') return cppProgress;
-    return otherProgress;
+    return cProgress;
   };
 
   const setProgressState = (courseId: CourseId, prog: StudentProgress) => {
-    if (courseId === 'c') setCProgress(prog);
-    else if (courseId === 'cpp') setCppProgress(prog);
-    else setOtherProgress(prog);
+    if (courseId === 'cpp') setCppProgress(prog);
+    else setCProgress(prog);
   };
 
   // Toggle Topic Completion
@@ -231,20 +225,8 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return Math.min(100, Math.round((completed / totalItems) * 100));
   };
 
-  const getOtherProgressPercentage = (): number => {
-    const otherUnits = db.getUnits('other');
-    let totalTopics = 0;
-    otherUnits.forEach(u => (totalTopics += u.topics.length));
-    const totalPracticals = db.getPracticals('other').length;
-    const totalItems = totalTopics + totalPracticals;
-    if (totalItems === 0) return 0;
-
-    const completed = otherProgress.completedTopicIds.length + otherProgress.completedPracticalIds.length;
-    return Math.min(100, Math.round((completed / totalItems) * 100));
-  };
-
   const getOverallProgressPercentage = (): number => {
-    return Math.round((getCProgressPercentage() + getCppProgressPercentage() + getOtherProgressPercentage()) / 3);
+    return Math.round((getCProgressPercentage() + getCppProgressPercentage()) / 2);
   };
 
   // Global search across topics, units, and practicals
@@ -313,7 +295,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       value={{
         cProgress,
         cppProgress,
-        otherProgress,
         bookmarks,
         quizAttempts,
         toggleTopicCompletion,
@@ -324,7 +305,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         submitQuizAttempt,
         getCProgressPercentage,
         getCppProgressPercentage,
-        getOtherProgressPercentage,
         getOverallProgressPercentage,
         searchAll,
         refreshData

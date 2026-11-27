@@ -16,38 +16,32 @@ export const Progress: React.FC = () => {
   const { 
     cProgress, 
     cppProgress, 
-    otherProgress,
     quizAttempts, 
     getCProgressPercentage, 
     getCppProgressPercentage, 
-    getOtherProgressPercentage,
     getOverallProgressPercentage 
   } = useProgress();
 
   const cPercent = getCProgressPercentage();
   const cppPercent = getCppProgressPercentage();
-  const otherPercent = getOtherProgressPercentage();
   const overallPercent = getOverallProgressPercentage();
 
   const cUnits = db.getUnits('c');
   const cppUnits = db.getUnits('cpp');
-  const otherUnits = db.getUnits('other');
 
   // Chart data for curriculum completion
   const courseComparisonData = [
     { name: 'C Language', completed: cProgress.completedTopicIds.length, total: 24, percent: cPercent },
     { name: 'C++ Modern', completed: cppProgress.completedTopicIds.length, total: 24, percent: cppPercent },
-    { name: 'Systems & Tools', completed: otherProgress.completedTopicIds.length, total: 24, percent: otherPercent },
   ];
 
   // Practical distribution data
   const practicalDistributionData = [
     { name: 'C Lab Programs', value: cProgress.completedPracticalIds.length || 1, color: '#24B8A6' },
     { name: 'C++ Lab Programs', value: cppProgress.completedPracticalIds.length || 1, color: '#F08068' },
-    { name: 'Systems Lab Programs', value: otherProgress.completedPracticalIds.length || 1, color: '#AAA2D5' },
   ];
 
-  const totalCertifiedUnits = cProgress.completedUnitIds.length + cppProgress.completedUnitIds.length + otherProgress.completedUnitIds.length;
+  const totalCertifiedUnits = cProgress.completedUnitIds.length + cppProgress.completedUnitIds.length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-200">
@@ -109,7 +103,7 @@ export const Progress: React.FC = () => {
         <div className="p-5 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
           <span className="text-xs text-slate-400 font-semibold uppercase">Practicals Executed</span>
           <p className="text-3xl font-black text-navy-900 dark:text-white mt-1">
-            {cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length + otherProgress.completedPracticalIds.length}
+            {cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length}
           </p>
           <span className="text-[11px] text-slate-500 mt-1 block">Compiled in Sandbox</span>
         </div>
@@ -192,10 +186,6 @@ export const Progress: React.FC = () => {
               <span className="w-3 h-3 rounded-full bg-coral-500" />
               <span className="text-slate-600 dark:text-slate-300 font-medium">C++ ({cppProgress.completedPracticalIds.length})</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-lavender-500" />
-              <span className="text-slate-600 dark:text-slate-300 font-medium">Systems ({otherProgress.completedPracticalIds.length})</span>
-            </div>
           </div>
         </div>
 
@@ -247,28 +237,6 @@ export const Progress: React.FC = () => {
                 return (
                   <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-navy-800/40 transition-colors">
                     <td className="py-3 font-bold text-coral-600">C++ Modern</td>
-                    <td className="py-3 font-semibold">{u.title}</td>
-                    <td className="py-3">{completed} / {u.topics.length}</td>
-                    <td className="py-3">
-                      {isPassed ? (
-                        <span className="inline-flex items-center gap-1 text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full text-[10px]">
-                          <CheckCircle2 className="w-3 h-3" /> Mastered
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">In Progress</span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-
-              {otherUnits.map(u => {
-                const completed = u.topics.filter(t => otherProgress.completedTopicIds.includes(t.id)).length;
-                const isPassed = otherProgress.completedUnitIds.includes(u.id);
-
-                return (
-                  <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-navy-800/40 transition-colors">
-                    <td className="py-3 font-bold text-lavender-600">Systems & Tools</td>
                     <td className="py-3 font-semibold">{u.title}</td>
                     <td className="py-3">{completed} / {u.topics.length}</td>
                     <td className="py-3">
