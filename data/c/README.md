@@ -1,31 +1,42 @@
-# CODEVERSE C Programming Data
+# CODEVERSE C Programming Syllabus & Curriculum Track
 
-This folder contains all educational data, curriculum syllabus, and standalone executable `.c` programs for the **C Programming** curriculum track.
+This folder documents the complete 5-Unit, 25-Step C Programming curriculum matching the official syllabus.
 
-## Directory Structure
-- `programs/` – 18 runnable standalone C source code exercises.
-  - `01_hello_world_and_console_output.c`
-  - `02_addition_of_two_numbers.c`
-  - `03_compound_assignment_and_bitwise_operations.c`
-  - `04_even_or_odd_number_check.c`
-  - `05_largest_of_three_numbers.c`
-  - `06_factorial_of_a_number.c`
-  - `07_fibonacci_series_generation.c`
-  - `08_prime_number_verification.c`
-  - `09_palindrome_and_armstrong_number_check.c`
-  - `10_right-angled_and_inverted_star_patterns.c`
-  - `11_bubble_sort_on_1d_array.c`
-  - `12_linear_search_in_array.c`
-  - `13_matrix_addition__2d_arrays_.c`
-  - `14_string_reversal_in_place.c`
-  - `15_function-based_modular_calculator.c`
-  - `16_variable_swapping_via_pointers__pass-by-reference_.c`
-  - `17_student_record_management_system.c`
-  - `18_writing_and_reading_persistent_files.c`
+---
 
-## Units Covered
-1. **Unit 1: Introduction to C** – Tokens, keywords, types, structure of a C program, printf/scanf.
-2. **Unit 2: Operators & Control Statements** – Arithmetic, bitwise, if-else, switch, while, for, do-while.
-3. **Unit 3: Arrays & Strings** – 1D arrays, 2D matrices, null-terminated strings, string manipulation.
-4. **Unit 4: Functions & Pointers** – Call by value/reference, recursion, pointer arithmetic, memory addresses.
-5. **Unit 5: Structures, Unions & File I/O** – `struct`, `union`, file open/write/read with `fopen`, `fprintf`, `fscanf`.
+## 5 Units (25 Steps Total)
+
+### UNIT-I: Introduction to Program Planning & C Programming (6 Hrs)
+- **Step 1:** Program Design Tools: Art of Programming through Algorithms & Flowcharts
+- **Step 2:** Overview of C: History and Importance of C, Character Set
+- **Step 3:** C Tokens: Keywords, Identifiers & Constants
+- **Step 4:** Variables, Data Types, Declarations & Storage Classes (auto, register, static, extern)
+- **Step 5:** Assigning Values to Variables, Defining Symbolic Constants (#define), const & volatile Modifiers
+
+### UNIT-II: Operators and Expressions (6 Hrs)
+- **Step 6:** Arithmetic, Assignment, Increment and Decrement Operators (Prefix vs Postfix)
+- **Step 7:** Relational, Logical & Conditional (Ternary) Operators
+- **Step 8:** Bitwise Operators (&, |, ^, ~, <<, >>) & Special Operators (sizeof, comma, &, *)
+- **Step 9:** Arithmetic Expressions, Evaluation of Expressions & Type Casting
+- **Step 10:** Operator Precedence, Associativity & Mathematical Functions (<math.h>)
+
+### UNIT-III: Control Flow (8 Hrs)
+- **Step 11:** Decision Making & Branching: Simple If Statement, If-Else Statements & Nested Decisions
+- **Step 12:** Decision Making & Branching: Else-If Ladder, Switch Statement (Cases & Break), Goto Statement
+- **Step 13:** Decision Making & Looping: While Statement and For Statement (Entry-Controlled Loops)
+- **Step 14:** Decision Making & Looping: Do-While Statement (Exit-Controlled Loop with Guaranteed Execution)
+- **Step 15:** Loop Control: Break and Continue Statements
+
+### UNIT-IV: Array and Strings (8 Hrs)
+- **Step 16:** One-Dimensional Arrays: Declaration, Contiguous Memory Layout & Initialization
+- **Step 17:** Two-Dimensional Arrays: Declaration, Row-Major Order & Matrix Initialization
+- **Step 18:** Character Arrays and Strings: Declaration, Initialization & Null Terminator ('\0')
+- **Step 19:** Terminal String Input & Output: Reading (scanf vs. fgets) and Writing (printf vs. puts)
+- **Step 20:** String Operations & Handling Functions: strlen, strcpy, strcat, strcmp (<string.h>)
+
+### UNIT-V: User Defined Functions and Structures (8 Hrs)
+- **Step 21:** User Defined Functions: Need for Functions, Multi-Function Program Architecture & Core Elements (Declaration/Prototype, Definition, Call)
+- **Step 22:** Return Values, Types & 4 Categories of Functions (No Arg No Return, Arg No Return, Arg With Return, No Arg With Return)
+- **Step 23:** Multiple Return Values (via Pointers), Nesting of Functions & Recursion (Base Conditions)
+- **Step 24:** Structures: What is a Structure? Heterogeneous Data, Structure Declarations & typedef
+- **Step 25:** Referencing Structure Members via Dot (.), Initialization & Whole Structure Operations

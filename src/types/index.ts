@@ -163,3 +163,55 @@ export interface ExecutionResult {
   executionTimeMs?: number;
   exitCode: number;
 }
+
+// Stage Learning System Types
+export interface StageLineExplanation {
+  line: string;
+  explanation: string;
+}
+
+export interface StageQuiz {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+export interface StageContent {
+  explanation: string;
+  definitions?: string[];
+  syntax?: string;
+  realLifeExample?: string;
+  codeSnippet?: string;
+  lineByLineExplanation?: StageLineExplanation[];
+  expectedOutput?: string;
+  pointsToRemember: string[];
+}
+
+export interface Stage {
+  id: string; // e.g. "c-u1-t1-s1"
+  topicId: string;
+  unitId: string;
+  courseId: CourseId;
+  stageNumber: number;
+  title: string;
+  subtitle?: string;
+  content: StageContent;
+  quiz?: StageQuiz;
+  published: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface StudentStageProgress {
+  userId: string;
+  courseId: CourseId;
+  completedStageIds: string[];
+  lastVisitedStageId?: string;
+  updatedAt: string;
+}
+
+export interface StageSettings {
+  sequentialLockEnabled: boolean;
+}
+

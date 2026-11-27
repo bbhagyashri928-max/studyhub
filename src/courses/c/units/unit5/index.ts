@@ -4,9 +4,9 @@ export const cUnit5: Unit = {
   id: 'c-unit-5',
   courseId: 'c',
   unitNumber: 5,
-  title: 'Structures, Unions and File Handling',
-  description: 'Master heterogeneous composite records, memory-shared unions, enumerations, persistent disk I/O, file pointers, and streaming modes.',
-  estimatedHours: 6.5,
+  title: 'User Defined Functions and Structures',
+  description: 'Master modular programming through user-defined functions (prototypes, function calls, definitions, the 4 canonical function categories, recursion, and parameter passing) and heterogeneous compound data structures (struct definitions, templates, typedef, member access, whole structure operations, and compile-time initialization).',
+  estimatedHours: 8.0,
   quizId: 'quiz-c-5',
   published: true,
   topics: [
@@ -15,54 +15,73 @@ export const cUnit5: Unit = {
       unitId: 'c-unit-5',
       courseId: 'c',
       order: 1,
-      title: 'Structures: Declaration, Initialization & Member Access',
-      summary: 'Package heterogeneous data types into cohesive composite records using the struct keyword and the dot (.) operator.',
+      title: 'User Defined Functions: Need, Multi-Function Architecture & Elements',
+      summary: 'Build clean, modular programs by decomposing complex problems into reusable user-defined functions.',
       content: {
-        definition: 'A structure (struct) is a user-defined composite data type in C that groups logically related variables of different data types under a single unified name. Each variable within a structure is called a member.',
-        syntax: 'struct Student {\n    int id;\n    char name[50];\n    float gpa;\n};\n\nstruct Student s1 = {101, "Alice", 3.85};\nprintf("Name: %s\\n", s1.name);',
+        definition: 'A User-Defined Function is a self-contained block of code designed to perform a specific computational task, written by the programmer to achieve modularity, readability, and reusability. A Multi-Function Program structures execution by having main() orchestrate and delegate sub-tasks to dedicated helper functions. The Three Core Elements of any function in C are: 1. Function Declaration (Prototype), 2. Function Call, and 3. Function Definition.',
+        syntax: `// 1. Function Declaration (Prototype): Declares name, return type, and parameter types before main()
+return_type function_name(parameter_type1, parameter_type2);
+
+// 2. Function Call: Transmits actual arguments and transfers control to the function
+function_name(actual_argument1, actual_argument2);
+
+// 3. Function Definition: Contains the actual algorithm body
+return_type function_name(type1 param1, type2 param2) {
+    // Function body statements
+    return result_value; // if return_type is not void
+}`,
         codeSnippet: `#include <stdio.h>
-#include <string.h>
 
-struct Student {
-    int rollNumber;
-    char name[30];
-    float marks;
-};
+// 1. Function Declarations (Prototypes)
+void displayBanner(void);
+int calculateArea(int length, int width);
 
-int main() {
-    struct Student s1;
-    s1.rollNumber = 1001;
-    strcpy(s1.name, "Marcus Sterling");
-    s1.marks = 94.5f;
+int main(void) {
+    // 2. Function Call: Invoking banner
+    displayBanner();
 
-    // Structure pointer with arrow operator (->)
-    struct Student *sPtr = &s1;
+    int l = 15, w = 8;
+    // Calling calculateArea with actual arguments l and w
+    int area = calculateArea(l, w);
 
-    printf("--- Student Details ---\\n");
-    printf("Roll:  %d\\n", s1.rollNumber);
-    printf("Name:  %s\\n", s1.name);
-    printf("Marks: %.1f\\n", s1.marks);
-    printf("Accessed via Pointer: %s (Marks: %.1f)\\n", sPtr->name, sPtr->marks);
+    printf("Calculated Room Area (%d m x %d m): %d sq. meters\\n", l, w, area);
     return 0;
+}
+
+// 3. Function Definition: Banner
+void displayBanner(void) {
+    printf("=========================================\\n");
+    printf("   CODEVERSE MODULAR MULTI-FUNCTION LAB  \\n");
+    printf("=========================================\\n");
+}
+
+// Function Definition: Area Calculator
+int calculateArea(int length, int width) {
+    // length and width are formal parameters
+    int result = length * width;
+    return result; // Transmits calculated integer back to caller
 }`,
         lineByLineExplanation: [
-          { line: 'struct Student s1;', explanation: 'Instantiates a structure variable allocating combined memory for rollNumber, name array, and marks.' },
-          { line: 's1.rollNumber = 1001;', explanation: 'Direct member access using the dot (.) operator.' },
-          { line: 'sPtr->name', explanation: 'Arrow (->) operator provides shorthand notation for dereferencing a structure pointer: (*sPtr).name.' }
+          { line: 'int calculateArea(int length, int width);', explanation: 'Function prototype informing the compiler of expected argument types and return type before invocation in main().' },
+          { line: 'int area = calculateArea(l, w);', explanation: 'Transfers control, pushes a stack frame, and copies actual arguments l and w into formal parameters length and width.' },
+          { line: 'return result;', explanation: 'Terminates helper function, pops the stack frame, and delivers the integer value back to the caller in main().' }
         ],
         keyConcepts: [
-          'Heterogeneous: can contain ints, floats, strings, arrays, and other structures',
-          'Memory size is equal to or greater than the sum of its member sizes due to compiler structure padding / alignment',
-          'Arrow operator (->) is used when accessing members via a structure pointer'
+          'Need for functions: Eliminates redundant code, eases debugging, enables collaborative team development, and improves code readability.',
+          'Actual Arguments: The actual values or variables passed into the function call (e.g., l, w).',
+          'Formal Parameters: The placeholder variables defined in the function header that receive the incoming values (e.g., length, width).',
+          'Prototypes allow main() to appear at the top of the file without compiler implicit declaration warnings.'
         ],
         commonMistakes: [
-          'Using the assignment operator to assign strings to char array members: s1.name = "text" (must use strcpy)',
-          'Omitting the terminating semicolon after the closing brace of a struct definition'
+          'Mismatching argument count or data types between function prototype, call, and definition.',
+          'Putting an accidental semicolon after the function definition header: "int add(int a, int b); { ... }" is a syntax error!',
+          'Confusing formal parameters (in definition) with actual arguments (in function call).'
         ],
         quickRevision: [
-          'struct: groups different data types.',
-          '. operator: accesses members of a struct variable.',
-          '-> operator: accesses members through a struct pointer.'
+          'Declaration (prototype) -> informs compiler.',
+          'Call -> executes function.',
+          'Definition -> implements logic.',
+          'Prototypes prevent implicit declaration warnings.'
         ]
       }
     },
@@ -71,57 +90,81 @@ int main() {
       unitId: 'c-unit-5',
       courseId: 'c',
       order: 2,
-      title: 'Array of Structures & Nested Structures',
-      summary: 'Manage database-like collections of records and model complex hierarchical real-world data.',
+      title: 'Return Values, Types & Categories of Functions',
+      summary: 'Explore the 4 canonical categories of C functions based on parameter inputs and return value outputs.',
       content: {
-        definition: 'An array of structures represents a collection where every element is a structure instance, ideal for tracking multiple records (such as a class roster). A nested structure is a structure that contains another structure as one of its members.',
-        syntax: 'struct Address {\n    char city[20];\n    int pin;\n};\n\nstruct Employee {\n    int id;\n    struct Address addr; // Nested structure\n};\n\nstruct Employee staff[10]; // Array of structures',
+        definition: 'Functions communicate with callers via inputs (arguments) and output (return value). Functions can return primary data types (int, float, char, double, pointers, structures) or void (no value returned). Based on inputs and outputs, C functions fall into 4 distinct categories.',
+        syntax: `/* The 4 Canonical Categories of Functions:
+   Category 1: No Arguments and No Return Values (void -> void)
+   void printHeader(void);
+
+   Category 2: Arguments but No Return Values (inputs -> void)
+   void printReport(char studentName[], int score);
+
+   Category 3: Arguments with Return Values (inputs -> output, Most Common)
+   double calculateTax(double income, double taxRate);
+
+   Category 4: No Arguments but Returns a Value (void -> output)
+   int getCurrentYear(void); */`,
         codeSnippet: `#include <stdio.h>
 
-struct Date {
-    int day;
-    int month;
-    int year;
-};
+// Category 1: No Arguments, No Return
+void printSeparator(void) {
+    printf("----------------------------------------\\n");
+}
 
-struct StudentRecord {
-    int id;
-    char name[20];
-    struct Date dob; // Nested struct member
-};
+// Category 2: Arguments, No Return
+void displayGrade(char studentName[], int score) {
+    printf("Student: %-8s | Score: %3d | Status: %s\\n", 
+           studentName, score, (score >= 50) ? "PASS" : "FAIL");
+}
 
-int main() {
-    struct StudentRecord roster[2] = {
-        {101, "Emma", {15, 8, 2003}},
-        {102, "Liam", {22, 11, 2002}}
-    };
+// Category 3: Arguments, With Return (Standard)
+int findMaximum(int a, int b) {
+    return (a > b) ? a : b;
+}
 
-    printf("=== ACADEMY ROSTER ===\\n");
-    for (int i = 0; i < 2; i++) {
-        printf("ID: %d | Name: %-6s | DOB: %02d/%02d/%d\\n",
-            roster[i].id, roster[i].name,
-            roster[i].dob.day, roster[i].dob.month, roster[i].dob.year);
-    }
+// Category 4: No Arguments, With Return
+int getStandardPort(void) {
+    return 8080; // Returns default server port
+}
+
+int main(void) {
+    printSeparator(); // Category 1 call
+    
+    displayGrade("Alex", 88);   // Category 2 call
+    displayGrade("Jordan", 44);
+    
+    int maxVal = findMaximum(45, 92); // Category 3 call
+    printf("Higher value: %d\\n", maxVal);
+    
+    int port = getStandardPort(); // Category 4 call
+    printf("Default Server Port: %d\\n", port);
+    
+    printSeparator();
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'struct Date dob;', explanation: 'Nesting: embedding the Date structure as a member inside StudentRecord.' },
-          { line: 'struct StudentRecord roster[2]', explanation: 'Allocates an array storing 2 distinct StudentRecord instances.' },
-          { line: 'roster[i].dob.day', explanation: 'Chained dot notation to access a member inside the nested structure.' }
+          { line: 'void printSeparator(void)', explanation: 'Takes no inputs and yields no return value; purely performs output side effects.' },
+          { line: 'void displayGrade(char studentName[], int score)', explanation: 'Consumes two arguments to format and print a grade, returning nothing to caller.' },
+          { line: 'int findMaximum(int a, int b)', explanation: 'Consumes two inputs, computes the maximum, and returns the result back to caller.' },
+          { line: 'int getStandardPort(void)', explanation: 'Takes zero arguments from caller, but produces and returns a configuration integer.' }
         ],
         keyConcepts: [
-          'Array of structures scales to thousands of student, product, or inventory records',
-          'Nested structures model hierarchical real-world entities (e.g., student -> address, person -> birthday)',
-          'Passed to functions cleanly as pointers for zero-copy performance'
+          'void return type means the function does not yield any value (a return; without an expression is optional).',
+          'A function can return only one value directly through its return statement.',
+          'In C, arguments are passed by value: the function works on temporary copies of the caller\'s data.',
+          'Category 3 (Arguments with Return Value) is the most versatile and modular function pattern.'
         ],
         commonMistakes: [
-          'Trying to access inner members without specifying the outer member (e.g. roster[i].day instead of roster[i].dob.day)',
-          'Stack overflow when declaring excessively large structure arrays locally on the stack'
+          'Trying to assign the result of a void function: "int x = printSeparator();" causes a compilation error.',
+          'Forgetting to return a value in a non-void function (leads to undefined garbage values returned to caller).'
         ],
         quickRevision: [
-          'Array of structs: struct Type arrayName[size].',
-          'Nested structs: struct inside another struct.',
-          'Chain dots for access: obj.nestedObj.field.'
+          'Cat 1: No args, No return.',
+          'Cat 2: Args, No return.',
+          'Cat 3: Args, With return (Standard).',
+          'Cat 4: No args, With return.'
         ]
       }
     },
@@ -130,53 +173,84 @@ int main() {
       unitId: 'c-unit-5',
       courseId: 'c',
       order: 3,
-      title: 'Unions & Enumerations (enum)',
-      summary: 'Explore memory-sharing unions, size optimization, and type-safe named constant enumerations.',
+      title: 'Multiple Return Values, Nesting of Functions & Recursion',
+      summary: 'Return multiple outputs using pointers, nest function invocations, and solve self-similar problems with recursive call stacks.',
       content: {
-        definition: 'A union is similar to a structure, but all its members share the exact same memory location. The total size of a union is equal to the size of its largest member. An enumeration (enum) is a user-defined type consisting of a set of named integer constants.',
-        syntax: 'union Data {\n    int i;\n    float f;\n    char str[20];\n};\n\nenum Status { PENDING, APPROVED, REJECTED }; // 0, 1, 2',
+        definition: 'While C’s return statement can send back only a single value directly, functions can return multiple values by passing pointers as output parameters or bundling them into a structure. Nesting of Functions refers to calling one function from within another. Recursion is a programming technique where a function calls itself directly or indirectly to solve smaller instances of the same problem.',
+        syntax: `// 1. Returning Multiple Values via Pointers (Output Parameters):
+void computeStats(int a, int b, int *sumOut, int *diffOut);
+
+// 2. Nesting of Function Calls:
+int result = add(multiply(2, 3), 4); // multiply() executes first, its output feeds add()
+
+// 3. Recursion Anatomy:
+int factorial(int n) {
+    if (n <= 1) return 1;          // Base condition (essential to terminate recursion)
+    return n * factorial(n - 1);    // Recursive step
+}`,
         codeSnippet: `#include <stdio.h>
 
-union Payload {
-    int intVal;
-    float floatVal;
-    char charVal;
-};
+// Returning Multiple Values via Pointer Parameters
+void computeStats(int a, int b, int *sumOut, int *diffOut, int *prodOut) {
+    *sumOut = a + b;
+    *diffOut = a - b;
+    *prodOut = a * b;
+}
 
-enum Priority { LOW = 1, MEDIUM, HIGH, CRITICAL };
+// Recursive Function: Factorial computation (n!)
+long long factorial(int n) {
+    if (n <= 1) {
+        return 1; // Base case: 0! = 1! = 1
+    }
+    return n * factorial(n - 1); // Recursive step
+}
 
-int main() {
-    union Payload p;
-    printf("Size of union Payload: %zu bytes\\n", sizeof(p)); // Matches largest member (4 bytes)
+// Recursive Function: Fibonacci term
+int fibonacci(int n) {
+    if (n <= 0) return 0;
+    if (n == 1) return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
 
-    p.intVal = 1050;
-    printf("Written intVal = %d\\n", p.intVal);
+int main(void) {
+    // 1. Multiple Return Values demonstration
+    int s, d, p;
+    computeStats(10, 4, &s, &d, &p);
+    printf("Multi-Output of (10, 4):\\n");
+    printf("  Sum = %d | Difference = %d | Product = %d\\n", s, d, p);
 
-    p.floatVal = 3.1415f; // Overwrites the shared memory space!
-    printf("Written floatVal = %.4f (intVal is now corrupted: %d)\\n", p.floatVal, p.intVal);
+    // 2. Recursion: Factorial of 5 (5 * 4 * 3 * 2 * 1 = 120)
+    int num = 5;
+    printf("\\nFactorial of %d (%d!): %lld\\n", num, num, factorial(num));
 
-    enum Priority taskLevel = HIGH;
-    printf("\\nTask Priority Level: %d\\n", taskLevel); // Prints 3
+    // 3. Recursion: Fibonacci series
+    printf("Fibonacci sequence (first 7 terms): ");
+    for (int i = 0; i < 7; i++) {
+        printf("%d ", fibonacci(i));
+    }
+    printf("\\n");
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'union Payload p;', explanation: 'Allocates memory equal to the largest member (4 bytes) shared by all members.' },
-          { line: 'p.floatVal = 3.1415f;', explanation: 'Writing to floatVal overwrites the bits previously stored by intVal.' },
-          { line: 'enum Priority taskLevel = HIGH;', explanation: 'Assigns named constant HIGH, which evaluates to integer 3.' }
+          { line: 'void computeStats(..., int *sumOut, ...)', explanation: 'Dereferences caller-provided memory addresses (*sumOut = ...) to write multiple return values.' },
+          { line: 'if (n <= 1) return 1;', explanation: 'Base case prevents infinite stack growth and terminates the recursion chain.' },
+          { line: 'return n * factorial(n - 1);', explanation: 'Pushes successive stack frames until the base case is hit, then unwinds multiplicatively.' }
         ],
         keyConcepts: [
-          'Union: memory is shared; only one member can hold a meaningful value at any given time',
-          'Struct: each member has its own distinct memory offset',
-          'enum: improves code readability by replacing magic numbers with meaningful labels'
+          'A function in standard C cannot be defined inside another function (nested definitions are illegal).',
+          'Every recursive function MUST have a well-defined base condition to avoid Stack Overflow (SIGSEGV).',
+          'Pointer parameters allow functions to simulate pass-by-reference and produce multiple outputs.',
+          'Call Stack: Each recursive call adds a new stack frame storing local variables and the return address.'
         ],
         commonMistakes: [
-          'Attempting to read from multiple union members simultaneously expecting independent values',
-          'Confusing enum values with string literals: enum names are integers, not text strings'
+          'Missing or faulty base condition causing infinite recursion and stack overflow crash.',
+          'Attempting to define a function inside main() (e.g. "void foo() { void bar() { ... } }" is invalid in standard C).'
         ],
         quickRevision: [
-          'Union size = size of largest member.',
-          'Struct size >= sum of all member sizes.',
-          'enum values auto-increment by 1 starting from 0 unless explicitly initialized.'
+          'Pointers allow returning multiple values.',
+          'Recursion = function calling itself.',
+          'Base condition is mandatory in recursion to prevent stack overflow.'
         ]
       }
     },
@@ -185,48 +259,105 @@ int main() {
       unitId: 'c-unit-5',
       courseId: 'c',
       order: 4,
-      title: 'File Handling: Opening, Closing & Modes',
-      summary: 'Master file streams, the FILE pointer, fopen(), fclose(), and file operation access modes.',
+      title: 'Structures: What is a Structure, Declarations, typedef & Arrays vs Structures',
+      summary: 'Package heterogeneous data attributes together into custom compound types using struct and typedef.',
       content: {
-        definition: 'File handling in C allows programs to persist data across execution sessions on secondary storage (disks). Files are managed via a stream controlled by a FILE pointer defined in <stdio.h>.',
-        syntax: 'FILE *fp = fopen("data.txt", "w"); // "r" (read), "w" (write), "a" (append)\nif (fp == NULL) {\n    perror("File open failed");\n}\nfclose(fp);',
+        definition: 'A Structure (struct) is a user-defined compound data type that groups variables of different data types (heterogeneous) under a single identifier name. While an array can only represent a collection of identical data types, structures allow modeling real-world entities with diverse attributes (such as a Book with title, author, pages, and price, or a Student with roll number, name, and marks). The keyword typedef allows defining convenient aliases for structure types.',
+        syntax: `// 1. Structure Definition Template:
+struct tag_name {
+    data_type member1;
+    data_type member2;
+}; // Semicolon is mandatory!
+
+// 2. Declaring Structure Variables:
+struct tag_name var1, var2;
+
+// 3. Combining Definition & Declaration:
+struct tag_name {
+    data_type member1;
+} var1, var2;
+
+// 4. Structure Type Declaration with typedef:
+typedef struct {
+    double real;
+    double img;
+} Complex;
+
+Complex c1, c2; // Direct declaration without 'struct' keyword!`,
         codeSnippet: `#include <stdio.h>
+#include <string.h>
 
-int main() {
-    FILE *filePtr = fopen("academy_log.txt", "w");
+// 1. Defining Structure with Tag Name: book_bank
+struct book_bank {
+    char title[20];
+    char author[15];
+    int pages;
+    float price;
+};
 
-    if (filePtr == NULL) {
-        printf("Error: Could not create or open file!\\n");
-        return 1;
-    }
+// 2. Defining Structure with typedef: Complex Numbers
+typedef struct {
+    double real;
+    double img;
+} Complex;
 
-    printf("File opened successfully in WRITE mode.\\n");
-    fprintf(filePtr, "CODEVERSE Session Log\\n");
-    fprintf(filePtr, "Platform: C Academy\\nStatus: Verified\\n");
+// Function adding two complex numbers and returning a whole structure
+Complex addComplex(Complex c1, Complex c2) {
+    Complex c3;
+    c3.real = c1.real + c2.real;
+    c3.img = c1.img + c2.img;
+    return c3;
+}
 
-    fclose(filePtr);
-    printf("File flushed and closed safely.\\n");
+int main(void) {
+    // Declaring structure variables of type struct book_bank
+    struct book_bank book1;
+
+    // Populating book1 members
+    strcpy(book1.title, "Programming in C");
+    strcpy(book1.author, "Balagurusamy");
+    book1.pages = 450;
+    book1.price = 399.50f;
+
+    printf("=== 1. Book Bank Database Record ===\\n");
+    printf("Title:  %s\\n", book1.title);
+    printf("Author: %s\\n", book1.author);
+    printf("Pages:  %d\\n", book1.pages);
+    printf("Price:  $%.2f\\n", book1.price);
+
+    // Using typedef Complex structure
+    Complex num1 = {3.5, 2.0};
+    Complex num2 = {1.5, 4.5};
+    Complex sum = addComplex(num1, num2);
+
+    printf("\\n=== 2. Complex Number Arithmetic ===\\n");
+    printf("Sum = %.1f + %.1fi\\n", sum.real, sum.img);
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'FILE *filePtr = fopen("academy_log.txt", "w");', explanation: 'Opens the file stream for writing. Creates the file if it does not exist, or truncates it to 0 bytes if it does.' },
-          { line: 'if (filePtr == NULL)', explanation: 'Crucial safety check: fopen returns NULL if the file cannot be opened (e.g. permission denied or missing disk).' },
-          { line: 'fclose(filePtr);', explanation: 'Flushes any unwritten buffer data to disk and releases OS file descriptor resources.' }
+          { line: 'struct book_bank { ... };', explanation: 'Defines the structure format (template). Note: No memory is allocated until variables like book1 are declared.' },
+          { line: 'struct book_bank book1;', explanation: 'Declares book1 as a structure variable, allocating memory space for all 4 member fields.' },
+          { line: 'typedef struct { ... } Complex;', explanation: 'Creates a type alias Complex so we can declare variables without writing "struct Complex".' },
+          { line: 'Complex addComplex(...)', explanation: 'Functions in C can take whole structures as parameters and return a whole structure directly.' }
         ],
         keyConcepts: [
-          'Modes: "r" (read, must exist), "w" (write, overwrites), "a" (append to end), "r+" (read/write)',
-          'Binary modes: "rb", "wb", "ab" for raw non-text binary data',
-          'Always close files with fclose() to prevent file descriptor leaks and data loss'
+          'Structures group heterogeneous data elements into one logical entity.',
+          'Defining a structure template does NOT allocate memory; memory is allocated when variables of that structure type are declared.',
+          'Arrays vs. Structures: Arrays hold homogeneous elements of the same type; structures hold heterogeneous elements of diverse types.',
+          'Arrays are derived types; structures are programmer-defined constructed data types.',
+          'The template MUST terminate with a semicolon (;).'
         ],
         commonMistakes: [
-          'Failing to verify if fopen returned NULL before reading or writing',
-          'Forgetting to call fclose(), which can leave disk writes unflushed in memory'
+          'Forgetting the mandatory terminating semicolon (;) after the closing brace of a struct definition.',
+          'Attempting to initialize members inside the struct template definition (e.g. struct book { int pages = 100; }; is strictly forbidden in C!).',
+          'Omitting the tag name when defining a struct without declaring variables immediately.'
         ],
         quickRevision: [
-          'FILE *fp: handle to file stream.',
-          'fopen(): opens file; returns NULL on error.',
-          'fclose(): closes file and flushes buffers.',
-          '"w" truncates existing files; "a" preserves existing content.'
+          'struct tag_name { type member; }; (needs semicolon).',
+          'Heterogeneous: can mix int, char[], float, double.',
+          'Memory is allocated only when variables are declared.',
+          'typedef creates a clean type alias without "struct".'
         ]
       }
     },
@@ -235,54 +366,92 @@ int main() {
       unitId: 'c-unit-5',
       courseId: 'c',
       order: 5,
-      title: 'Reading and Writing Files: fprintf, fscanf, fputs & fgets',
-      summary: 'Perform text stream operations with formatted I/O and line-based buffer-safe reading functions.',
+      title: 'Referencing Structure Members, Initialization & Whole Structures',
+      summary: 'Access members using the dot operator (.), initialize records at compile time, and perform whole structure assignments and function passing.',
       content: {
-        definition: 'C provides specialized functions for reading from and writing to file streams: fprintf() and fscanf() for formatted data, fputs() for writing text lines, and fgets() for buffer-safe string reading.',
-        syntax: 'fprintf(fp, "Format: %d\\n", val);\nfscanf(fp, "%d", &val);\nfgets(buffer, sizeof(buffer), fp);\nfputs("Hello\\n", fp);',
+        definition: 'Structure members are accessed using the Member Selection (Dot) Operator (.). Structures can be initialized at compile time using curly braces {}. In C, Whole Structures can be copied directly using the assignment operator (=), passed by value to functions, and returned from functions.',
+        syntax: `// 1. Referencing Members via Dot Operator:
+variable_name.member_name
+
+// 2. Compile-Time Initialization:
+struct personal {
+    char name[20];
+    int day;
+    char month[10];
+    int year;
+    float salary;
+};
+struct personal person = {"M.L.Goel", 10, "January", 1945, 4500.00};
+
+// 3. Whole Structure Assignment (Copies all members bit-for-bit):
+struct personal backupPerson = person;`,
         codeSnippet: `#include <stdio.h>
+#include <string.h>
 
-int main() {
-    // 1. Write structured data
-    FILE *fpWrite = fopen("students.dat", "w");
-    if (fpWrite) {
-        fprintf(fpWrite, "101 Dennis 98.5\\n");
-        fprintf(fpWrite, "102 Ken 96.0\\n");
-        fclose(fpWrite);
-    }
+// Personal record structure from university curriculum
+struct personal {
+    char name[20];
+    int day;
+    char month[10];
+    int year;
+    float salary;
+};
 
-    // 2. Read structured data back
-    FILE *fpRead = fopen("students.dat", "r");
-    if (fpRead) {
-        int id;
-        char name[30];
-        float score;
+// Function accepting whole structure as argument (pass by value)
+void printPersonRecord(struct personal p) {
+    printf("Name:   %s\\n", p.name);
+    printf("DOB:    %d %s %d\\n", p.day, p.month, p.year);
+    printf("Salary: $%.2f\\n", p.salary);
+}
 
-        printf("Records read from file:\\n");
-        while (fscanf(fpRead, "%d %s %f", &id, name, &score) == 3) {
-            printf("Student #%d: %s | Score: %.1f\\n", id, name, score);
-        }
-        fclose(fpRead);
-    }
+int main(void) {
+    // 1. Compile-Time Initialization
+    struct personal person1 = {"M.L.Goel", 10, "January", 1945, 4500.00f};
+
+    printf("=== 1. Primary Record (Initialized at Compile Time) ===\\n");
+    printPersonRecord(person1);
+
+    // 2. Referencing Members via Dot (.) Operator and Updating
+    person1.salary = 5200.00f; // Salary increment
+    printf("\\nUpdated Salary for %s: $%.2f\\n", person1.name, person1.salary);
+
+    // 3. Whole Structure Assignment
+    struct personal person2 = person1; // Bitwise copy of all members
+    printf("\\n=== 2. Backup Record (Whole Structure Assignment) ===\\n");
+    printPersonRecord(person2);
+
+    // 4. Partial Initialization Demonstration
+    // Remaining uninitialized members are automatically set to 0 or '\\0'
+    struct personal partialPerson = {"A.K.Sharma", 15, "March"};
+    printf("\\n=== 3. Partial Initialization (Uninitialized fields default to 0) ===\\n");
+    printf("Name: %s | Day: %d | Month: %s | Year: %d | Salary: $%.2f\\n",
+           partialPerson.name, partialPerson.day, partialPerson.month, 
+           partialPerson.year, partialPerson.salary);
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'fprintf(fpWrite, ...)', explanation: 'Writes formatted string output directly into the file stream pointed to by fpWrite.' },
-          { line: 'while (fscanf(...) == 3)', explanation: 'Reads until EOF (End Of File) is encountered, validating that all 3 tokens were successfully matched.' }
+          { line: 'person1.salary = 5200.00f;', explanation: 'Uses the dot (.) operator to select and update the salary member of person1.' },
+          { line: 'struct personal person2 = person1;', explanation: 'C performs a shallow bitwise copy of all member fields from person1 to person2.' },
+          { line: 'struct personal partialPerson = {"A.K.Sharma", 15, "March"};', explanation: 'Partial initialization: year and salary are omitted and automatically receive default 0 values.' }
         ],
         keyConcepts: [
-          'fgets() is buffer-safe because it accepts a maximum buffer size parameter',
-          'EOF is a special macro (-1) returned when the end of a file stream is reached',
-          'ferror() and feof() check error conditions and EOF status respectively'
+          'Dot (.) operator (also called period operator) links structure variables to their members.',
+          'Compile-time initialization requires values inside curly braces {} in the exact declared member order.',
+          'Partial initialization is permitted: uninitialized numeric members default to 0, characters/strings default to \'\\0\'.',
+          'Whole structure assignment (s2 = s1) copies all fields automatically.',
+          'C does NOT allow comparing whole structures with == (e.g. if (p1 == p2) is a compiler error!).'
         ],
         commonMistakes: [
-          'Using gets() instead of fgets(): gets() has no buffer limit and was removed from the C standard for causing security vulnerabilities',
-          'Testing feof() before attempting a read (feof only flags true AFTER a read has failed past the end of the file)'
+          'Trying to initialize members within the struct template definition.',
+          'Comparing two structure variables directly using == operator.',
+          'Mismatching the order of data types in the compile-time initialization list {}.'
         ],
         quickRevision: [
-          'fprintf() and fscanf() work like printf and scanf on file streams.',
-          'fgets(buf, size, fp) is the gold standard for reading lines safely.',
-          'Always check return codes when reading files.'
+          'Access members via dot: var.member.',
+          'Initialization: struct tag var = {val1, val2, ...};',
+          'Uninitialized members default to 0 or \'\\0\'.',
+          'Whole structure copy: var2 = var1.'
         ]
       }
     }
@@ -293,54 +462,64 @@ export const cUnit5Quiz: Quiz = {
   id: 'quiz-c-5',
   unitId: 'c-unit-5',
   courseId: 'c',
-  unitTitle: 'Unit 5: Structures, Unions and File Handling',
-  title: 'Unit 5 Mastery Quiz',
-  passingScorePercent: 60,
+  unitTitle: 'Unit 5: User Defined Functions and Structures',
+  title: 'Functions & Structures Certification Quiz',
+  passingScorePercent: 80,
   questions: [
     {
       id: 'q-c5-1',
-      question: 'What operator is used to access structure members through a structure pointer?',
-      options: ['. (dot)', '-> (arrow)', ':: (scope)', '* (asterisk only)'],
-      correctIndex: 1,
-      explanation: 'The arrow operator (->) is syntactic shorthand for dereferencing a pointer and accessing the member: (*ptr).member.'
+      question: 'What is the primary technical distinction between an Array and a Structure in C?',
+      options: [
+        'Arrays hold homogeneous elements of the same type; structures group heterogeneous elements of diverse types',
+        'Arrays are allocated on the heap; structures are allocated on the stack',
+        'Arrays can be passed to functions; structures cannot be passed to functions',
+        'Arrays have member names; structures only use numeric indices'
+      ],
+      correctIndex: 0,
+      explanation: 'Arrays are homogeneous (storing identical data types), whereas structures are heterogeneous (grouping diverse data types under one named entity).'
     },
     {
       id: 'q-c5-2',
-      question: 'What is the principal difference between a struct and a union in C?',
+      question: 'What is mandatory for any recursive function to avoid infinite execution and stack overflow?',
       options: [
-        'A struct can only contain integers, while a union can contain any type',
-        'In a struct, each member has its own memory; in a union, all members share the same memory space',
-        'Unions can have methods, while structs cannot',
-        'Structs are allocated on the heap, unions on the stack'
+        'A while loop in the header',
+        'A well-defined base condition that stops recursive calls',
+        'At least two return statements',
+        'A pointer argument'
       ],
       correctIndex: 1,
-      explanation: 'A union shares a single block of memory among all its members (sized to the largest member), whereas a struct allocates distinct memory for each member.'
+      explanation: 'A base condition terminates the recursion tree. Without it, the function calls itself indefinitely until stack memory is exhausted.'
     },
     {
       id: 'q-c5-3',
-      question: 'What does fopen("report.txt", "w") do if "report.txt" already exists on disk?',
+      question: 'Can you compare two structure variables directly using the equality operator (e.g., if (student1 == student2)) in standard C?',
       options: [
-        'It opens the file and appends content to the end',
-        'It generates a runtime exception',
-        'It truncates the file content to 0 bytes (overwriting it)',
-        'It opens the file in read-only mode'
+        'Yes, C automatically compares each field',
+        'No, C does not support direct structure comparison with ==; you must compare members individually',
+        'Yes, but only if they have no pointers',
+        'Yes, provided both are defined with typedef'
       ],
-      correctIndex: 2,
-      explanation: 'Opening an existing file in "w" (write) mode truncates its contents to zero length, erasing existing data.'
+      correctIndex: 1,
+      explanation: 'In C, the == operator cannot be used directly on whole structure variables due to memory padding discrepancies. You must compare individual members.'
     },
     {
       id: 'q-c5-4',
-      question: 'What value does fopen() return when it fails to open a requested file?',
-      options: ['0', 'NULL', '-1', 'EOF'],
-      correctIndex: 1,
-      explanation: 'fopen() returns a NULL pointer when an error occurs while attempting to open a file stream.'
+      question: 'Which operator is used to access an individual member of a structure variable?',
+      options: ['Dot (.) operator', 'Arrow (->) operator', 'Scope resolution (::) operator', 'Comma (,) operator'],
+      correctIndex: 0,
+      explanation: 'The dot (.) operator selects members from direct structure variables. The arrow (->) operator is used when accessing through a pointer.'
     },
     {
       id: 'q-c5-5',
-      question: 'Which function is the safest choice for reading a line of text from a file without risking buffer overflow?',
-      options: ['gets()', 'scanf("%s")', 'fgets()', 'getc()'],
-      correctIndex: 2,
-      explanation: 'fgets() requires passing the maximum buffer size as an argument, preventing buffer overruns by guaranteeing it will never read more characters than the buffer can hold.'
+      question: 'What happens to the uninitialized members when a structure variable is partially initialized in C?',
+      options: [
+        'They are automatically set to default values: 0 for numeric types and \'\\0\' for characters and strings',
+        'They contain unpredictable garbage memory values',
+        'The compiler throws a fatal syntax error',
+        'The entire structure is zeroed out completely'
+      ],
+      correctIndex: 0,
+      explanation: 'Under C rules for partial structure initialization, any trailing uninitialized members automatically receive default zero values (0 for numbers, \'\\0\' for characters).'
     }
   ]
 };

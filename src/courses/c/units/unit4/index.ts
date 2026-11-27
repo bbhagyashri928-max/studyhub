@@ -4,9 +4,9 @@ export const cUnit4: Unit = {
   id: 'c-unit-4',
   courseId: 'c',
   unitNumber: 4,
-  title: 'Functions and Pointers',
-  description: 'Master modular software design with user-defined functions, recursion, call-by-value vs reference, pointer arithmetic, and memory addressing.',
-  estimatedHours: 6.0,
+  title: 'Arrays and Strings',
+  description: 'Master 1D and 2D arrays, compile-time and run-time initialization, matrix arithmetic (addition and multiplication), character arrays, null-terminated strings, safe terminal I/O, string handling functions (<string.h>), and classic string algorithms like palindrome checking.',
+  estimatedHours: 8.0,
   quizId: 'quiz-c-4',
   published: true,
   topics: [
@@ -15,45 +15,90 @@ export const cUnit4: Unit = {
       unitId: 'c-unit-4',
       courseId: 'c',
       order: 1,
-      title: 'Functions: Declaration, Definition, Arguments & Return Values',
-      summary: 'Break complex systems into modular, testable, and reusable functional components.',
+      title: 'One-Dimensional Arrays: Declaration, Initialization & Core Operations',
+      summary: 'Learn sequential contiguous data storage in 1D arrays, compile-time vs. run-time initialization, and master the 6 classic array algorithms (print, reverse, sum, average, largest, smallest).',
       content: {
-        definition: 'A function is a self-contained block of statements designed to perform a specific task. Function declaration (prototype) informs the compiler about the function name, return type, and parameters. The definition contains the actual executable implementation.',
-        syntax: '// Function Prototype\nint calculateSum(int a, int b);\n\n// Function Definition\nint calculateSum(int a, int b) {\n    return a + b;\n}',
-        codeSnippet: `#include <stdio.h>
+        definition: 'An Array in C is a contiguous, fixed-size sequential collection of elements of the same data type (homogeneous elements) stored under a single variable name. A One-Dimensional (1D) array or vector represents a single row or column of elements, indexed starting from 0 to size - 1.',
+        syntax: `/* 1. Declaration of 1-D Arrays:
+   type variable_name [size];
+   Examples:
+   int rollnumbers[4];
+   float height[30];
+   char name[40]; */
 
-// Prototype
-double calculateArea(double radius);
+/* 2. Compile-Time (Build-Time) Initialization:
+   type array_name[size] = {list of values};
+   int nums[4] = {2, 5, 6, 7};
+   float area[5] = {23.4, 6.8, 5.5, 7.3, 2.4};
+   char name[9] = {'T', 'u', 't', 'o', 'r', 'i', 'a', 'l', '\\0'}; */
 
-int main() {
-    double r = 5.0;
-    double area = calculateArea(r);
-    printf("Radius: %.2f | Circle Area: %.2f\\n", r, area);
+/* 3. Run-Time (Dynamic) Initialization:
+   Accepting values during program execution using loops and scanf():
+   for (int i = 0; i < size; i++) {
+       scanf("%d", &array[i]);
+   } */`,
+        codeSnippet: `/* Comprehensive 1D Array Demonstration: Sum, Average, Largest & Smallest */
+#include <stdio.h>
+
+int main(void) {
+    int array[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    int size = 10;
+    
+    // 1. Forward Traversal
+    printf("1. Forward Array Elements:\\n");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\\n");
+
+    // 2. Reverse Traversal
+    printf("\\n2. Reverse Array Elements:\\n");
+    for (int i = size - 1; i >= 0; i--) {
+        printf("%d ", array[i]);
+    }
+    printf("\\n");
+
+    // 3. Sum and Average
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += array[i];
+    }
+    float avg = (float)sum / size;
+    printf("\\n3. Sum of elements     : %d\\n", sum);
+    printf("   Average of elements : %.2f\\n", avg);
+
+    // 4. Largest and Smallest
+    int largest = array[0];
+    int smallest = array[0];
+    for (int i = 1; i < size; i++) {
+        if (array[i] > largest)  largest = array[i];
+        if (array[i] < smallest) smallest = array[i];
+    }
+    printf("\\n4. Largest element      : %d\\n", largest);
+    printf("   Smallest element     : %d\\n", smallest);
+
     return 0;
-}
-
-// Definition
-double calculateArea(double radius) {
-    const double PI = 3.1415926535;
-    return PI * radius * radius;
 }`,
         lineByLineExplanation: [
-          { line: 'double calculateArea(double radius);', explanation: 'Forward declaration (prototype) allowing main() to call calculateArea before its definition appears.' },
-          { line: 'calculateArea(r);', explanation: 'Function invocation passing argument r by value to parameter radius.' },
-          { line: 'return PI * radius * radius;', explanation: 'Calculates result and returns value to the caller, terminating function execution.' }
+          { line: 'int array[10] = {1, 2, 3, ...};', explanation: 'Compile-time declaration and initialization of 10 contiguous 4-byte integers in RAM.' },
+          { line: 'for (int i = size - 1; i >= 0; i--)', explanation: 'Reverse traversal starting from highest valid index (9) down to index 0.' },
+          { line: 'avg = (float)sum / size;', explanation: 'Explicit type cast prevents integer division truncation, preserving fractional averages.' },
+          { line: 'if (array[i] > largest) largest = array[i];', explanation: 'Iterative comparison algorithm tracking the maximum value observed.' }
         ],
         keyConcepts: [
-          'Modularity: reduces code duplication and eases debugging',
-          'Pass-by-value: C copies parameter values into the function call stack frame',
-          'Scope: local variables created inside functions are destroyed upon return'
+          'Homogeneous Data: All elements in an array must share the exact same data type.',
+          'Zero-Based Indexing: The first element is always at index 0, and the last is at index size - 1.',
+          'Compile-Time Initialization occurs during compilation; Run-Time occurs via user input or loops.',
+          'No Bounds Checking: C does not verify array boundaries; accessing array[10] in an array of size 10 accesses unauthorized memory.'
         ],
         commonMistakes: [
-          'Forgetting the semicolon after a function prototype',
-          'Type mismatch between the return expression and the declared return type'
+          'Off-by-one errors: attempting to access array[10] in an array of 10 elements (valid indices are 0 to 9)',
+          'Performing integer division when calculating average (e.g. sum / size without float casting)'
         ],
         quickRevision: [
-          'Prototype tells compiler: return type, name, argument types.',
-          'Pass-by-value means modifications inside the function do not affect the caller\'s original variable.'
+          'type name[size]; declares a 1D array.',
+          'Indices range from 0 to size - 1.',
+          'Initialize at compile-time: int a[3] = {1, 2, 3};'
         ]
       }
     },
@@ -62,41 +107,102 @@ double calculateArea(double radius) {
       unitId: 'c-unit-4',
       courseId: 'c',
       order: 2,
-      title: 'Recursion & The Call Stack',
-      summary: 'Solve problems elegantly by self-referencing functions, base condition design, and stack frame unwinding.',
+      title: 'Multi-Dimensional Arrays: 2D Matrices, Addition & Multiplication',
+      summary: 'Represent tables, matrices, and grids using 2D arrays, master flat vs. row-bracket initializations, and implement matrix addition and multiplication.',
       content: {
-        definition: 'Recursion is a programming technique in which a function calls itself directly or indirectly to solve smaller instances of the same problem. Every recursive function requires a base case to terminate execution and prevent stack overflow.',
-        syntax: 'int factorial(int n) {\n    if (n <= 1) return 1; // Base case\n    return n * factorial(n - 1); // Recursive case\n}',
-        codeSnippet: `#include <stdio.h>
+        definition: 'A Multi-Dimensional Array has dimensions greater than one. A Two-Dimensional (2D) Array is an array of arrays, organized conceptually as a matrix or table with rows and columns. In C memory, 2D arrays are stored in Row-Major Order (row-by-row sequentially).',
+        syntax: `/* 1. Declaration of 2D Arrays:
+   type array_name [row_size] [column_size];
+   int matrix[2][3]; // 2 rows, 3 columns
 
-long long factorial(int n) {
-    if (n <= 1) {
-        return 1; // Base case terminates recursion
+/* 2. Initialization Methods:
+   Method 1 (Flat list):
+   int a[4][3] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+
+   Method 2 (Nested row brackets - Recommended):
+   int a[4][3] = {
+       {0, 1, 2},
+       {3, 4, 5},
+       {6, 7, 8},
+       {9, 10, 11}
+   }; */
+
+/* 3. 3-Dimensional Array Syntax:
+   type array_name [size1] [size2] [size3];
+   int cube[2][3][4]; // 2 layers of 3x4 matrices */`,
+        codeSnippet: `/* Demonstrating Matrix Creation, 3x3 Matrix Addition, and Matrix Multiplication */
+#include <stdio.h>
+
+int main(void) {
+    // 1. Matrix Creation and Display
+    int a[3][3] = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+    int b[3][3] = {
+        {9, 8, 7},
+        {6, 5, 4},
+        {3, 2, 1}
+    };
+    int sum[3][3];
+
+    // 2. Matrix Addition: sum[i][j] = a[i][j] + b[i][j]
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            sum[i][j] = a[i][j] + b[i][j];
+        }
     }
-    return n * factorial(n - 1); // Recursive call
-}
 
-int main() {
-    int num = 6;
-    printf("Factorial of %d = %lld\\n", num, factorial(num));
+    printf("--- Result of 3x3 Matrix Addition ---\\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", sum[i][j]);
+        }
+        printf("\\n");
+    }
+
+    // 3. 2x2 Matrix Multiplication: m[i][j] += a[i][k] * b[k][j]
+    int m1[2][2] = {{1, 2}, {3, 4}};
+    int m2[2][2] = {{5, 6}, {7, 8}};
+    int product[2][2] = {{0, 0}, {0, 0}};
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                product[i][j] += m1[i][k] * m2[k][j];
+            }
+        }
+    }
+
+    printf("\\n--- Result of 2x2 Matrix Multiplication ---\\n");
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            printf("%d ", product[i][j]);
+        }
+        printf("\\n");
+    }
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'if (n <= 1) return 1;', explanation: 'Base case: halts recursive descent when n reaches 1 or 0.' },
-          { line: 'return n * factorial(n - 1);', explanation: 'Pushes a new frame onto the stack and evaluates sub-problem until base case triggers unwinding.' }
+          { line: 'int a[3][3] = {{1, 2, 3}, ...};', explanation: 'Creates a 3x3 matrix initialized using nested row brackets.' },
+          { line: 'sum[i][j] = a[i][j] + b[i][j];', explanation: 'Direct element-by-element addition of corresponding row and column indices.' },
+          { line: 'product[i][j] += m1[i][k] * m2[k][j];', explanation: 'Triple-nested loop computing the dot product of row i and column j.' }
         ],
         keyConcepts: [
-          'Base Case: condition under which the function returns without recursing',
-          'Call Stack: each recursive call allocates its own stack frame containing local variables and return address',
-          'Stack Overflow: occurs if recursion is infinite or depth exceeds available stack memory'
+          'Row-Major Order: Element [i][j] is stored at memory address: Base + (i * COLS + j) * sizeof(type).',
+          'Matrix Addition requires both matrices to have the exact same row and column dimensions.',
+          'Matrix Multiplication requires columns of Matrix 1 to equal rows of Matrix 2.'
         ],
         commonMistakes: [
-          'Omitting the base case, leading to infinite recursion and segmentation fault (stack overflow)',
-          'Incorrectly advancing toward the base case (e.g. calling factorial(n) instead of factorial(n - 1))'
+          'Omitting the column size in 2D array declarations (the column dimension is strictly mandatory)',
+          'Confusing row index `i` with column index `j` inside nested loops'
         ],
         quickRevision: [
-          'Every recursive function MUST have at least one base case.',
-          'Divide-and-conquer algorithms like Quicksort, Mergesort, and Tree traversals rely heavily on recursion.'
+          'type mat[rows][cols]; declares a 2D matrix.',
+          'Access elements using mat[row][col].',
+          'Matrix multiplication uses 3 nested loops: i, j, and k.'
         ]
       }
     },
@@ -105,47 +211,71 @@ int main() {
       unitId: 'c-unit-4',
       courseId: 'c',
       order: 3,
-      title: 'Storage Classes: auto, register, static & extern',
-      summary: 'Explore variable lifetime, scope, visibility, and memory placement across translation units.',
+      title: 'Character Arrays & Strings: Declaration, Memory Layout & Null Terminator',
+      summary: 'Understand strings in C as null-terminated character sequences, memory byte allocation, and real-world applications in text processing and genome matching.',
       content: {
-        definition: 'A storage class defines the scope (visibility) and lifetime of a variable or function within a C program. The four storage classes are auto (default for locals), register (CPU register storage hint), static (retains value between calls), and extern (global across multiple files).',
-        syntax: 'static int callCount = 0; // Retains value across function calls\nextern int globalConfig;   // Defined in another file',
-        codeSnippet: `#include <stdio.h>
+        definition: 'In C, String is not a built-in primitive data type. A String is a one-dimensional array of characters terminated by a special Null Character (\'\\0\', ASCII value 0). The null character tells the compiler and library routines where the string ends in memory.',
+        syntax: `/* 1. Declaration of Character Arrays & Strings:
+   char name[size]; // size must be at least: length of text + 1 (for '\\0')
 
-void trackVisits() {
-    // static variable retains its value between function invocations
-    static int visitCounter = 0;
-    int localTemp = 0; // auto variable reset every call
+/* 2. Initialization Variants:
+   char s1[] = "HOME";                  // 4 chars + 1 '\\0' = 5 bytes in RAM
+   char s2[10] = "HOME";                // 5 bytes used, 5 zero-filled bytes
+   char s3[] = {'H','O','M','E','\\0'}; // Explicit character array with null byte
+   char s4[] = {'c','h','a','r','$','*'}; // Raw character array (no null byte) */
 
-    visitCounter++;
-    localTemp++;
+/* 3. Uses and Importance:
+   - Storing names, messages, and filenames
+   - Text editors and word processors
+   - Language processing and speech-to-text engines
+   - DNA and genome sequence pattern matching */`,
+        codeSnippet: `/* Demonstrating Character Arrays, String Sizing, and Null Terminator */
+#include <stdio.h>
+#include <string.h>
 
-    printf("Visit Counter (static): %d | Local Temp (auto): %d\\n", visitCounter, localTemp);
-}
+int main(void) {
+    char str[] = "HOME";
+    char letters[] = {'H', 'O', 'M', 'E', '\\0'};
 
-int main() {
-    printf("Call 1: "); trackVisits();
-    printf("Call 2: "); trackVisits();
-    printf("Call 3: "); trackVisits();
+    printf("String literal 'str'   : %s\\n", str);
+    printf("Char array 'letters'   : %s\\n", letters);
+
+    // Memory sizing demonstration
+    printf("\\nMemory Footprint:\\n");
+    printf("strlen(str)  = %zu characters (excludes '\\\\0')\\n", strlen(str));
+    printf("sizeof(str)  = %zu bytes (includes '\\\\0')\\n", sizeof(str));
+
+    // Inspecting characters and indices:
+    printf("\\nCharacter Array Layout for \\"HOME\\":\\n");
+    printf("Index  Char  ASCII\\n");
+    for (int i = 0; i < 5; i++) {
+        if (str[i] == '\\0') {
+            printf("[%d]    '\\\\0'  0 (Null Terminator)\\n", i);
+        } else {
+            printf("[%d]    '%c'   %d\\n", i, str[i], str[i]);
+        }
+    }
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'static int visitCounter = 0;', explanation: 'Allocated in the data segment once at program startup. Retains its state across function calls.' },
-          { line: 'int localTemp = 0;', explanation: 'Standard auto storage class allocated on the stack and reinitialized to 0 on every call.' }
+          { line: 'char str[] = "HOME";', explanation: 'Allocates 5 bytes: \'H\'(0), \'O\'(1), \'M\'(2), \'E\'(3), and \'\\0\'(4).' },
+          { line: 'strlen(str)', explanation: 'Returns 4 because strlen counts characters up to, but not including, \'\\0\'.' },
+          { line: 'sizeof(str)', explanation: 'Returns 5 because sizeof counts all physical bytes allocated in RAM, including \'\\0\'.' }
         ],
         keyConcepts: [
-          'auto: default local variables with block scope and automatic duration',
-          'static: preserves value throughout the entire program lifetime; file-scope static restricts visibility to the current translation unit',
-          'extern: declares a variable defined in another file or scope without allocating storage again'
+          'C has no primitive `string` data type; strings are 1D character arrays ending with `\\0`.',
+          'The null terminator `\\0` has an ASCII value of exactly 0.',
+          'Always allocate array size at least `length + 1` to accommodate `\\0`.'
         ],
         commonMistakes: [
-          'Attempting to get the memory address (&) of a register variable (registers do not have RAM addresses)',
-          'Redefining an extern variable with conflicting types'
+          'Allocating a 4-character array for a 4-letter word: char s[4] = "HOME"; leaves no room for \\0, causing buffer overruns and garbage output',
+          'Confusing a single character \'A\' (1 byte) with a string "A" (2 bytes: \'A\' + \'\\0\')'
         ],
         quickRevision: [
-          'static local: retains value between calls.',
-          'static global: limits visibility to current file.',
-          'extern: references a global variable defined elsewhere.'
+          'String = 1D character array ending with `\\0`.',
+          'strlen() excludes `\\0`; sizeof() includes `\\0`.',
+          'Always size char arrays with `+ 1` extra byte.'
         ]
       }
     },
@@ -154,44 +284,70 @@ int main() {
       unitId: 'c-unit-4',
       courseId: 'c',
       order: 4,
-      title: 'Pointers: Declaration, Initialization & Dereferencing',
-      summary: 'Demystify direct memory access, the address-of operator (&), and dereferencing operator (*).',
+      title: 'Reading Strings from Terminal & Writing to Screen',
+      summary: 'Safely read user input from the console using scanf, fgets, and %[^\n], and output strings to screen using printf and puts.',
       content: {
-        definition: 'A pointer is a variable that stores the memory address of another variable. By dereferencing a pointer using the unary * operator, a program can directly read or mutate the value located at that physical memory address.',
-        syntax: 'int value = 42;\nint *ptr = &value; // ptr stores address of value\n*ptr = 100;        // modifies value directly through memory address',
-        codeSnippet: `#include <stdio.h>
+        definition: 'Terminal String I/O involves accepting character streams from the keyboard (stdin) and displaying character strings on the monitor (stdout). C provides multiple functions: scanf("%s") reads single words, scanf("%[^\\n]") or fgets() reads whole sentences with spaces, and puts() writes strings with an automatic newline.',
+        syntax: `/* 1. Reading with scanf("%s", str):
+   - Reads a single word; STOPS on the first whitespace (space, tab, newline).
+   - Does NOT require & operator: scanf("%s", name); (name is already a memory address!)
 
-int main() {
-    int score = 75;
-    int *ptr = &score; // Pointer declaration and initialization
+/* 2. Reading Lines with Spaces:
+   - scanf("%[^\\n]", str);  -> Reads characters until user presses Enter (newline)
+   - fgets(str, sizeof(str), stdin); -> Safe, modern function reading full lines with bounds checks
+   - gets(str); -> DEPRECATED and dangerous (causes buffer overflow!)
 
-    printf("Value of score:          %d\\n", score);
-    printf("Address of score (&score): %p\\n", (void*)&score);
-    printf("Value stored in ptr:     %p\\n", (void*)ptr);
-    printf("Dereferenced (*ptr):     %d\\n", *ptr);
+/* 3. Writing Strings to Screen:
+   - printf("%s", str);  -> Formatted string output
+   - puts(str);          -> Prints string and automatically appends a newline character '\\n' */`,
+        codeSnippet: `/* Demonstrating Terminal String Input & Output Techniques */
+#include <stdio.h>
+#include <string.h>
 
-    // Modify score through pointer dereferencing
-    *ptr = 98;
-    printf("\\nAfter updating via pointer, score is now: %d\\n", score);
+int main(void) {
+    char singleWord[30];
+    char fullLine[100];
+
+    // 1. Single word input (simulated)
+    printf("Simulating scanf(\"%%s\", name):\\n");
+    strcpy(singleWord, "Dennis"); // scanf would stop here if input was "Dennis Ritchie"
+    printf("Read single word: %s\\n", singleWord);
+
+    // 2. Full line with spaces (simulated fgets)
+    printf("\\nSimulating fgets(line, sizeof, stdin):\\n");
+    strcpy(fullLine, "Dennis Ritchie created C in 1972\\n");
+    
+    // Strip trailing newline left by fgets:
+    size_t len = strlen(fullLine);
+    if (len > 0 && fullLine[len - 1] == '\\n') {
+        fullLine[len - 1] = '\\0';
+    }
+
+    // 3. Output with printf vs puts
+    printf("Output with printf: [%s]\\n", fullLine);
+    printf("Output with puts  : ");
+    puts(fullLine); // automatically adds \\n
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'int *ptr = &score;', explanation: 'Declares pointer ptr to an int and assigns it the memory address of score obtained via &.' },
-          { line: '*ptr = 98;', explanation: 'Dereferences ptr to write the integer 98 directly into score\'s memory slot.' }
+          { line: 'scanf("%s", name);', explanation: 'No & operator is needed because the array name `name` decays to a pointer to its first element.' },
+          { line: 'fgets(fullLine, sizeof, stdin);', explanation: 'Safely reads characters including whitespace up to the buffer limit, preventing memory corruption.' },
+          { line: 'puts(fullLine);', explanation: 'Streams characters to stdout and appends a trailing newline.' }
         ],
         keyConcepts: [
-          'Address-of operator (&): retrieves the memory address of a variable',
-          'Dereference operator (*): accesses or alters the data residing at the address held by the pointer',
-          'NULL pointer: points to address 0, used to represent an uninitialized or empty pointer safely'
+          'scanf("%s") terminates input on the first whitespace encountered.',
+          'Never use the gets() function: it lacks buffer bounds checking and was removed in modern C standards.',
+          'fgets() keeps the trailing newline (\'\\n\') if buffer space allows; always check and strip it if needed.'
         ],
         commonMistakes: [
-          'Dereferencing an uninitialized or wild pointer (causes crashes or corrupts arbitrary memory)',
-          'Confusing * in pointer declaration (type marker) with * in expressions (dereference operator)'
+          'Using `&str` in `scanf("%s", &str)` (unnecessary and redundant; use `str`)',
+          'Using `scanf("%s")` to read full names with spaces, resulting in only the first name being read'
         ],
         quickRevision: [
-          '& = address of variable.',
-          '* = value at pointer address.',
-          'Always initialize pointers to NULL or a valid address before use.'
+          'scanf("%s", str) reads until space.',
+          'fgets(str, sizeof, stdin) reads whole line with spaces.',
+          'puts(str) prints string + newline.'
         ]
       }
     },
@@ -200,51 +356,93 @@ int main() {
       unitId: 'c-unit-4',
       courseId: 'c',
       order: 5,
-      title: 'Pointer Arithmetic & Pointers with Arrays',
-      summary: 'Explore pointer offsets, scaling by data type size, passing arrays as pointers, and pass-by-reference.',
+      title: 'String Handling Functions & Practice Programs (Palindrome, Reverse, Swap)',
+      summary: 'Master the standard string manipulation library (<string.h>): strlen, strcpy, strcat, strcmp, strrev, character frequency counting, string swapping with pointers, and palindrome verification.',
       content: {
-        definition: 'When an integer is added to or subtracted from a pointer, the address is scaled automatically by sizeof(DataType). Array names decay into pointers to their first element, enabling efficient pointer traversal.',
-        syntax: 'int arr[3] = {10, 20, 30};\nint *p = arr;\n*(p + 1) = 25; // Equivalent to arr[1] = 25',
-        codeSnippet: `#include <stdio.h>
+        definition: 'The C Standard Library `<string.h>` provides built-in functions to manipulate null-terminated strings: measuring length, copying buffers, concatenating strings, comparing lexicographical order, and inverting character sequences.',
+        syntax: `/* Standard <string.h> Functions:
+   strlen(str)         : Returns character count excluding null terminator '\\0'
+   strcpy(dest, src)   : Copies src string into dest (overwrites dest)
+   strcat(dest, src)   : Appends src string to the end of dest
+   strcmp(s1, s2)      : Lexicographical comparison:
+                         returns 0 if s1 == s2
+                         returns <0 if s1 < s2
+                         returns >0 if s1 > s2
+   strrev(str)         : Reverses string in-place (available in many C runtimes) */`,
+        codeSnippet: `/* Comprehensive Demonstration of String Functions, Palindrome & Character Frequency */
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
-void swapNumbers(int *a, int *b) {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+// Function to check if a string is a palindrome
+bool checkPalindrome(const char str[]) {
+    int left = 0;
+    int right = strlen(str) - 1;
+    while (left < right) {
+        if (str[left] != str[right]) return false;
+        left++;
+        right--;
+    }
+    return true;
 }
 
-int main() {
-    int x = 10, y = 99;
-    printf("Before swap: x = %d, y = %d\\n", x, y);
-    swapNumbers(&x, &y);
-    printf("After swap:  x = %d, y = %d\\n", x, y);
+int main(void) {
+    printf("--- 1. String Functions (<string.h>) ---\\n");
+    char s1[50] = "Hello, ";
+    const char s2[] = "learners!";
+    
+    // strlen
+    printf("Length of s1: %zu\\n", strlen(s1));
+    
+    // strcat: concatenate s2 to s1
+    strcat(s1, s2);
+    printf("After strcat : %s\\n", s1);
 
-    // Pointer traversal of array
-    int numbers[4] = {100, 200, 300, 400};
-    int *ptr = numbers;
-    printf("\\nArray via pointer arithmetic:\\n");
-    for (int i = 0; i < 4; i++) {
-        printf("*(ptr + %d) = %d at address %p\\n", i, *(ptr + i), (void*)(ptr + i));
+    // strcpy: copy into new buffer
+    char duplicate[50];
+    strcpy(duplicate, s1);
+    printf("After strcpy : %s\\n", duplicate);
+
+    // strcmp: comparison
+    printf("strcmp(\"abc\", \"abc\") : %d (identical)\\n", strcmp("abc", "abc"));
+    printf("strcmp(\"abc\", \"xyz\") : %d (abc < xyz)\\n", strcmp("abc", "xyz"));
+
+    printf("\\n--- 2. Character Frequency Counter ---\\n");
+    char text[] = "This website is awesome";
+    char searchChar = 'e';
+    int freq = 0;
+    for (int i = 0; text[i] != '\\0'; i++) {
+        if (text[i] == searchChar) freq++;
     }
+    printf("Frequency of '%c' in \\"%s\\" = %d\\n", searchChar, text, freq);
+
+    printf("\\n--- 3. Palindrome String Verification ---\\n");
+    char testWord[] = "abbba";
+    printf("Word \\"%s\\" is %s\\n", testWord, 
+           checkPalindrome(testWord) ? "a PALINDROME" : "NOT a palindrome");
+
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: 'void swapNumbers(int *a, int *b)', explanation: 'Simulates pass-by-reference in C by accepting pointers to caller variables.' },
-          { line: '*(ptr + i)', explanation: 'Evaluates to address ptr + (i * sizeof(int)) and dereferences it to fetch the element value.' }
+          { line: 'strcat(s1, s2);', explanation: 'Locates \'\\0\' in s1, appends all characters of s2, and writes a final \'\\0\'.' },
+          { line: 'strcpy(duplicate, s1);', explanation: 'Duplicates string content from s1 into destination buffer.' },
+          { line: 'while (left < right) ...', explanation: 'Two-pointer palindrome check comparing symmetrical characters from both ends.' },
+          { line: 'if (text[i] == searchChar) freq++;', explanation: 'Linear search iterating through character array until null terminator.' }
         ],
         keyConcepts: [
-          'Pointer addition scales by sizeof(DataType). Adding 1 to an int* on a 64-bit system adds 4 bytes to the memory address',
-          'arr[i] is syntactically identical to *(arr + i)',
-          'Pass-by-reference is achieved in C by passing pointer arguments'
+          'Destination buffer for strcat() and strcpy() must be large enough to hold combined characters plus \'\\0\'.',
+          'strcmp() returns 0 when strings match; check if (strcmp(a, b) == 0).',
+          'Never compare strings with `if (s1 == s2)` — that compares pointer memory addresses, not string text!'
         ],
         commonMistakes: [
-          'Assuming ptr + 1 adds 1 byte: it adds 1 element size (e.g. 4 bytes for int, 8 for double)',
-          'Dangling pointers: holding a pointer to a local variable after its enclosing function returns'
+          'Buffer overflow: calling strcat into an array that does not have enough unallocated space',
+          'Using == to compare string contents instead of strcmp()'
         ],
         quickRevision: [
-          'arr[i] == *(arr + i).',
-          'Pass pointers to functions to allow functions to modify caller variables.',
-          'Pointer arithmetic only makes sense within contiguous arrays or allocated blocks.'
+          'strlen(s) returns character length.',
+          'strcpy(dest, src) copies string.',
+          'strcat(dest, src) appends string.',
+          'strcmp(s1, s2) == 0 means strings are identical.'
         ]
       }
     }
@@ -255,59 +453,54 @@ export const cUnit4Quiz: Quiz = {
   id: 'quiz-c-4',
   unitId: 'c-unit-4',
   courseId: 'c',
-  unitTitle: 'Unit 4: Functions and Pointers',
-  title: 'Unit 4 Mastery Quiz',
-  passingScorePercent: 60,
+  unitTitle: 'Unit 4: Arrays and Strings',
+  title: 'Arrays & Strings Certification Quiz',
+  passingScorePercent: 80,
   questions: [
     {
       id: 'q-c4-1',
-      question: 'What is the consequence of omitting the base case in a recursive function?',
-      options: [
-        'The function returns 0 immediately',
-        'The program encounters infinite recursion and terminates with a stack overflow',
-        'The compiler converts it to a while loop automatically',
-        'Execution continues normally with default values'
-      ],
+      question: 'What is the index of the final element in an array declared as "int rollnumbers[10];"?',
+      options: ['10', '9', '11', '0'],
       correctIndex: 1,
-      explanation: 'Without a base case to halt recursion, stack frames continue to be pushed until memory is exhausted, causing a stack overflow crash.'
+      explanation: 'C arrays use zero-based indexing. For an array of size 10, valid indices are 0 through 9.'
     },
     {
       id: 'q-c4-2',
-      question: 'Which storage class allows a local variable to preserve its value between multiple calls to the same function?',
-      options: ['auto', 'register', 'static', 'extern'],
-      correctIndex: 2,
-      explanation: 'static local variables are allocated once in the data segment and maintain their persisted value across subsequent calls.'
+      question: 'How are two-dimensional (2D) arrays stored sequentially in computer RAM in C?',
+      options: [
+        'Row-Major Order (row by row sequentially)',
+        'Column-Major Order',
+        'Diagonal Linked Order',
+        'Segment Block Order'
+      ],
+      correctIndex: 0,
+      explanation: 'In C, 2D arrays are stored in Row-Major Order, where all elements of row 0 are stored, followed immediately by row 1, etc.'
     },
     {
       id: 'q-c4-3',
-      question: 'If int *ptr points to address 0x1000, what address will (ptr + 2) point to, assuming sizeof(int) is 4 bytes?',
-      options: ['0x1002', '0x1004', '0x1008', '0x1016'],
-      correctIndex: 2,
-      explanation: 'Pointer arithmetic scales by sizeof(type). 2 * 4 bytes = 8 bytes. Thus 0x1000 + 8 = 0x1008.'
+      question: 'How many bytes of memory are allocated for the string literal "HOME" in C?',
+      options: ['4 bytes', '5 bytes', '8 bytes', '10 bytes'],
+      correctIndex: 1,
+      explanation: 'The string literal "HOME" contains 4 characters (\'H\', \'O\', \'M\', \'E\') plus 1 byte for the terminating null character (\'\\0\'), occupying 5 bytes total.'
     },
     {
       id: 'q-c4-4',
-      question: 'How do you simulate pass-by-reference in C so a function can modify variables in the caller\'s scope?',
+      question: 'Why does scanf("%s", str) stop reading when the user types "Dennis Ritchie"?',
       options: [
-        'By using the global keyword',
-        'By passing pointers to the variables and dereferencing them inside the function',
-        'By returning an array of values',
-        'By declaring all variables as const'
+        'scanf("%s") terminates input upon encountering the first whitespace character (space)',
+        'The name is longer than 10 characters',
+        'C forbids uppercase characters in input',
+        'Ritchie is a reserved word'
       ],
-      correctIndex: 1,
-      explanation: 'Passing memory addresses (pointers) allows the called function to dereference the pointer and write modifications directly into the caller\'s memory.'
+      correctIndex: 0,
+      explanation: 'The %s format specifier in scanf terminates reading when it reaches whitespace (space, tab, or newline).'
     },
     {
       id: 'q-c4-5',
-      question: 'What does the expression *(arr + 3) evaluate to?',
-      options: [
-        'arr[3]',
-        'Address of arr[3]',
-        'arr + 3 bytes',
-        'Undefined behavior'
-      ],
-      correctIndex: 0,
-      explanation: 'In C, array subscript notation arr[i] is defined as syntactic sugar for *(arr + i).'
+      question: 'What does the standard function call "strcmp(str1, str2)" return when both strings are identical?',
+      options: ['1', '0', '-1', 'true'],
+      correctIndex: 1,
+      explanation: 'strcmp() returns integer 0 when both strings have identical characters and lengths.'
     }
   ]
 };

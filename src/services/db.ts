@@ -1,10 +1,12 @@
 import { 
   UserProfile, Course, Unit, Topic, PracticalProgram, Quiz, QuizAttempt, 
-  StudentProgress, Bookmark, Announcement, ActivityLog, CourseId 
+  StudentProgress, Bookmark, Announcement, ActivityLog, CourseId,
+  Stage, StudentStageProgress, StageSettings 
 } from '@/types';
 import { cCourse, cUnits, cQuizzes, cPracticals } from '@/courses/c';
 import { cppCourse, cppUnits, cppQuizzes, cppPracticals } from '@/courses/cpp';
 import { otherCourse, otherUnits, otherQuizzes, otherPracticals } from '@/courses/other';
+import { buildMasterStageSeed } from './stageSeedData';
 
 // Storage keys
 const STORAGE_PREFIX = 'codeverse_';
@@ -21,20 +23,23 @@ const KEYS = {
   ANNOUNCEMENTS: `${STORAGE_PREFIX}announcements`,
   ACTIVITY_LOGS: `${STORAGE_PREFIX}activity_logs`,
   CURRENT_USER: `${STORAGE_PREFIX}current_user`,
+  STAGES: `${STORAGE_PREFIX}stages`,
+  STAGE_PROGRESS: `${STORAGE_PREFIX}stage_progress`,
+  STAGE_SETTINGS: `${STORAGE_PREFIX}stage_settings`,
 };
 
 // Initial Seed Users
 export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
   {
     id: 'user-student-1',
-    email: 'alex.student@codeverse.edu',
-    fullName: 'Alex Morgan',
+    email: 'bhagyashri.bhise@codeverse.edu',
+    fullName: 'Bhagyashri Bhise',
     studentId: 'CV-2024-8841',
     role: 'STUDENT',
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     bio: 'Aspiring systems engineer and competitive programmer learning C, C++, and CS Systems fundamentals.',
     status: 'ACTIVE',
-    streakDays: 4,
+    streakDays: 7,
     lastActiveDate: new Date().toISOString().split('T')[0],
     enrolledCourses: ['c', 'cpp', 'other'],
     createdAt: '2024-09-01T08:00:00Z',
@@ -162,6 +167,28 @@ function saveToStorage<T>(key: string, data: T): void {
 export const db = {
   // Initialization
   init: () => {
+    const DB_VERSION = 'codeverse_c_unit5_fcp_v8';
+    if (localStorage.getItem('codeverse_curriculum_version') !== DB_VERSION) {
+      saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits, ...otherUnits]);
+      saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes, ...otherQuizzes]);
+      saveToStorage(KEYS.COURSES, [cCourse, cppCourse, otherCourse]);
+      saveToStorage(KEYS.STAGES, buildMasterStageSeed());
+      localStorage.setItem('codeverse_curriculum_version', DB_VERSION);
+    }
+
+    // Check and seed stages
+    if (!localStorage.getItem(KEYS.STAGES)) {
+      saveToStorage(KEYS.STAGES, buildMasterStageSeed());
+    }
+    // Check and seed stage settings
+    if (!localStorage.getItem(KEYS.STAGE_SETTINGS)) {
+      saveToStorage(KEYS.STAGE_SETTINGS, { sequentialLockEnabled: true });
+    }
+    // Check and seed stage progress
+    if (!localStorage.getItem(KEYS.STAGE_PROGRESS)) {
+      saveToStorage(KEYS.STAGE_PROGRESS, []);
+    }
+
     // Check and seed users
     if (!localStorage.getItem(KEYS.USERS)) {
       saveToStorage(KEYS.USERS, SEED_USERS);
@@ -554,6 +581,125 @@ export const db = {
       recentUsers: students.slice(-5).reverse(),
       recentActivities: db.getActivityLogs(8)
     };
+  },
+
+  // ================= STAGE LEARNING SYSTEM =================
+  getStages: (topicId?: string): Stage[] => {
+    const allStages = loadFromStorage<Stage[]>(KEYS.STAGES, []);
+    if (!topicId) return allStages;
+    return allStages
+      .filter(s => s.topicId === topicId)
+      .sort((a, b) => a.stageNumber - b.stageNumber);
+  },
+
+  getStage: (stageId: string): Stage | undefined => {
+    const allStages = loadFromStorage<Stage[]>(KEYS.STAGES, []);
+    return allStages.find(s => s.id === stageId);
+  },
+
+  saveStage: (stage: Stage): void => {
+    const allStages = loadFromStorage<Stage[]>(KEYS.STAGES, []);
+    const idx = allStages.findIndex(s => s.id === stage.id);
+    if (idx >= 0) {
+      allStages[idx] = { ...stage, updatedAt: new Date().toISOString() };
+    } else {
+      allStages.push({
+        ...stage,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      });
+    }
+    saveToStorage(KEYS.STAGES, allStages);
+  },
+
+  deleteStage: (stageId: string): void => {
+    const allStages = loadFromStorage<Stage[]>(KEYS.STAGES, []);
+    const filtered = allStages.filter(s => s.id !== stageId);
+    saveToStorage(KEYS.STAGES, filtered);
+  },
+
+  reorderStages: (topicId: string, orderedStageIds: string[]): void => {
+    const allStages = loadFromStorage<Stage[]>(KEYS.STAGES, []);
+    orderedStageIds.forEach((id, idx) => {
+      const stage = allStages.find(s => s.id === id);
+      if (stage) {
+        stage.stageNumber = idx + 1;
+        stage.updatedAt = new Date().toISOString();
+      }
+    });
+    saveToStorage(KEYS.STAGES, allStages);
+  },
+
+  getStageSettings: (): StageSettings => {
+    return loadFromStorage<StageSettings>(KEYS.STAGE_SETTINGS, { sequentialLockEnabled: true });
+  },
+
+  updateStageSettings: (settings: Partial<StageSettings>): void => {
+    const current = db.getStageSettings();
+    saveToStorage(KEYS.STAGE_SETTINGS, { ...current, ...settings });
+  },
+
+  getStudentStageProgress: (userId: string, courseId: CourseId): StudentStageProgress => {
+    const allProgress = loadFromStorage<StudentStageProgress[]>(KEYS.STAGE_PROGRESS, []);
+    let userProgress = allProgress.find(p => p.userId === userId && p.courseId === courseId);
+    if (!userProgress) {
+      userProgress = {
+        userId,
+        courseId,
+        completedStageIds: [],
+        updatedAt: new Date().toISOString()
+      };
+    }
+    return userProgress;
+  },
+
+  markStageCompleted: (userId: string, courseId: CourseId, stageId: string): { success: boolean; progress: StudentStageProgress } => {
+    const allProgress = loadFromStorage<StudentStageProgress[]>(KEYS.STAGE_PROGRESS, []);
+    let userProgress = allProgress.find(p => p.userId === userId && p.courseId === courseId);
+    if (!userProgress) {
+      userProgress = {
+        userId,
+        courseId,
+        completedStageIds: [stageId],
+        lastVisitedStageId: stageId,
+        updatedAt: new Date().toISOString()
+      };
+      allProgress.push(userProgress);
+    } else {
+      if (!userProgress.completedStageIds.includes(stageId)) {
+        userProgress.completedStageIds.push(stageId);
+      }
+      userProgress.lastVisitedStageId = stageId;
+      userProgress.updatedAt = new Date().toISOString();
+    }
+    saveToStorage(KEYS.STAGE_PROGRESS, allProgress);
+    return { success: true, progress: userProgress };
+  },
+
+  isStageUnlocked: (userId: string, courseId: CourseId, stage: Stage, allTopicStages: Stage[]): boolean => {
+    const settings = db.getStageSettings();
+    if (!settings.sequentialLockEnabled) return true; // sequential lock disabled by admin
+
+    // Stage 1 is always unlocked
+    if (stage.stageNumber === 1) return true;
+
+    // Check if the immediately preceding stage is completed
+    const sorted = [...allTopicStages].sort((a, b) => a.stageNumber - b.stageNumber);
+    const stageIdx = sorted.findIndex(s => s.id === stage.id);
+    if (stageIdx <= 0) return true;
+
+    const prevStage = sorted[stageIdx - 1];
+    const progress = db.getStudentStageProgress(userId, courseId);
+    return progress.completedStageIds.includes(prevStage.id);
+  },
+
+  getTopicStageStats: (topicId: string, userId: string, courseId: CourseId): { total: number; completed: number; percent: number } => {
+    const stages = db.getStages(topicId).filter(s => s.published);
+    if (stages.length === 0) return { total: 0, completed: 0, percent: 0 };
+    const progress = db.getStudentStageProgress(userId, courseId);
+    const completed = stages.filter(s => progress.completedStageIds.includes(s.id)).length;
+    const percent = Math.round((completed / stages.length) * 100);
+    return { total: stages.length, completed, percent };
   }
 };
 

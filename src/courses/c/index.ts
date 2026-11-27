@@ -9,8 +9,8 @@ import { cPracticals } from './practical';
 export const cCourse: Course = {
   id: 'c',
   title: 'C Programming',
-  subtitle: 'Master the fundamentals of procedural programming',
-  description: 'Build a rock-solid foundation in procedural programming, computer architecture, memory allocation, pointers, and high-performance system programming with Dennis Ritchie’s legendary language.',
+  subtitle: 'Master Algorithms, Operators, Control Flow, Arrays & Functions',
+  description: 'A comprehensive journey through procedural systems programming: from algorithmic planning and flowcharts to low-level operators, structured control flow, multi-dimensional arrays, strings, modular user-defined functions, and memory structures.',
   badge: 'Foundation & Systems',
   icon: 'Terminal',
   accentColor: '#24B8A6',
@@ -21,3 +21,7 @@ export const cCourse: Course = {
 export const cUnits = [cUnit1, cUnit2, cUnit3, cUnit4, cUnit5];
 export const cQuizzes = [cUnit1Quiz, cUnit2Quiz, cUnit3Quiz, cUnit4Quiz, cUnit5Quiz];
 export { cPracticals };
+
+// Export the 25-step gamified curriculum steps
+export { C_GAME_STEPS, C_GAME_WORLDS } from './gameData';
+export type { GameStep } from './gameData';

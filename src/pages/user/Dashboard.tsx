@@ -5,7 +5,7 @@ import { db } from '@/services/db';
 import { 
   Terminal, Code2, Flame, Award, BookOpen, ArrowRight, Play, 
   CheckCircle2, Clock, Sparkles, Target, Bookmark as BookmarkIcon, 
-  ChevronRight, Calendar, Cpu 
+  ChevronRight, Calendar, Cpu, Gamepad2 
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -86,6 +86,37 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Featured C Game Quest Banner */}
+      <section className="bg-gradient-to-r from-teal-900/40 via-teal-800/20 to-navy-900/60 rounded-3xl p-6 border border-teal-500/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-soft">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-400 flex-shrink-0">
+            <Gamepad2 className="w-7 h-7" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300">
+                New Syllabus Mode
+              </span>
+              <span className="text-xs text-slate-400">25 Interactive Missions</span>
+            </div>
+            <h3 className="text-lg font-extrabold text-navy-900 dark:text-white mt-1">
+              C Mastery Game Quest
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
+              Play through step-by-step challenges covering Algorithms, Operators, Control Flow, 2D Arrays, and Structures!
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => onNavigate('c-game')}
+          className="px-6 py-2.5 rounded-xl text-xs font-black bg-teal-500 hover:bg-teal-400 text-navy-950 flex items-center gap-2 shadow-soft transition-all whitespace-nowrap"
+        >
+          <span>Play C Game (25 Steps)</span>
+          <ChevronRight className="w-4 h-4" />
+        </button>
       </section>
 
       {/* 2. Top Metric Cards Grid */}

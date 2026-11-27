@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Unit, Topic } from '@/types';
+import { Unit, Topic, Stage } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 import { useProgress } from '@/context/ProgressContext';
 import { CodeEditor } from '@/components/code-editor/CodeEditor';
 import { UnitQuizModal } from '@/components/quizzes/UnitQuizModal';
+import { TopicStageAccordion } from '@/components/stages/TopicStageAccordion';
+import { StageModalReader } from '@/components/stages/StageModalReader';
 import { db } from '@/services/db';
 import { 
   CheckCircle2, Circle, Bookmark, ChevronLeft, ChevronRight, 
@@ -29,10 +32,15 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
     isBookmarked 
   } = useProgress();
 
+  const { currentUser } = useAuth();
+  const userId = currentUser?.id || 'user-student-1';
+
   const [activeTopicId, setActiveTopicId] = useState<string>(
     initialTopicId || unit.topics[0]?.id || ''
   );
   const [isQuizModalOpen, setIsQuizModalOpen] = useState(false);
+  const [activeStageData, setActiveStageData] = useState<{ stage: Stage; allTopicStages: Stage[] } | null>(null);
+  const [stageRefresh, setStageRefresh] = useState(0);
 
   const activeTopic: Topic | undefined = unit.topics.find(t => t.id === activeTopicId) || unit.topics[0];
   const activeIndex = unit.topics.findIndex(t => t.id === activeTopicId);
@@ -203,6 +211,20 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
           </div>
         </div>
 
+        {/* Interactive Topic Stage Module Accordion */}
+        <div className="mt-6 mb-8">
+          <TopicStageAccordion
+            key={`${activeTopic.id}-${stageRefresh}`}
+            topic={activeTopic}
+            courseId={unit.courseId}
+            userId={userId}
+            isInitiallyExpanded={true}
+            onSelectStage={(stage, allTopicStages) => {
+              setActiveStageData({ stage, allTopicStages });
+            }}
+          />
+        </div>
+
         {/* Definition Section */}
         <div className="mt-8 space-y-6">
           <div className="p-5 rounded-2xl bg-ivory-100 dark:bg-navy-950 border border-navy-100 dark:border-navy-800">
@@ -355,6 +377,26 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
           quiz={unitQuiz}
           isOpen={isQuizModalOpen}
           onClose={() => setIsQuizModalOpen(false)}
+        />
+      )}
+
+      {/* Stage Lesson Modal Reader */}
+      {activeStageData && (
+        <StageModalReader
+          stage={activeStageData.stage}
+          allStages={activeStageData.allTopicStages}
+          courseId={unit.courseId}
+          userId={userId}
+          onClose={() => setActiveStageData(null)}
+          onNavigateStage={(nextStage) => {
+            setActiveStageData({
+              stage: nextStage,
+              allTopicStages: activeStageData.allTopicStages
+            });
+          }}
+          onProgressUpdated={() => {
+            setStageRefresh(prev => prev + 1);
+          }}
         />
       )}
     </div>

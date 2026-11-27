@@ -18,6 +18,7 @@ import { Bookmarks } from '@/pages/user/Bookmarks';
 import { Progress } from '@/pages/user/Progress';
 import { Profile } from '@/pages/user/Profile';
 import { Settings } from '@/pages/user/Settings';
+import { CGameView } from '@/pages/user/CGameView';
 
 // Admin Pages
 import { AdminOverview } from '@/pages/admin/AdminOverview';
@@ -27,6 +28,7 @@ import { PracticalManagement } from '@/pages/admin/PracticalManagement';
 import { QuizManagement } from '@/pages/admin/QuizManagement';
 import { AnnouncementsManagement } from '@/pages/admin/AnnouncementsManagement';
 import { AnalyticsReports } from '@/pages/admin/AnalyticsReports';
+import { StageManagement } from '@/pages/admin/StageManagement';
 
 export const AppContent: React.FC = () => {
   const { isAuthenticated, isAdmin, currentUser } = useAuth();
@@ -132,6 +134,8 @@ export const AppContent: React.FC = () => {
           return <StudentsManagement />;
         case 'admin-courses':
           return <CourseManagement />;
+        case 'admin-stages':
+          return <StageManagement />;
         case 'admin-practicals':
           return <PracticalManagement />;
         case 'admin-quizzes':
@@ -147,6 +151,13 @@ export const AppContent: React.FC = () => {
     switch (currentRoute) {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigate} />;
+      case 'c-game':
+        return (
+          <CGameView
+            onNavigateToCourse={() => handleNavigate('course-c')}
+            onNavigateToUnit={(unitId) => handleOpenUnit(unitId)}
+          />
+        );
       case 'courses':
       case 'course-c':
         return (
