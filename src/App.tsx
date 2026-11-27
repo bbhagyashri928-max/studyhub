@@ -19,6 +19,7 @@ import { Progress } from '@/pages/user/Progress';
 import { Profile } from '@/pages/user/Profile';
 import { Settings } from '@/pages/user/Settings';
 import { CGameView } from '@/pages/user/CGameView';
+import { CppGameView } from '@/pages/user/CppGameView';
 
 // Admin Pages
 import { AdminOverview } from '@/pages/admin/AdminOverview';
@@ -150,9 +151,18 @@ export const AppContent: React.FC = () => {
       case 'dashboard':
         return <Dashboard onNavigate={handleNavigate} />;
       case 'c-game':
+      case 'game-c':
         return (
           <CGameView
             onNavigateToCourse={() => handleNavigate('course-c')}
+            onNavigateToUnit={(unitId) => handleOpenUnit(unitId)}
+          />
+        );
+      case 'cpp-game':
+      case 'game-cpp':
+        return (
+          <CppGameView
+            onNavigateToCourse={() => handleNavigate('course-cpp')}
             onNavigateToUnit={(unitId) => handleOpenUnit(unitId)}
           />
         );

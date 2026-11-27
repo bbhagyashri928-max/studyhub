@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { 
   Home, BarChart3, Bookmark, 
   User, Settings, LogOut, ChevronDown, ChevronRight, 
-  Rocket, Code, Terminal, Sparkles
+  Rocket, Code, Terminal, Sparkles, Gamepad2
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -146,27 +146,82 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <Terminal className="w-3 h-3" />
                   <span>Practical Lab</span>
                 </button>
+                <button
+                  onClick={() => handleItemClick('c-game')}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5 font-bold ${
+                    currentRoute === 'c-game'
+                      ? 'bg-amber-500/20 text-amber-300'
+                      : 'text-amber-400 hover:text-amber-300 hover:bg-[#12233D]'
+                  }`}
+                >
+                  <Gamepad2 className="w-3 h-3 text-amber-400" />
+                  <span>C Game Quest</span>
+                </button>
               </div>
             )}
           </div>
 
           {/* 4. C++ Programming */}
-          <button
-            onClick={() => handleItemClick('course-cpp')}
-            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-              currentRoute === 'course-cpp'
-                ? 'bg-[#192E52] text-white'
-                : 'text-slate-300 hover:bg-[#13223B] hover:text-white'
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="w-5 h-5 rounded-full bg-purple-600/30 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold text-[9px]">
-                C++
-              </span>
-              <span>C++ Programming</span>
-            </div>
-            <ChevronRight className="w-4 h-4 text-slate-400" />
-          </button>
+          <div className="space-y-1">
+            <button
+              onClick={() => {
+                handleItemClick('course-cpp');
+                setIsCppDropdownOpen(!isCppDropdownOpen);
+              }}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                currentRoute === 'course-cpp' || currentRoute.startsWith('cpp-unit-')
+                  ? 'bg-[#192E52] text-white'
+                  : 'text-slate-300 hover:bg-[#13223B] hover:text-white'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <span className="w-5 h-5 rounded-full bg-purple-600/30 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold text-[9px]">
+                  C++
+                </span>
+                <span>C++ Programming</span>
+              </div>
+              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isCppDropdownOpen ? 'rotate-0' : '-rotate-90'}`} />
+            </button>
+
+            {/* Sub-menu with vertical guide line */}
+            {isCppDropdownOpen && (
+              <div className="ml-5 pl-3 border-l-2 border-[#1E3356] space-y-1 py-0.5">
+                {[
+                  { id: 'cpp-unit-1', label: 'Unit 1' },
+                  { id: 'cpp-unit-2', label: 'Unit 2' },
+                  { id: 'cpp-unit-3', label: 'Unit 3' },
+                  { id: 'cpp-unit-4', label: 'Unit 4' },
+                  { id: 'cpp-unit-5', label: 'Unit 5' },
+                ].map((u) => (
+                  <button
+                    key={u.id}
+                    onClick={() => handleItemClick('course-cpp')}
+                    className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-purple-300 hover:bg-[#12233D] transition-colors block"
+                  >
+                    {u.label}
+                  </button>
+                ))}
+                <button
+                  onClick={() => handleItemClick('practical-lab?course=cpp')}
+                  className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-purple-400 hover:text-purple-300 hover:bg-[#12233D] transition-colors flex items-center gap-1.5 font-medium"
+                >
+                  <Terminal className="w-3 h-3" />
+                  <span>Practical Lab</span>
+                </button>
+                <button
+                  onClick={() => handleItemClick('cpp-game')}
+                  className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5 font-bold ${
+                    currentRoute === 'cpp-game'
+                      ? 'bg-purple-500/20 text-purple-300'
+                      : 'text-purple-400 hover:text-purple-300 hover:bg-[#12233D]'
+                  }`}
+                >
+                  <Gamepad2 className="w-3 h-3 text-purple-400" />
+                  <span>C++ Game Quest</span>
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* 5. My Progress */}
           <button

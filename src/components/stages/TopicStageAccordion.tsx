@@ -97,8 +97,10 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
           
           <div className="space-y-3">
             <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
-              <span>Stage Learning Sequence ({stages.length} Steps)</span>
-              <span>Click a stage box to study</span>
+              <span className="flex items-center gap-1.5 font-bold text-teal-600 dark:text-teal-400">
+                <span>🎮 Interactive Concept Games & Labs ({stages.length} Steps)</span>
+              </span>
+              <span className="text-[11px] text-slate-400">Click any stage to play & practice</span>
             </div>
 
             {/* Responsive Numbered Rectangular Stage Grid (12 cols desktop, 6-8 tablet, 4 mobile) */}

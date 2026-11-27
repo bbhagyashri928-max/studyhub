@@ -374,7 +374,8 @@ export const CourseView: React.FC<CourseViewProps> = ({ courseId, onNavigate, on
             </div>
 
             {/* Quick Game Quest Button for C */}
-            {courseId === 'c' && (
+            {/* Interactive Game Launcher Pill */}
+            {courseId === 'c' ? (
               <button
                 onClick={() => onNavigate('c-game')}
                 className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-teal-500/10 to-teal-500/5 hover:from-teal-500/20 hover:to-teal-500/10 border border-teal-500/30 text-teal-700 dark:text-teal-300 text-xs font-bold flex items-center justify-between transition-all"
@@ -382,6 +383,17 @@ export const CourseView: React.FC<CourseViewProps> = ({ courseId, onNavigate, on
                 <div className="flex items-center gap-2.5">
                   <span className="text-base">🎮</span>
                   <span>Interactive C Game (25 Step Journey)</span>
+                </div>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={() => onNavigate('cpp-game')}
+                className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-purple-500/10 to-purple-500/5 hover:from-purple-500/20 hover:to-purple-500/10 border border-purple-500/30 text-purple-700 dark:text-purple-300 text-xs font-bold flex items-center justify-between transition-all"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="text-base">🎮</span>
+                  <span>Interactive C++ Citadel Game (25 Step Journey)</span>
                 </div>
                 <ArrowRight className="w-4 h-4" />
               </button>

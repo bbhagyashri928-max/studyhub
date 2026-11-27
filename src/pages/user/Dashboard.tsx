@@ -441,29 +441,57 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Interactive C Game Quest Card */}
-          <div className="rounded-2xl bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-transparent border border-teal-500/30 p-4.5 flex items-center justify-between gap-4 shadow-soft-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-teal-500 text-navy-950 flex items-center justify-center font-bold text-lg shadow-xs flex-shrink-0">
-                🎮
+          {/* Interactive Game Quests: C and C++ */}
+          <div className="space-y-3">
+            {/* C Game Quest Card */}
+            <div className="rounded-2xl bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-transparent border border-teal-500/30 p-4 flex items-center justify-between gap-3 shadow-soft-sm hover:border-teal-400 transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-teal-500 text-navy-950 flex items-center justify-center font-bold text-lg shadow-xs flex-shrink-0">
+                  🎮
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-xs text-navy-950 dark:text-white">
+                    C Mastery Game Quest
+                  </h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    25 gamified missions across 5 worlds
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-extrabold text-xs text-navy-950 dark:text-white">
-                  C Mastery Game Quest
-                </h4>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                  Play 25 gamified programming missions
-                </p>
-              </div>
+
+              <button
+                onClick={() => onNavigate('c-game')}
+                className="px-3.5 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-navy-950 text-xs font-bold flex items-center gap-1.5 transition-all flex-shrink-0 shadow-xs"
+              >
+                <span>Play Now</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
-            <button
-              onClick={() => onNavigate('c-game')}
-              className="px-3.5 py-2 rounded-xl bg-teal-500 hover:bg-teal-400 text-navy-950 text-xs font-bold flex items-center gap-1.5 transition-all flex-shrink-0 shadow-xs"
-            >
-              <span>Play Now</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
+            {/* C++ Game Quest Card */}
+            <div className="rounded-2xl bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-transparent border border-purple-500/30 p-4 flex items-center justify-between gap-3 shadow-soft-sm hover:border-purple-400 transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold text-lg shadow-xs flex-shrink-0">
+                  🕹️
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-xs text-navy-950 dark:text-white">
+                    C++ OOP Citadel Quest
+                  </h4>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                    25 OOP, pointers & STL missions
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onNavigate('cpp-game')}
+                className="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all flex-shrink-0 shadow-xs"
+              >
+                <span>Play Now</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
 
         </div>
