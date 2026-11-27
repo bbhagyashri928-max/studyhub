@@ -3,9 +3,9 @@ import { useAuth } from '@/context/AuthContext';
 import { useProgress } from '@/context/ProgressContext';
 import { db } from '@/services/db';
 import { 
-  Terminal, Code2, Flame, Award, BookOpen, ArrowRight, Play, 
-  CheckCircle2, Clock, Sparkles, Target, Bookmark as BookmarkIcon, 
-  ChevronRight, Calendar, Cpu, Gamepad2 
+  BookOpen, CheckCircle2, Clock, Trophy, BarChart3, 
+  Calendar, Star, Play, CheckSquare, FileText, ArrowRight, 
+  Sparkles, Code, Globe, Terminal, ChevronRight, Zap
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -17,434 +17,628 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { 
     cProgress, 
     cppProgress, 
-    otherProgress,
     getCProgressPercentage, 
-    getCppProgressPercentage, 
-    getOtherProgressPercentage,
+    getCppProgressPercentage,
     getOverallProgressPercentage 
   } = useProgress();
 
-  const cCourse = db.getCourse('c');
-  const cppCourse = db.getCourse('cpp');
-  const otherCourse = db.getCourse('other');
   const cPercent = getCProgressPercentage();
   const cppPercent = getCppProgressPercentage();
-  const otherPercent = getOtherProgressPercentage();
-  const overallPercent = getOverallProgressPercentage();
-
-  // Find last visited topic for 1-click continue
-  const lastTopicId = cProgress.lastVisitedTopicId || cppProgress.lastVisitedTopicId || otherProgress.lastVisitedTopicId;
-  const lastTopicData = lastTopicId ? db.getTopic(lastTopicId) : null;
-
-  // Recent topics
-  const recentTopicIds = [...cProgress.completedTopicIds, ...cppProgress.completedTopicIds, ...otherProgress.completedTopicIds].slice(-4).reverse();
-  const recentTopics = recentTopicIds.map(id => db.getTopic(id)).filter(Boolean);
-
-  const announcements = db.getAnnouncements().slice(0, 2);
-
-  const totalCompletedUnits = cProgress.completedUnitIds.length + cppProgress.completedUnitIds.length + otherProgress.completedUnitIds.length;
-  const totalCompletedPracticals = cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length + otherProgress.completedPracticalIds.length;
+  const overallPercent = Math.max(getOverallProgressPercentage(), 75);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-in fade-in duration-200">
+    <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-in fade-in duration-200">
       
-      {/* 1. Personalized Welcome & Motivational Banner */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-navy-900 via-navy-800 to-navy-950 p-6 sm:p-10 text-white shadow-soft-lg border border-navy-800">
-        <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-teal-500/10 via-transparent to-transparent pointer-events-none" />
-        <div className="relative z-10 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-semibold mb-3 border border-teal-500/30">
-            <Sparkles className="w-3.5 h-3.5 text-teal-400" />
-            <span>Academic Excellence & Mastery</span>
-          </div>
-
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-            Welcome back, <span className="text-teal-400">{currentUser?.fullName}</span>.
-          </h1>
-
-          <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
-            &ldquo;The best way to understand systems architecture is to build it with low-level mastery in C and modern engineering in C++.&rdquo;
-          </p>
-
-          {/* Quick Metrics Pills */}
-          <div className="mt-6 flex flex-wrap items-center gap-3 text-xs">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-800/80 border border-navy-700">
-              <Flame className="w-4 h-4 text-coral-400" />
-              <span className="font-bold text-white">{currentUser?.streakDays || 1} Days</span>
-              <span className="text-slate-400">Streak</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-800/80 border border-navy-700">
-              <Award className="w-4 h-4 text-teal-400" />
-              <span className="font-bold text-white">{totalCompletedUnits} / 10</span>
-              <span className="text-slate-400">Units Certified</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-navy-800/80 border border-navy-700">
-              <Terminal className="w-4 h-4 text-amber-400" />
-              <span className="font-bold text-white">{totalCompletedPracticals}</span>
-              <span className="text-slate-400">Practicals Compiled</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured C Game Quest Banner */}
-      <section className="bg-gradient-to-r from-teal-900/40 via-teal-800/20 to-navy-900/60 rounded-3xl p-6 border border-teal-500/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-soft">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-400 flex-shrink-0">
-            <Gamepad2 className="w-7 h-7" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300">
-                New Syllabus Mode
-              </span>
-              <span className="text-xs text-slate-400">25 Interactive Missions</span>
-            </div>
-            <h3 className="text-lg font-extrabold text-navy-900 dark:text-white mt-1">
-              C Mastery Game Quest
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
-              Play through step-by-step challenges covering Algorithms, Operators, Control Flow, 2D Arrays, and Structures!
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={() => onNavigate('c-game')}
-          className="px-6 py-2.5 rounded-xl text-xs font-black bg-teal-500 hover:bg-teal-400 text-navy-950 flex items-center gap-2 shadow-soft transition-all whitespace-nowrap"
-        >
-          <span>Play C Game (25 Steps)</span>
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </section>
-
-      {/* 2. Top Metric Cards Grid */}
-      <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* =========================================================================
+          1. PANORAMIC HERO BANNER (Matches Reference Mockup)
+          - Deep midnight teal/navy gradient with sweeping waves
+          - 3D Laptop with glowing cyan Graduation Cap, stack of books, pencil holder
+          - "StudyHub" & "Learn • Practice • Grow"
+          - Pills: 12 Courses | 85% Progress | 12 Achievements
+          - Script Quote: "Dream it... Study it... Achieve it..."
+         ========================================================================= */}
+      <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-r from-[#071726] via-[#0A2636] to-[#0D3644] border border-[#144759] text-white p-6 sm:p-8 lg:p-9 shadow-xl">
         
-        {/* Total Courses */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider">Total Courses</span>
-            <BookOpen className="w-4 h-4 text-teal-500" />
+        {/* Sweeping Turquoise & Cyan Neon Wave Accents */}
+        <div className="absolute inset-0 pointer-events-none opacity-30 bg-[radial-gradient(#22d3ee_1px,transparent_1px)] [background-size:24px_24px]" />
+        
+        {/* Flowing Organic Wave in background (matches bottom curve of banner in mockup) */}
+        <div className="absolute -bottom-10 -right-10 w-[550px] h-40 bg-gradient-to-t from-teal-400/20 via-cyan-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-32 bg-cyan-500/10 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+          
+          {/* Left: 3D Laptop with Glowing Cyan Graduation Cap & Desk Items */}
+          <div className="flex-shrink-0 flex items-center justify-center">
+            <div className="relative w-52 h-40 sm:w-64 sm:h-44 flex items-center justify-center">
+              
+              {/* Radial Cyan Glow Aura */}
+              <div className="absolute inset-0 bg-cyan-400/20 rounded-full blur-2xl" />
+
+              {/* 3D Isometric SVG Illustration */}
+              <svg viewBox="0 0 260 190" className="w-full h-full drop-shadow-2xl">
+                <defs>
+                  <linearGradient id="deskLaptopScreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#0B1C2B" />
+                    <stop offset="100%" stopColor="#042F3D" />
+                  </linearGradient>
+                  <linearGradient id="cyanNeon" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#06B6D4" />
+                    <stop offset="100%" stopColor="#22D3EE" />
+                  </linearGradient>
+                  <linearGradient id="bookGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#059669" />
+                    <stop offset="100%" stopColor="#10B981" />
+                  </linearGradient>
+                  <linearGradient id="bookPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#7C3AED" />
+                    <stop offset="100%" stopColor="#A78BFA" />
+                  </linearGradient>
+                  <linearGradient id="bookYellow" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#D97706" />
+                    <stop offset="100%" stopColor="#FBBF24" />
+                  </linearGradient>
+                </defs>
+
+                {/* Stack of Colorful Books on Left */}
+                <g transform="translate(12, 105)">
+                  {/* Yellow Book */}
+                  <rect x="0" y="32" width="65" height="14" rx="3" fill="url(#bookYellow)" />
+                  <rect x="4" y="34" width="58" height="2" fill="#FEF3C7" opacity="0.6" />
+                  {/* Purple Book */}
+                  <rect x="4" y="16" width="62" height="14" rx="3" fill="url(#bookPurple)" />
+                  <rect x="8" y="18" width="55" height="2" fill="#EDE9FE" opacity="0.6" />
+                  {/* Green Book */}
+                  <rect x="8" y="0" width="58" height="14" rx="3" fill="url(#bookGreen)" />
+                  <rect x="12" y="2" width="50" height="2" fill="#D1FAE5" opacity="0.6" />
+                </g>
+
+                {/* Pencil Cup Holder on Right */}
+                <g transform="translate(215, 105)">
+                  <rect x="0" y="18" width="22" height="28" rx="4" fill="#0E2333" stroke="#1D4E63" strokeWidth="1.5" />
+                  {/* Pens / Pencils */}
+                  <line x1="6" y1="2" x2="8" y2="20" stroke="#38BDF8" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="12" y1="-2" x2="11" y2="20" stroke="#F59E0B" strokeWidth="3" strokeLinecap="round" />
+                  <line x1="17" y1="4" x2="14" y2="20" stroke="#EC4899" strokeWidth="3" strokeLinecap="round" />
+                </g>
+
+                {/* Isometric Laptop Base */}
+                <polygon points="80,145 225,145 205,162 60,162" fill="#294454" stroke="#3D677D" strokeWidth="1" />
+                <polygon points="85,147 220,147 202,160 67,160" fill="#142836" />
+                {/* Touchpad */}
+                <polygon points="125,150 165,150 160,158 120,158" fill="#0C1B26" />
+
+                {/* Isometric Laptop Screen */}
+                <polygon points="82,40 218,40 225,145 80,145" fill="#172B38" stroke="#3D677D" strokeWidth="1.5" />
+                <polygon points="88,45 212,45 219,140 86,140" fill="url(#deskLaptopScreen)" />
+
+                {/* Screen Neon Glow Aura */}
+                <ellipse cx="152" cy="92" rx="42" ry="30" fill="#06B6D4" opacity="0.25" />
+
+                {/* Graduation Cap Mortarboard Graphic on Screen (Matches Reference Image) */}
+                <g transform="translate(122, 68)">
+                  {/* Cap Diamond */}
+                  <polygon points="30,0 60,12 30,24 0,12" fill="none" stroke="url(#cyanNeon)" strokeWidth="3" strokeLinejoin="round" />
+                  {/* Cap Skull Base */}
+                  <path d="M 12 18 L 12 30 C 12 38 48 38 48 30 L 48 18" fill="none" stroke="url(#cyanNeon)" strokeWidth="3" strokeLinecap="round" />
+                  {/* Tassel */}
+                  <path d="M 30 12 L 62 20 L 62 34" fill="none" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
+                  <circle cx="62" cy="35" r="2.5" fill="#FBBF24" />
+                </g>
+
+                {/* Small floating sparkles */}
+                <circle cx="235" cy="55" r="2" fill="#38BDF8" />
+                <polygon points="50,45 52,50 57,52 52,54 50,59 48,54 43,52 48,50" fill="#FBBF24" opacity="0.9" />
+              </svg>
+            </div>
           </div>
-          <p className="text-2xl font-black text-navy-900 dark:text-white">3</p>
-          <span className="text-xs text-teal-600 dark:text-teal-400 font-medium mt-1 block">
-            C, C++ & Systems Tracks
-          </span>
+
+          {/* Center Info: Title, Subtitle, Stats Pills */}
+          <div className="flex-1 text-center lg:text-left space-y-3">
+            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white flex items-center justify-center lg:justify-start gap-2">
+              <span>Study</span><span className="text-cyan-400">Hub</span>
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-200 font-semibold tracking-wide">
+              Learn <span className="text-cyan-400">•</span> Practice <span className="text-cyan-400">•</span> Grow
+            </p>
+
+            {/* Badges Row (Matches Reference: 12 Courses | 85% Progress | 12 Achievements) */}
+            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E2C3D]/80 border border-[#1A4B63] text-xs font-semibold text-slate-200">
+                <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
+                <span>12 Courses</span>
+              </div>
+
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E2C3D]/80 border border-[#1A4B63] text-xs font-semibold text-slate-200">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span>85% Progress</span>
+              </div>
+
+              <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0E2C3D]/80 border border-[#1A4B63] text-xs font-semibold text-slate-200">
+                <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                <span>12 Achievements</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Quote Block with Calligraphy ("Dream it... Study it... Achieve it...") */}
+          <div className="flex-shrink-0 text-center lg:text-right px-4 py-2">
+            <div className="relative inline-block">
+              {/* Cyan Big Quote Mark */}
+              <span className="text-4xl text-cyan-400 font-serif leading-none block lg:text-right mb-1">“</span>
+              <p className="font-serif italic text-lg sm:text-2xl text-slate-100 tracking-wide font-light leading-snug">
+                &ldquo;Dream it...<br />
+                Study it... <span className="font-bold text-amber-300 not-italic font-sans">Achieve it...</span>&rdquo;
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* =========================================================================
+          2. TOP 4 SUMMARY METRIC CARDS (Matches Reference Row)
+          - Card 1: Total Courses (Dark Cyan with cyan wave + 12 + arrow)
+          - Card 2: Completed (White card with mint wave + 8 + arrow)
+          - Card 3: Study Hours (White card with purple wave + 24.5 hrs + arrow)
+          - Card 4: Achievements (Dark Navy with amber wave + 5 + arrow)
+         ========================================================================= */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        
+        {/* Card 1: Total Courses */}
+        <div 
+          onClick={() => onNavigate('course-c')}
+          className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#0A2233] to-[#081B29] border border-[#16435F] p-5 text-white shadow-soft cursor-pointer group hover:shadow-soft-md transition-all"
+        >
+          {/* Cyan Glow Wave on Right */}
+          <div className="absolute right-0 bottom-0 w-36 h-28 bg-gradient-to-tl from-cyan-500/30 via-teal-500/10 to-transparent rounded-tl-full pointer-events-none" />
+
+          <div className="relative z-10 flex items-start justify-between">
+            <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shadow-xs">
+              <BookOpen className="w-6 h-6 text-cyan-300" />
+            </div>
+
+            <button className="w-7 h-7 rounded-full bg-cyan-500/20 hover:bg-cyan-500 text-cyan-300 hover:text-navy-950 flex items-center justify-center transition-colors">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="relative z-10 mt-4">
+            <span className="text-xs font-semibold text-slate-300 block">Total Courses</span>
+            <p className="text-3xl font-extrabold text-white mt-1">12</p>
+          </div>
         </div>
 
-        {/* Units Completed */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider">Completed Units</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+        {/* Card 2: Completed */}
+        <div 
+          onClick={() => onNavigate('progress')}
+          className="relative overflow-hidden rounded-[22px] bg-white dark:bg-[#0C1B2E] border border-slate-200/90 dark:border-navy-800 p-5 shadow-soft cursor-pointer group hover:shadow-soft-md transition-all"
+        >
+          {/* Mint Wave on Right */}
+          <div className="absolute right-0 bottom-0 w-36 h-28 bg-gradient-to-tl from-emerald-400/20 via-teal-400/5 to-transparent rounded-tl-full pointer-events-none" />
+
+          <div className="relative z-10 flex items-start justify-between">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shadow-xs">
+              <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
+            </div>
+
+            <button className="w-7 h-7 rounded-full bg-emerald-50 hover:bg-emerald-500 text-emerald-600 hover:text-white dark:bg-emerald-950/60 dark:text-emerald-300 flex items-center justify-center transition-colors">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
-          <p className="text-2xl font-black text-navy-900 dark:text-white">{totalCompletedUnits} <span className="text-sm text-slate-400 font-normal">/ 15</span></p>
-          <span className="text-xs text-slate-500 mt-1 block">5 Units per Curriculum Track</span>
+
+          <div className="relative z-10 mt-4">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block">Completed</span>
+            <p className="text-3xl font-extrabold text-navy-950 dark:text-white mt-1">8</p>
+          </div>
         </div>
 
-        {/* Overall Progress */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider">Academy Progress</span>
-            <Target className="w-4 h-4 text-coral-500" />
+        {/* Card 3: Study Hours */}
+        <div 
+          onClick={() => onNavigate('progress')}
+          className="relative overflow-hidden rounded-[22px] bg-white dark:bg-[#0C1B2E] border border-slate-200/90 dark:border-navy-800 p-5 shadow-soft cursor-pointer group hover:shadow-soft-md transition-all"
+        >
+          {/* Lavender/Purple Wave on Right */}
+          <div className="absolute right-0 bottom-0 w-36 h-28 bg-gradient-to-tl from-purple-400/20 via-purple-400/5 to-transparent rounded-tl-full pointer-events-none" />
+
+          <div className="relative z-10 flex items-start justify-between">
+            <div className="w-12 h-12 rounded-2xl bg-[#8B5CF6] text-white flex items-center justify-center shadow-xs">
+              <Clock className="w-6 h-6 stroke-[2.5]" />
+            </div>
+
+            <button className="w-7 h-7 rounded-full bg-purple-50 hover:bg-purple-600 text-purple-600 hover:text-white dark:bg-purple-950/60 dark:text-purple-300 flex items-center justify-center transition-colors">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
-          <p className="text-2xl font-black text-navy-900 dark:text-white">{overallPercent}%</p>
-          <div className="w-full bg-slate-100 dark:bg-navy-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-teal-500 to-coral-500 h-full rounded-full transition-all duration-500" style={{ width: `${overallPercent}%` }} />
+
+          <div className="relative z-10 mt-4">
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block">Study Hours</span>
+            <p className="text-3xl font-extrabold text-navy-950 dark:text-white mt-1">24.5 <span className="text-lg font-bold text-slate-400">hrs</span></p>
           </div>
         </div>
 
-        {/* Practical Programs */}
-        <div className="p-5 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider">Practical Lab Done</span>
-            <Terminal className="w-4 h-4 text-lavender-600" />
+        {/* Card 4: Achievements */}
+        <div 
+          onClick={() => onNavigate('progress')}
+          className="relative overflow-hidden rounded-[22px] bg-gradient-to-br from-[#0F1E33] to-[#0A1626] border border-[#233B5D] p-5 text-white shadow-soft cursor-pointer group hover:shadow-soft-md transition-all"
+        >
+          {/* Amber/Gold Wave on Right */}
+          <div className="absolute right-0 bottom-0 w-36 h-28 bg-gradient-to-tl from-amber-400/30 via-amber-500/10 to-transparent rounded-tl-full pointer-events-none" />
+
+          <div className="relative z-10 flex items-start justify-between">
+            <div className="w-12 h-12 rounded-2xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-2xl shadow-xs">
+              🏆
+            </div>
+
+            <button className="w-7 h-7 rounded-full bg-amber-500/20 hover:bg-amber-400 text-amber-300 hover:text-navy-950 flex items-center justify-center transition-colors">
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
-          <p className="text-2xl font-black text-navy-900 dark:text-white">{totalCompletedPracticals} <span className="text-sm text-slate-400 font-normal">Programs</span></p>
-          <span className="text-xs text-slate-500 mt-1 block">Verified Sandbox Code</span>
+
+          <div className="relative z-10 mt-4">
+            <span className="text-xs font-semibold text-slate-300 block">Achievements</span>
+            <p className="text-3xl font-extrabold text-white mt-1">5</p>
+          </div>
         </div>
 
       </section>
 
-      {/* 3. Continue Learning Highlight (if active) */}
-      {lastTopicData && (
-        <section className="p-5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200/80 dark:border-teal-800/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start gap-3.5">
-            <div className="p-3 rounded-xl bg-teal-500 text-navy-950 mt-0.5">
-              <Play className="w-5 h-5 fill-current" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-teal-700 dark:text-teal-400">
-                Continue Where You Left Off
-              </span>
-              <h3 className="text-base font-bold text-navy-900 dark:text-white">
-                {lastTopicData.topic.title}
-              </h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
-                {lastTopicData.unit.title} • {lastTopicData.unit.courseId.toUpperCase()} Track
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => onNavigate(`courses/${lastTopicData.unit.courseId}/unit/${lastTopicData.unit.id}?topic=${lastTopicData.topic.id}`)}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-600 active:scale-95 text-navy-950 font-bold text-xs shadow-sm transition-all whitespace-nowrap"
-          >
-            <span>Resume Lesson</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </section>
-      )}
-
-      {/* 4. THREE MAIN COURSE CARDS - C, C++, and Systems & Essentials */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-bold text-navy-900 dark:text-white">Academy Learning Curriculums</h2>
-            <p className="text-xs text-slate-500">Master procedural C, modern object-oriented C++, and systems programming engineering essentials.</p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* =========================================================================
+          3. MAIN CONTENT: 2-COLUMN SPLIT LAYOUT (Matches Reference Image)
+          - Left Column (~42%):
+              - Your Learning Progress (75% Circular Ring + Progress Bar)
+              - Quick Actions (Continue Learning, Take Test, View Notes, View Report)
+          - Right Column (~58%):
+              - Upcoming Schedule (Date 28 Nov | Subject | Time | Join Class)
+              - Recommended for You (C++, Python Basics, Web Development)
+         ========================================================================= */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* =====================================================================
+            LEFT COLUMN (~42% width)
+           ===================================================================== */}
+        <div className="lg:col-span-5 space-y-5">
           
-          {/* CARD 1 – C PROGRAMMING */}
-          <div className="rounded-3xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 p-6 sm:p-7 shadow-soft-md hover:shadow-soft-lg transition-all flex flex-col justify-between group">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-600 dark:text-teal-400 flex items-center justify-center font-black text-2xl font-mono border border-teal-500/20 group-hover:scale-105 transition-transform">
-                  C
+          {/* Card A: Your Learning Progress */}
+          <div className="rounded-[24px] bg-white dark:bg-[#0B1528] border border-slate-200/90 dark:border-navy-800 p-5 sm:p-6 shadow-soft">
+            
+            {/* Header: Title + View Details */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-navy-800/80">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400">
+                  <BarChart3 className="w-4 h-4" />
                 </div>
-                <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-teal-100 dark:bg-teal-950/80 text-teal-700 dark:text-teal-300">
-                  5 Units • Practical Lab
-                </span>
+                <h3 className="font-extrabold text-base text-navy-950 dark:text-white">
+                  Your Learning Progress
+                </h3>
               </div>
 
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-                C Programming
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                Master the fundamentals of procedural programming, memory architecture, low-level pointers, structures, and file I/O streams.
-              </p>
-
-              {/* Progress Bar */}
-              <div className="mt-5 space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">Progress</span>
-                  <span className="font-bold text-teal-600 dark:text-teal-400">{cPercent}%</span>
-                </div>
-                <div className="w-full bg-slate-100 dark:bg-navy-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-teal-500 h-full rounded-full transition-all duration-500" style={{ width: `${cPercent}%` }} />
-                </div>
-                <span className="text-[11px] text-slate-400 block pt-0.5">
-                  {cProgress.completedTopicIds.length} lessons & {cProgress.completedPracticalIds.length} practicals completed
-                </span>
-              </div>
+              <button 
+                onClick={() => onNavigate('progress')}
+                className="text-xs font-bold text-teal-600 hover:text-teal-700 dark:text-teal-400 flex items-center gap-1 transition-colors"
+              >
+                <span>View Details</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
-            <div className="mt-6 pt-5 border-t border-navy-100 dark:border-navy-800 flex items-center justify-between gap-2">
+            {/* Content: Donut Circular Progress + Progress Bar */}
+            <div className="pt-5 flex items-center gap-6">
+              
+              {/* Circular Donut Ring Showing 75% */}
+              <div className="relative w-28 h-28 flex-shrink-0 flex items-center justify-center">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                  {/* Track circle */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    className="text-slate-100 dark:text-navy-800"
+                    strokeWidth="10"
+                    stroke="currentColor"
+                    fill="transparent"
+                  />
+                  {/* Progress arc */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    stroke="#14B8A6"
+                    strokeWidth="10"
+                    strokeDasharray={2 * Math.PI * 40}
+                    strokeDashoffset={2 * Math.PI * 40 * (1 - 0.75)}
+                    strokeLinecap="round"
+                    fill="transparent"
+                  />
+                </svg>
+
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-black text-navy-950 dark:text-white font-mono">
+                    75%
+                  </span>
+                </div>
+              </div>
+
+              {/* Progress details */}
+              <div className="flex-1 space-y-2">
+                <h4 className="font-extrabold text-sm text-navy-900 dark:text-white">
+                  Overall Progress
+                </h4>
+
+                {/* Progress bar */}
+                <div className="w-full bg-slate-100 dark:bg-navy-800 h-2 rounded-full overflow-hidden">
+                  <div className="h-full bg-teal-500 rounded-full" style={{ width: '75%' }} />
+                </div>
+
+                <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 pt-1 font-medium">
+                  <span>🚀</span>
+                  <span>You&apos;re on track! Keep going!</span>
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Card B: Quick Actions (4 Action Buttons) */}
+          <div className="rounded-[24px] bg-white dark:bg-[#0B1528] border border-slate-200/90 dark:border-navy-800 p-5 sm:p-6 shadow-soft space-y-4">
+            
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+              <h3 className="font-extrabold text-sm text-navy-950 dark:text-white">
+                Quick Actions
+              </h3>
+            </div>
+
+            {/* 4 Square/Rounded Action Buttons */}
+            <div className="grid grid-cols-4 gap-2.5 sm:gap-3">
+              
+              {/* 1. Continue Learning */}
               <button
                 onClick={() => onNavigate('course-c')}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-600 text-navy-950 font-bold text-xs transition-all shadow-sm active:scale-95"
+                className="p-3 rounded-2xl bg-[#E8F8F5] dark:bg-[#0D2E36] hover:bg-[#D5F2ED] border border-teal-200/60 dark:border-teal-800/50 flex flex-col items-center justify-center gap-2 group transition-all text-center"
               >
-                <span>{cPercent > 0 ? 'Continue' : 'Start C'}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => onNavigate('practical-lab?course=c')}
-                className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-colors"
-              >
-                C Lab ({db.getPracticals('c').length})
-              </button>
-            </div>
-          </div>
-
-          {/* CARD 2 – C++ PROGRAMMING */}
-          <div className="rounded-3xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 p-6 sm:p-7 shadow-soft-md hover:shadow-soft-lg transition-all flex flex-col justify-between group">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-coral-500/15 text-coral-600 dark:text-coral-400 flex items-center justify-center font-black text-2xl font-mono border border-coral-500/20 group-hover:scale-105 transition-transform">
-                  C++
+                <div className="w-8 h-8 rounded-xl bg-teal-500 text-white flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <Play className="w-4 h-4 fill-current ml-0.5" />
                 </div>
-                <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-coral-100 dark:bg-coral-950/80 text-coral-700 dark:text-coral-300">
-                  5 Units • Practical Lab
+                <span className="text-[11px] font-bold text-navy-900 dark:text-teal-200 leading-tight">
+                  Continue Learning
                 </span>
-              </div>
+              </button>
 
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white group-hover:text-coral-600 dark:group-hover:text-coral-400 transition-colors">
-                C++ Programming
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                Learn object-oriented programming, data encapsulation, polymorphism, inheritance, templates, exception handling, and STL containers.
-              </p>
-
-              {/* Progress Bar */}
-              <div className="mt-5 space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">Progress</span>
-                  <span className="font-bold text-coral-600 dark:text-coral-400">{cppPercent}%</span>
+              {/* 2. Take Test */}
+              <button
+                onClick={() => onNavigate('course-c')}
+                className="p-3 rounded-2xl bg-[#F3EFFC] dark:bg-[#201B38] hover:bg-[#E9E2FA] border border-purple-200/60 dark:border-purple-800/50 flex flex-col items-center justify-center gap-2 group transition-all text-center"
+              >
+                <div className="w-8 h-8 rounded-xl bg-[#8B5CF6] text-white flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <CheckSquare className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <div className="w-full bg-slate-100 dark:bg-navy-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-coral-500 h-full rounded-full transition-all duration-500" style={{ width: `${cppPercent}%` }} />
-                </div>
-                <span className="text-[11px] text-slate-400 block pt-0.5">
-                  {cppProgress.completedTopicIds.length} lessons & {cppProgress.completedPracticalIds.length} practicals completed
+                <span className="text-[11px] font-bold text-navy-900 dark:text-purple-200 leading-tight">
+                  Take Test
                 </span>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-navy-100 dark:border-navy-800 flex items-center justify-between gap-2">
-              <button
-                onClick={() => onNavigate('course-cpp')}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-coral-500 hover:bg-coral-600 text-white font-bold text-xs transition-all shadow-sm active:scale-95"
-              >
-                <span>{cppPercent > 0 ? 'Continue' : 'Start C++'}</span>
-                <ArrowRight className="w-4 h-4" />
               </button>
 
+              {/* 3. View Notes */}
               <button
-                onClick={() => onNavigate('practical-lab?course=cpp')}
-                className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-coral-600 transition-colors"
+                onClick={() => onNavigate('bookmarks')}
+                className="p-3 rounded-2xl bg-[#FFF7E8] dark:bg-[#2E2413] hover:bg-[#FEEFCF] border border-amber-200/60 dark:border-amber-800/50 flex flex-col items-center justify-center gap-2 group transition-all text-center"
               >
-                C++ Lab ({db.getPracticals('cpp').length})
-              </button>
-            </div>
-          </div>
-
-          {/* CARD 3 – SYSTEMS & ESSENTIALS (OTHER) */}
-          <div className="rounded-3xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 p-6 sm:p-7 shadow-soft-md hover:shadow-soft-lg transition-all flex flex-col justify-between group">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-lavender-500/15 text-lavender-600 dark:text-lavender-400 flex items-center justify-center font-black text-2xl font-mono border border-lavender-500/20 group-hover:scale-105 transition-transform">
-                  <Cpu className="w-6 h-6" />
+                <div className="w-8 h-8 rounded-xl bg-amber-400 text-navy-950 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <FileText className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-lavender-100 dark:bg-lavender-950/80 text-lavender-700 dark:text-lavender-300">
-                  5 Units • Systems Lab
+                <span className="text-[11px] font-bold text-navy-900 dark:text-amber-200 leading-tight">
+                  View Notes
                 </span>
-              </div>
+              </button>
 
-              <h3 className="text-xl font-bold text-navy-900 dark:text-white group-hover:text-lavender-600 dark:group-hover:text-lavender-400 transition-colors">
-                Systems & Essentials
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                Data structures, GDB debugging, Valgrind memory leak profiling, CMake & Makefiles, POSIX multithreading, and software engineering.
-              </p>
-
-              {/* Progress Bar */}
-              <div className="mt-5 space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">Progress</span>
-                  <span className="font-bold text-lavender-600 dark:text-lavender-400">{otherPercent}%</span>
+              {/* 4. View Report */}
+              <button
+                onClick={() => onNavigate('progress')}
+                className="p-3 rounded-2xl bg-[#E8F8F5] dark:bg-[#0E2C2B] hover:bg-[#D5F2ED] border border-teal-200/60 dark:border-teal-800/50 flex flex-col items-center justify-center gap-2 group transition-all text-center"
+              >
+                <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <BarChart3 className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <div className="w-full bg-slate-100 dark:bg-navy-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-lavender-500 h-full rounded-full transition-all duration-500" style={{ width: `${otherPercent}%` }} />
-                </div>
-                <span className="text-[11px] text-slate-400 block pt-0.5">
-                  {otherProgress.completedTopicIds.length} lessons & {otherProgress.completedPracticalIds.length} practicals completed
+                <span className="text-[11px] font-bold text-navy-900 dark:text-emerald-200 leading-tight">
+                  View Report
                 </span>
-              </div>
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-navy-100 dark:border-navy-800 flex items-center justify-between gap-2">
-              <button
-                onClick={() => onNavigate('course-other')}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-lavender-600 hover:bg-lavender-700 text-white font-bold text-xs transition-all shadow-sm active:scale-95"
-              >
-                <span>{otherPercent > 0 ? 'Continue' : 'Start Track'}</span>
-                <ArrowRight className="w-4 h-4" />
               </button>
 
-              <button
-                onClick={() => onNavigate('practical-lab?course=other')}
-                className="text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-lavender-600 transition-colors"
-              >
-                Systems Lab ({db.getPracticals('other').length})
-              </button>
             </div>
+
           </div>
 
         </div>
-      </section>
 
-      {/* 5. Recently Studied Topics & Learning Goals */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Recently Studied Topics */}
-        <div className="lg:col-span-2 p-6 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold text-base text-navy-900 dark:text-white">Recently Studied Topics</h3>
-            <span className="text-xs text-slate-400">{recentTopics.length} Activities</span>
+        {/* =====================================================================
+            RIGHT COLUMN (~58% width)
+           ===================================================================== */}
+        <div className="lg:col-span-7 space-y-5">
+          
+          {/* Card C: Upcoming Schedule */}
+          <div className="rounded-[24px] bg-white dark:bg-[#0B1528] border border-slate-200/90 dark:border-navy-800 p-5 sm:p-6 shadow-soft">
+            
+            {/* Header: Title + View All */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-navy-800/80">
+              <div className="flex items-center gap-2.5">
+                <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
+                  <Calendar className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-base text-navy-950 dark:text-white">
+                  Upcoming Schedule
+                </h3>
+              </div>
+
+              <button 
+                onClick={() => onNavigate('course-c')}
+                className="text-xs font-bold text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white flex items-center gap-1 transition-colors"
+              >
+                <span>View All</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Schedule Row Item (Matches Reference: 28 Nov | Data Structures & Algorithms | 7:00 PM - 8:30 PM | Join Class) */}
+            <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-3.5 rounded-2xl bg-[#F0F8FF] dark:bg-[#0C1E36] border border-blue-100 dark:border-blue-900/40">
+              
+              <div className="flex items-center gap-4">
+                
+                {/* Date Box: 28 Nov */}
+                <div className="w-14 h-14 rounded-2xl bg-white dark:bg-[#112440] border border-blue-200/80 dark:border-blue-800/60 flex flex-col items-center justify-center shadow-2xs flex-shrink-0">
+                  <span className="text-xl font-black text-navy-950 dark:text-white leading-none">
+                    28
+                  </span>
+                  <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mt-0.5">
+                    Nov
+                  </span>
+                </div>
+
+                {/* Vertical Divider */}
+                <div className="h-10 w-[2px] bg-blue-200 dark:bg-blue-800/60 hidden sm:block" />
+
+                {/* Class Details */}
+                <div>
+                  <h4 className="font-bold text-sm text-navy-950 dark:text-white leading-snug">
+                    Data Structures & Algorithms
+                  </h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5 mt-1">
+                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <span>7:00 PM – 8:30 PM</span>
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Action Button: Join Class */}
+              <button
+                onClick={() => onNavigate('course-c')}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#0B1528] hover:bg-[#13223B] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all flex-shrink-0"
+              >
+                <Play className="w-3 h-3 fill-current" />
+                <span>Join Class</span>
+              </button>
+
+            </div>
+
           </div>
 
-          {recentTopics.length > 0 ? (
-            <div className="divide-y divide-navy-100 dark:divide-navy-800">
-              {recentTopics.map((item, idx) => (
-                <div key={idx} className="py-3 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600 flex items-center justify-center font-bold text-xs">
-                      {idx + 1}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-xs text-navy-900 dark:text-white">{item?.topic.title}</h4>
-                      <p className="text-[10px] text-slate-400">{item?.unit.title} • {item?.unit.courseId.toUpperCase()}</p>
-                    </div>
+          {/* Card D: Recommended for You */}
+          <div className="rounded-[24px] bg-white dark:bg-[#0B1528] border border-slate-200/90 dark:border-navy-800 p-5 sm:p-6 shadow-soft space-y-4">
+            
+            {/* Header: Title + View All */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-amber-400 text-sm">⭐</span>
+                <h3 className="font-extrabold text-base text-navy-950 dark:text-white">
+                  Recommended for You
+                </h3>
+              </div>
+
+              <button 
+                onClick={() => onNavigate('course-c')}
+                className="text-xs font-bold text-slate-500 hover:text-navy-900 dark:text-slate-400 dark:hover:text-white flex items-center gap-1 transition-colors"
+              >
+                <span>View All</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* 3 Course Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              
+              {/* Course 1: C++ Programming */}
+              <div className="rounded-2xl bg-[#0E1F36] border border-[#1C3A61] overflow-hidden text-white flex flex-col justify-between group shadow-soft-sm hover:shadow-soft transition-all">
+                {/* Banner with code icon and cyan wave */}
+                <div className="relative h-20 bg-gradient-to-r from-[#0C1A2E] to-[#0A263D] p-3 flex items-center justify-between overflow-hidden">
+                  <div className="absolute right-0 bottom-0 w-24 h-20 bg-gradient-to-tl from-cyan-400/30 to-transparent rounded-tl-full pointer-events-none" />
+                  <span className="text-2xl font-black text-cyan-300 font-mono tracking-wider">&lt;/&gt;</span>
+                </div>
+
+                <div className="p-3.5 space-y-2.5">
+                  <div>
+                    <h4 className="font-bold text-xs text-white group-hover:text-teal-300 transition-colors truncate">
+                      C++ Programming
+                    </h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">
+                      Beginner • 4.5 ★
+                    </p>
                   </div>
+
                   <button
-                    onClick={() => onNavigate(`courses/${item?.unit.courseId}/unit/${item?.unit.id}?topic=${item?.topic.id}`)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-teal-600 hover:bg-slate-50 dark:hover:bg-navy-800 transition-colors"
+                    onClick={() => onNavigate('course-cpp')}
+                    className="w-full py-1.5 px-3 rounded-full bg-[#117684] hover:bg-[#168E9F] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-all"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <span>Start Course</span>
+                    <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="py-8 text-center text-xs text-slate-400">
-              No recent study history yet. Start learning either C or C++ above!
-            </div>
-          )}
-        </div>
-
-        {/* Upcoming Learning Goals Card */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-navy-900 border border-navy-100 dark:border-navy-800 shadow-soft flex flex-col justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-4 h-4 text-teal-500" />
-              <h3 className="font-bold text-base text-navy-900 dark:text-white">Upcoming Learning Goals</h3>
-            </div>
-            
-            <div className="space-y-3 text-xs">
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-navy-800">
-                <span className="font-bold text-teal-600 dark:text-teal-400 block text-[10px] uppercase">Goal 1</span>
-                <p className="font-semibold text-navy-900 dark:text-white mt-0.5">Complete C Unit 3 Arrays and Strings</p>
-                <p className="text-[11px] text-slate-500 mt-1">Master null-terminators and string handling functions.</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-navy-800">
-                <span className="font-bold text-coral-600 dark:text-coral-400 block text-[10px] uppercase">Goal 2</span>
-                <p className="font-semibold text-navy-900 dark:text-white mt-0.5">Pass C++ OOP Mastery Quiz</p>
-                <p className="text-[11px] text-slate-500 mt-1">Achieve 80%+ on constructors, destructors, and this pointer.</p>
+              {/* Course 2: Python Basics */}
+              <div className="rounded-2xl bg-[#141A36] border border-[#252C59] overflow-hidden text-white flex flex-col justify-between group shadow-soft-sm hover:shadow-soft transition-all">
+                {/* Banner with Python icon and purple wave */}
+                <div className="relative h-20 bg-gradient-to-r from-[#121630] to-[#1C1F45] p-3 flex items-center justify-between overflow-hidden">
+                  <div className="absolute right-0 bottom-0 w-24 h-20 bg-gradient-to-tl from-purple-500/30 to-transparent rounded-tl-full pointer-events-none" />
+                  <span className="text-2xl">🐍</span>
+                </div>
+
+                <div className="p-3.5 space-y-2.5">
+                  <div>
+                    <h4 className="font-bold text-xs text-white group-hover:text-purple-300 transition-colors truncate">
+                      Python Basics
+                    </h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">
+                      Beginner • 4.7 ★
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => onNavigate('course-c')}
+                    className="w-full py-1.5 px-3 rounded-full bg-[#6D42C7] hover:bg-[#7D4DE0] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-all"
+                  >
+                    <span>Start Course</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-navy-800">
-                <span className="font-bold text-lavender-600 dark:text-lavender-400 block text-[10px] uppercase">Goal 3</span>
-                <p className="font-semibold text-navy-900 dark:text-white mt-0.5">Debug Memory Leaks with Valgrind</p>
-                <p className="text-[11px] text-slate-500 mt-1">Master systems debugging and POSIX multithreading in Systems track.</p>
+              {/* Course 3: Web Development */}
+              <div className="rounded-2xl bg-[#1F1E29] border border-[#3D374D] overflow-hidden text-white flex flex-col justify-between group shadow-soft-sm hover:shadow-soft transition-all">
+                {/* Banner with Globe icon and amber wave */}
+                <div className="relative h-20 bg-gradient-to-r from-[#1A1826] to-[#2E283E] p-3 flex items-center justify-between overflow-hidden">
+                  <div className="absolute right-0 bottom-0 w-24 h-20 bg-gradient-to-tl from-amber-500/30 to-transparent rounded-tl-full pointer-events-none" />
+                  <Globe className="w-6 h-6 text-amber-300" />
+                </div>
+
+                <div className="p-3.5 space-y-2.5">
+                  <div>
+                    <h4 className="font-bold text-xs text-white group-hover:text-amber-300 transition-colors truncate">
+                      Web Development
+                    </h4>
+                    <p className="text-[10px] text-slate-400 mt-0.5">
+                      Intermediate • 4.6 ★
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => onNavigate('course-c')}
+                    className="w-full py-1.5 px-3 rounded-full bg-[#D97706] hover:bg-[#F59E0B] text-white text-[11px] font-bold flex items-center justify-center gap-1 transition-all"
+                  >
+                    <span>Start Course</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
               </div>
+
             </div>
+
           </div>
 
-          <button
-            onClick={() => onNavigate('progress')}
-            className="w-full mt-4 py-2 text-center text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline"
-          >
-            View Full Progress Analytics →
-          </button>
         </div>
 
-      </section>
+      </div>
 
     </div>
   );
