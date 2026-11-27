@@ -20,7 +20,13 @@ This folder contains all educational data, curriculum syllabus, and standalone e
   - `14_stl_vector_sorting__maps__and_lambda_expressions.cpp`
 
 ## Units Covered
-1. **Unit 1: Introduction to C++** – C vs C++, iostream, cin/cout, namespaces, variables.
+1. **Unit 1: Introduction to C++ Programming (6hrs)**:
+   - **Program Design Tools**: Algorithm definition, 4-step problem solving, 5 algorithm characteristics (finiteness, definiteness, effectiveness, generality, input/output).
+   - **Flowchart Design**: Standard geometrical symbols (oval, parallelogram, rectangle, diamond, connector, directed flow lines) and circle area walk-through.
+   - **Pseudocode**: Rules for writing, advantages (logic verification, brain-machine bridge, documentation, team communication, interview readiness), even/odd check.
+   - **Overview of C++**: History & evolution from 1979 "C with Classes" to C++20 and C++23, features of C++, 8 principal benefits of OOP, and real-world industrial applications.
+   - **Program Structure & Lexical Units**: Anatomy of a C++ program (#include, using namespace std, main entrypoint, cin/cout stream mechanics, return 0), comments (single-line // and multi-line /* */).
+   - **Tokens & Language Elements**: 6 token types, 95+ C++ reserved keywords, 7 strict identifier rules, constants & literals hierarchy (numeric, octal, hexadecimal, real, single character vs string), complete backslash escape sequences table, variable definitions, and comprehensive constants vs variables comparison.
 2. **Unit 2: Control Statements & Functions** – Overloading, default arguments, inline functions, recursion.
 3. **Unit 3: Object-Oriented Programming** – Classes, objects, access specifiers, constructors, RAII destructors.
 4. **Unit 4: Inheritance & Polymorphism** – Inheritance hierarchies, virtual functions, operator overloading.
