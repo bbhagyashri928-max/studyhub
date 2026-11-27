@@ -36,6 +36,15 @@ This folder contains all educational data, curriculum syllabus, and standalone e
    - **Expressions**: Constant, integral, float, relational, logical, and bitwise expressions, operator precedence, and Lvalues vs Rvalues.
    - **Conditional Statements**: Decision-making structures, flow diagrams, `if` statement, `if-else` branching, `if-else-if` ladder, and nested `if` statements.
    - **Switch Statements**: Integral/enum case testing, compile-time constants, `break` and fall-through behavior, `default` case, and nested `switch` statements (supported up to 256 nesting levels).
-3. **Unit 3: Object-Oriented Programming** – Classes, objects, access specifiers, constructors, RAII destructors.
+3. **Unit 3: Looping Statements and Arrays in C++ (6hrs)**:
+   - **Looping Fundamentals**: Definition of iteration and loops, components of a loop (initialization, test condition, body, update), entry-controlled vs exit-controlled loops.
+   - **The while Loop**: Syntax, flowchart, entry-controlled execution flow, zero-iteration possibility, counter & sentinel examples.
+   - **The for Loop**: 3-part header execution sequence, infinite loops (`for(;;)`) and intentional termination, comma expressions in initialization and updates.
+   - **The do-while Loop**: Exit-controlled mechanics, mandatory terminating semicolon (`;`), guaranteed minimum 1 execution cycle, comparison with `while` and `for`.
+   - **Nested Loops & Algorithmic Complexity**: Outer vs inner loop iteration multiplication, compiler nesting depth limit (up to 256 levels), prime number generator algorithm (2 to 100), quadratic $O(N^2)$ algorithmic complexity.
+   - **Loop Control Statements**: `break` (immediate loop termination, inner-most scope exit), `continue` (skipping remaining body to next iteration), `goto` and named labels (cautionary use, escaping deeply nested loops), `return` statement.
+   - **Introduction to Arrays**: Fixed-size contiguous sequential memory storage, zero-based indexing, element address calculation formula ($\text{Address} = \text{Base} + (\text{Index} \times \text{Size})$), bounds checking caveats.
+   - **Array Initialization, Traversal & Memory Formatting**: Complete initialization, omitted size auto-deduction, partial zero-filling, memory alignment, formatted table output with `<iomanip>` `setw()`, pointer decay (`arr == &arr[0]`).
+   - **Multi-Dimensional & Two-Dimensional (2D) Arrays**: Matrix representation (rows $\times$ columns), contiguous Row-Major order memory mapping ($\text{Address} = \text{Base} + (i \times C + j) \times \text{Size}$), nested loop matrix traversal, scalar multiplication.
 4. **Unit 4: Inheritance & Polymorphism** – Inheritance hierarchies, virtual functions, operator overloading.
 5. **Unit 5: Advanced C++ Concepts** – Function & class templates, exception handling, STL vector/map/stack.
