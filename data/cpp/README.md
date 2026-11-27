@@ -27,7 +27,15 @@ This folder contains all educational data, curriculum syllabus, and standalone e
    - **Overview of C++**: History & evolution from 1979 "C with Classes" to C++20 and C++23, features of C++, 8 principal benefits of OOP, and real-world industrial applications.
    - **Program Structure & Lexical Units**: Anatomy of a C++ program (#include, using namespace std, main entrypoint, cin/cout stream mechanics, return 0), comments (single-line // and multi-line /* */).
    - **Tokens & Language Elements**: 6 token types, 95+ C++ reserved keywords, 7 strict identifier rules, constants & literals hierarchy (numeric, octal, hexadecimal, real, single character vs string), complete backslash escape sequences table, variable definitions, and comprehensive constants vs variables comparison.
-2. **Unit 2: Control Statements & Functions** – Overloading, default arguments, inline functions, recursion.
+2. **Unit 2: Basics of C++ and Conditional Statements (6hrs)**:
+   - **Data Types Hierarchy**: Built-in (integral `int`/`char`, floating `float`/`double`, `void`), User-defined (`struct`, `union`, `class`, `enum`), Derived (`array`, `pointer`, `reference`, `function`).
+   - **Data Representation**: Byte sizes, ranges, signed/unsigned modifiers, and C++ strict `void*` explicit cast requirements.
+   - **User-Defined & Derived Types**: Structs vs unions (shared memory), OOP classes, type-safe enums (tag names, explicit int-to-enum casts, anonymous enums, class scoping), arrays, pointers, and reference aliases.
+   - **Operators Toolkit**: Arithmetic (integer division truncation, modulo), relational, logical (short-circuiting), compound assignment, prefix vs postfix increment trap (`++x` vs `x++`), bitwise manipulation (`&`, `|`, `^`, `~`, `<<`, `>>`), ternary (`?:`), and `sizeof`.
+   - **C++ Dedicated Operators**: Scope Resolution (`::`) for unshadowing global variables, dynamic memory (`new`, `delete`, `new[]`, `delete[]`), and `<iomanip>` stream manipulators (`endl`, `setw`).
+   - **Expressions**: Constant, integral, float, relational, logical, and bitwise expressions, operator precedence, and Lvalues vs Rvalues.
+   - **Conditional Statements**: Decision-making structures, flow diagrams, `if` statement, `if-else` branching, `if-else-if` ladder, and nested `if` statements.
+   - **Switch Statements**: Integral/enum case testing, compile-time constants, `break` and fall-through behavior, `default` case, and nested `switch` statements (supported up to 256 nesting levels).
 3. **Unit 3: Object-Oriented Programming** – Classes, objects, access specifiers, constructors, RAII destructors.
 4. **Unit 4: Inheritance & Polymorphism** – Inheritance hierarchies, virtual functions, operator overloading.
 5. **Unit 5: Advanced C++ Concepts** – Function & class templates, exception handling, STL vector/map/stack.
