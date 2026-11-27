@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { 
-  Home, BookOpen, BarChart3, Bookmark, 
+  Home, BarChart3, Bookmark, 
   User, Settings, LogOut, ChevronDown, ChevronRight, 
   Rocket, Code, Terminal, Sparkles
 } from 'lucide-react';
@@ -99,20 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span>Dashboard</span>
           </button>
 
-          {/* 2. My Courses */}
-          <button
-            onClick={() => handleItemClick('courses')}
-            className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-              currentRoute === 'courses'
-                ? 'bg-[#192E52] text-white font-bold'
-                : 'text-slate-300 hover:bg-[#13223B] hover:text-white'
-            }`}
-          >
-            <BookOpen className="w-4 h-4 text-slate-400" />
-            <span>My Courses</span>
-          </button>
-
-          {/* 3. C Programming (Collapsible Dropdown matching Reference Screenshot) */}
+          {/* 2. C Programming (Collapsible Dropdown matching Reference Screenshot) */}
           <div className="space-y-1">
             <button
               onClick={() => {
