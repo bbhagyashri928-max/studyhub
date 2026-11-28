@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: cpp-pr-9
  * Category: Inheritance
  * Title: Multilevel and Multiple Inheritance
@@ -10,7 +10,7 @@
 
 class Academic {
 public:
-    std::string institution = "CODEVERSE University";
+    std::string institution = "CODEVIVA University";
 };
 
 class Researcher : virtual public Academic {

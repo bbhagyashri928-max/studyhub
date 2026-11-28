@@ -1,4 +1,4 @@
-import { Stage } from '@/types';
+﻿import { Stage } from '@/types';
 
 /**
  * High-fidelity, syllabus-accurate stages for C Unit 1:
@@ -630,7 +630,7 @@ int main(void) {
     // Single-line comment
     /* Multi-line comment:
        printing a welcome banner */
-    printf("Welcome to DIT & CODEVERSE C Academy!\\n");
+    printf("Welcome to DIT & CODEVIVA C Academy!\\n");
     return 0;
 }`,
       lineByLineExplanation: [
@@ -639,7 +639,7 @@ int main(void) {
         { line: 'printf(...)', explanation: 'Library routine streaming characters to console stdout.' },
         { line: 'return 0;', explanation: 'Clean program termination code.' }
       ],
-      expectedOutput: `Welcome to DIT & CODEVERSE C Academy!`,
+      expectedOutput: `Welcome to DIT & CODEVIVA C Academy!`,
       pointsToRemember: [
         'C statements must end with a semicolon (;).',
         'Curly braces { } define the scope and boundaries of functions and blocks.'
@@ -783,7 +783,7 @@ int main(void) {
 1. Keywords        : int, return, if, while (Reserved system words)
 2. Identifiers     : total, student_name, calculateSum (User-defined names)
 3. Constants       : 100, 3.14, 'A' (Fixed values)
-4. Strings         : "CODEVERSE", "Hello World" (Literal text in double quotes)
+4. Strings         : "CODEVIVA", "Hello World" (Literal text in double quotes)
 5. Special Symbols : [ ], ( ), { }, ,, ;, *
 6. Operators       : +, -, *, /, %, &&, ||, == (Symbols performing operations)`,
       realLifeExample: 'In human language, tokens are individual words, punctuation marks, and numbers that together form a complete sentence.',
@@ -1604,7 +1604,7 @@ Rules:
 
 #define MAX_USERS 500
 #define PI 3.14159
-#define COLLEGE "CODEVERSE ACADEMY"
+#define COLLEGE "CODEVIVA ACADEMY"
 
 int main(void) {
     printf("Institution: %s\\n", COLLEGE);
@@ -1616,7 +1616,7 @@ int main(void) {
         { line: '#define MAX_USERS 500', explanation: 'Replaces all occurrences of MAX_USERS with 500 textually.' },
         { line: 'printf("%d", MAX_USERS);', explanation: 'Preprocessor transforms this into printf("%d", 500); prior to compiling.' }
       ],
-      expectedOutput: `Institution: CODEVERSE ACADEMY\nMax Users  : 500\nPI Value   : 3.14159`,
+      expectedOutput: `Institution: CODEVIVA ACADEMY\nMax Users  : 500\nPI Value   : 3.14159`,
       pointsToRemember: [
         'NEVER put a semicolon at the end of #define (e.g. #define PI 3.14; will break math expressions!).',
         '#define does not allocate memory; it performs pre-compilation text substitution.'

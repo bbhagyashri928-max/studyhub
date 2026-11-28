@@ -21,7 +21,7 @@ interface PlayerGameState {
   streak: number;
 }
 
-const STORAGE_KEY = 'codeverse_cpp_game_state_v1';
+const STORAGE_KEY = 'codeviva_cpp_game_state_v1';
 
 export const CppGameView: React.FC<CppGameViewProps> = ({ onNavigateToCourse, onNavigateToUnit }) => {
   // Load saved game progress

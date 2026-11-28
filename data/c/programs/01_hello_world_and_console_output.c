@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: c-pr-1
  * Category: Basic Programs
  * Title: Hello World and Console Output
@@ -10,6 +10,6 @@
 int main() {
     // Print formal greeting to standard output
     printf("Hello, World!\\n");
-    printf("Welcome to CODEVERSE C Programming Academy.\\n");
+    printf("Welcome to CODEVIVA C Programming Academy.\\n");
     return 0;
 }

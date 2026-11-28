@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: c-pr-14
  * Category: Strings
  * Title: String Reversal in Place
@@ -22,7 +22,7 @@ void reverseString(char str[]) {
 }
 
 int main() {
-    char word[] = "CODEVERSE";
+    char word[] = "CODEVIVA";
     printf("Original String: %s\\n", word);
 
     reverseString(word);

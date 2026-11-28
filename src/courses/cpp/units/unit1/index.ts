@@ -1,4 +1,4 @@
-import { Unit, Quiz } from '@/types';
+﻿import { Unit, Quiz } from '@/types';
 
 export const cppUnit1: Unit = {
   id: 'cpp-unit-1',
@@ -199,7 +199,7 @@ int main() {
 // Demonstrating C++ Evolution: From Classic C-style to Modern C++
 int main() {
     std::cout << "========================================" << std::endl;
-    std::cout << "CODEVERSE C++ HISTORICAL EVOLUTION" << std::endl;
+    std::cout << "CODEVIVA C++ HISTORICAL EVOLUTION" << std::endl;
     std::cout << "From 1979 (C with Classes) to Modern C++23" << std::endl;
     std::cout << "========================================" << std::endl;
 
@@ -467,7 +467,7 @@ int main() {
     const char quoteChar = '\\'';
 
     // String constant automatically null-terminated with '\\0'
-    const char message[] = "Welcome to CODEVERSE";
+    const char message[] = "Welcome to CODEVIVA";
 
     std::cout << "Decimal: " << decimalVal << " | Octal: " << octalVal << " | Hex: " << hexVal << newline;
     std::cout << "Real Constant: " << realVal << newline;

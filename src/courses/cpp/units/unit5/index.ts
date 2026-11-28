@@ -1,4 +1,4 @@
-import { Unit, Quiz } from '@/types';
+﻿import { Unit, Quiz } from '@/types';
 
 export const cppUnit5: Unit = {
   id: 'cpp-unit-5',
@@ -47,7 +47,7 @@ int main() {
     double r = 7.0;
     cout << "Area of circle with radius " << r << " is: " << calculateCircleArea(r) << endl;
 
-    string pass = "Codeverse2026";
+    string pass = "CODEVIVA2026";
     cout << "Is password '" << pass << "' valid? " 
          << (validatePassword(pass) ? "YES (Valid)" : "NO (Too short)") << endl;
 
@@ -395,7 +395,7 @@ public:
 
 int main() {
     // Instantiate object
-    ProductItem item1("Codeverse Laptop", 1200.0);
+    ProductItem item1("CODEVIVA Laptop", 1200.0);
 
     // Using Getters
     cout << "Item: " << item1.getProductName() << " | Price: $" << item1.getPrice() << endl;

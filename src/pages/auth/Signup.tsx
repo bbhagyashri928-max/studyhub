@@ -66,12 +66,13 @@ export const Signup: React.FC<SignupProps> = ({ onNavigateToLogin, onSignupSucce
       
       {/* Brand Header */}
       <div className="text-center mb-6">
-        <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 to-teal-400 items-center justify-center text-navy-950 font-black text-2xl shadow-soft mb-2">
-          C
+        <div className="inline-block p-1 rounded-2xl bg-navy-900/40 border border-slate-200 dark:border-navy-800 shadow-soft mb-2">
+          <img 
+            src="/logo.jpg" 
+            alt="CodeViva - Learn • Practice • Grow" 
+            className="w-48 sm:w-56 h-auto rounded-xl object-contain mx-auto"
+          />
         </div>
-        <h1 className="font-extrabold text-2xl tracking-tight text-navy-900 dark:text-white">
-          CODE<span className="text-teal-500">VERSE</span>
-        </h1>
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Student Enrollment Portal
         </p>
@@ -203,7 +204,7 @@ export const Signup: React.FC<SignupProps> = ({ onNavigateToLogin, onSignupSucce
                 className="w-4 h-4 mt-0.5 accent-teal-500 rounded flex-shrink-0"
               />
               <span className="text-[11px] leading-tight">
-                I agree to the CODEVERSE Academy academic integrity honor code and terms of service.
+                I agree to the CodeViva Academy academic integrity honor code and terms of service.
               </span>
             </label>
           </div>

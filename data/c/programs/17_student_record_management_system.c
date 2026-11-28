@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: c-pr-17
  * Category: Structures and Unions
  * Title: Student Record Management System

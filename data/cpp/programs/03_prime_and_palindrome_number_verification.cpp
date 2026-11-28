@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: cpp-pr-3
  * Category: Operators and Control Statements
  * Title: Prime and Palindrome Number Verification

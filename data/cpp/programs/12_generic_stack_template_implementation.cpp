@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: cpp-pr-12
  * Category: Templates
  * Title: Generic Stack Template Implementation
@@ -43,7 +43,7 @@ int main() {
 
     // String Stack
     CustomStack<std::string> strStack;
-    strStack.push("Codeverse");
+    strStack.push("CODEVIVA");
     strStack.push("Academy");
     std::cout << "Top of strStack: " << strStack.top() << "\\n";
     return 0;

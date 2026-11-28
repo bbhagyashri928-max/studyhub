@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: c-pr-2
  * Category: Basic Programs
  * Title: Addition of Two Numbers

@@ -1,4 +1,4 @@
-import { Unit, Quiz } from '@/types';
+﻿import { Unit, Quiz } from '@/types';
 
 export const cUnit3: Unit = {
   id: 'c-unit-3',
@@ -374,7 +374,7 @@ int main(void) {
                 printf(">> Deposit window activated.\\n");
                 break;
             case 3:
-                printf(">> Thank you for banking with CodeVerse! Exiting.\\n");
+                printf(">> Thank you for banking with CODEVIVA! Exiting.\\n");
                 break;
             default:
                 printf(">> Invalid option! Try again.\\n");

@@ -47,14 +47,15 @@ export const Login: React.FC<LoginProps> = ({ onNavigateToSignup, onLoginSuccess
       
       {/* Brand Header */}
       <div className="text-center mb-6">
-        <div className="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 to-teal-400 items-center justify-center text-navy-950 font-black text-2xl shadow-soft mb-2">
-          C
+        <div className="inline-block p-1 rounded-2xl bg-navy-900/40 border border-slate-200 dark:border-navy-800 shadow-soft mb-2">
+          <img 
+            src="/logo.jpg" 
+            alt="CodeViva - Learn • Practice • Grow" 
+            className="w-48 sm:w-56 h-auto rounded-xl object-contain mx-auto"
+          />
         </div>
-        <h1 className="font-extrabold text-2xl tracking-tight text-navy-900 dark:text-white">
-          CODE<span className="text-teal-500">VERSE</span>
-        </h1>
         <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Learn. Practice. Master.
+          C &amp; C++ Programming Academy
         </p>
       </div>
 
@@ -94,7 +95,7 @@ export const Login: React.FC<LoginProps> = ({ onNavigateToSignup, onLoginSuccess
                 required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="alex.student@codeverse.edu"
+                placeholder="student@codeviva.edu"
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-navy-950 border border-slate-200 dark:border-navy-700 text-navy-900 dark:text-white outline-none focus:border-teal-500"
               />
             </div>

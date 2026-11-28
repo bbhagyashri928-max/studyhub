@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: cpp-pr-13
  * Category: Exception Handling
  * Title: Custom Exception Class and Stack Unwinding

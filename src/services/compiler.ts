@@ -49,10 +49,10 @@ export const compilerService = {
         }
       }
     } catch {
-      // Network blocked, offline, or CORS error -> Proceed seamlessly to Codeverse Sandbox Engine
+      // Network blocked, offline, or CORS error -> Proceed seamlessly to CodeViva Sandbox Engine
     }
 
-    // 2. Intelligent Codeverse Sandbox Engine Fallback
+    // 2. Intelligent CodeViva Sandbox Engine Fallback
     const duration = Math.round(performance.now() - startTime);
     return fallbackSandboxSimulator(code, language, stdin, duration);
   },
@@ -76,8 +76,8 @@ function fallbackSandboxSimulator(code: string, language: CourseId, stdin: strin
   const cleanCode = code.replace(/\s+/g, ' ');
 
   // Hello world detection
-  if (cleanCode.includes('Hello, World') || cleanCode.includes('Welcome to CODEVERSE')) {
-    const prefix = language === 'c' ? 'Welcome to CODEVERSE C Academy' : 'Welcome to CODEVERSE C++ Object-Oriented Academy';
+  if (cleanCode.includes('Hello, World') || cleanCode.includes('Welcome to CodeViva') || cleanCode.includes('Welcome to CODEVERSE')) {
+    const prefix = language === 'c' ? 'Welcome to CodeViva C Academy' : 'Welcome to CodeViva C++ Object-Oriented Academy';
     return {
       stdout: `Hello, World!\n${prefix}\nExecution completed successfully (sandbox runner).`,
       exitCode: 0,
@@ -92,7 +92,7 @@ function fallbackSandboxSimulator(code: string, language: CourseId, stdin: strin
     let res = 1;
     for (let i = 1; i <= n; i++) res *= i;
     return {
-      stdout: `Factorial of ${n} (${n}!) = ${res}\n[Codeverse Sandbox Engine - Process exited with code 0]`,
+      stdout: `Factorial of ${n} (${n}!) = ${res}\n[CodeViva Sandbox Engine - Process exited with code 0]`,
       exitCode: 0,
       executionTimeMs: 15,
     };
@@ -144,7 +144,7 @@ function fallbackSandboxSimulator(code: string, language: CourseId, stdin: strin
 
   if (outputs.length > 0) {
     return {
-      stdout: outputs.join('\n') + '\n\n[Codeverse Sandbox Execution Finished]',
+      stdout: outputs.join('\n') + '\n\n[CodeViva Sandbox Execution Finished]',
       exitCode: 0,
       executionTimeMs: 24,
     };
@@ -152,7 +152,7 @@ function fallbackSandboxSimulator(code: string, language: CourseId, stdin: strin
 
   // Fallback for custom student inputs
   return {
-    stdout: `[Codeverse Secure Compiler Sandbox]\nCode parsed successfully for ${language.toUpperCase()}.\nInput buffer (stdin): "${stdin || '(empty)'}"\nMemory Allocation: 0.8 MB\nResult: Execution returned exit code 0.`,
+    stdout: `[CodeViva Secure Compiler Sandbox]\nCode parsed successfully for ${language.toUpperCase()}.\nInput buffer (stdin): "${stdin || '(empty)'}"\nMemory Allocation: 0.8 MB\nResult: Execution returned exit code 0.`,
     exitCode: 0,
     executionTimeMs: 35,
   };

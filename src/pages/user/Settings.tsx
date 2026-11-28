@@ -46,7 +46,7 @@ export const Settings: React.FC = () => {
             <h3 className="font-bold text-base text-navy-900 dark:text-white">Appearance & Theme</h3>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
-            CODEVERSE defaults to a clean, high-contrast Soft Ivory academic light theme, with optional Dark Mode.
+            CodeViva defaults to a clean, high-contrast Soft Ivory academic light theme, with optional Dark Mode.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

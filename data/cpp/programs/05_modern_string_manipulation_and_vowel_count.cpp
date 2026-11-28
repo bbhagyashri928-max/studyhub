@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: cpp-pr-5
  * Category: Arrays and Strings
  * Title: Modern String Manipulation and Vowel Count
@@ -10,7 +10,7 @@
 #include <cctype>
 
 int main() {
-    std::string text = "Codeverse Academy C++ Masterclass";
+    std::string text = "CODEVIVA Academy C++ Masterclass";
     int vowels = 0;
 
     for (char c : text) {

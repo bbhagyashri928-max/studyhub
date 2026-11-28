@@ -1,4 +1,4 @@
-import { Unit, Quiz } from '@/types';
+﻿import { Unit, Quiz } from '@/types';
 
 export const cppUnit4: Unit = {
   id: 'cpp-unit-4',
@@ -115,7 +115,7 @@ int main() {
     }
 
     // 6. strstr(s1, s2): find substring in string
-    char text[] = "Learning C++ Programming at Codeverse";
+    char text[] = "Learning C++ Programming at CODEVIVA";
     char* subPtr = strstr(text, "C++");
     if (subPtr != nullptr) {
         cout << "strstr found substring: " << subPtr << endl;
@@ -180,7 +180,7 @@ int main() {
     cout << "str3.size() : " << len << endl;
 
     // 4. Built-in string methods Demonstration
-    string s = "Hello Codeverse";
+    string s = "Hello CODEVIVA";
 
     // substr(start, length): extracts portion
     cout << "s.substr(6, 9): " << s.substr(6, 9) << endl;
@@ -202,7 +202,7 @@ int main() {
     cout << "After erase: " << s << endl;
 
     // compare()
-    cout << "Comparison result: " << s.compare("Brilliant Codeverse") << endl;
+    cout << "Comparison result: " << s.compare("Brilliant CODEVIVA") << endl;
 
     // c_str(): converts to C-style const char* for legacy C libraries
     const char* cStr = s.c_str();
@@ -658,7 +658,7 @@ export const cppUnit4Quiz: Quiz = {
   questions: [
     {
       id: 'q-cpp4-1',
-      question: 'In C++, how many bytes must be allocated in a character array to store the string "Codeverse" (9 characters) as a C-style string?',
+      question: 'In C++, how many bytes must be allocated in a character array to store the string "CODEVIVA" (9 characters) as a C-style string?',
       options: [
         '9 bytes',
         '10 bytes (9 characters plus 1 byte for the null terminator \'\\0\')',

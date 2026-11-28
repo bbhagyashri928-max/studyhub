@@ -1,4 +1,4 @@
-# CODEVERSE C Programming Syllabus & Curriculum Track
+﻿# CODEVIVA C Programming Syllabus & Curriculum Track
 
 This folder documents the complete 5-Unit, 25-Step C Programming curriculum matching the official syllabus.
 

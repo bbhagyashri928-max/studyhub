@@ -91,7 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const userWithStreak = processStreak(user);
     setCurrentUser(userWithStreak);
     localStorage.setItem(CURRENT_USER_KEY, user.id);
-    db.logActivity(user.id, user.fullName, 'User Sign In', `${user.fullName} logged into CODEVERSE Academy`);
+    db.logActivity(user.id, user.fullName, 'User Sign In', `${user.fullName} logged into CodeViva Academy`);
     return { success: true };
   };
 
@@ -115,7 +115,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       enrolledCourses: ['c', 'cpp'],
       createdAt: new Date().toISOString(),
       passwordHash: data.passwordHash,
-      bio: 'New student enrolled in CODEVERSE Academy.'
+      bio: 'New student enrolled in CodeViva Academy.'
     };
 
     db.createUser(newUser);

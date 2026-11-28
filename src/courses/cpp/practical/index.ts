@@ -1,4 +1,4 @@
-import { PracticalProgram } from '@/types';
+﻿import { PracticalProgram } from '@/types';
 
 export const cppPracticals: PracticalProgram[] = [
   {
@@ -12,7 +12,7 @@ export const cppPracticals: PracticalProgram[] = [
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
-    std::cout << "Welcome to CODEVERSE C++ Object-Oriented Academy." << std::endl;
+    std::cout << "Welcome to CODEVIVA C++ Object-Oriented Academy." << std::endl;
     return 0;
 }`,
     explanation: [
@@ -23,7 +23,7 @@ int main() {
       'return 0 signals successful termination.'
     ],
     sampleInput: '(None)',
-    expectedOutput: `Hello, World!\nWelcome to CODEVERSE C++ Object-Oriented Academy.`,
+    expectedOutput: `Hello, World!\nWelcome to CODEVIVA C++ Object-Oriented Academy.`,
     keyConcepts: ['<iostream>', 'std::cout stream', '<< insertion operator', 'std::endl'],
     published: true
   },
@@ -155,7 +155,7 @@ int main() {
 #include <cctype>
 
 int main() {
-    std::string text = "Codeverse Academy C++ Masterclass";
+    std::string text = "CODEVIVA Academy C++ Masterclass";
     int vowels = 0;
 
     for (char c : text) {
@@ -177,8 +177,8 @@ int main() {
       'std::tolower() normalizes character casing.',
       'substr() extracts sub-phrases safely.'
     ],
-    sampleInput: '"Codeverse Academy C++ Masterclass"',
-    expectedOutput: `Input String: "Codeverse Academy C++ Masterclass"\nLength:       33 characters\nTotal Vowels: 11\nSubstring:    Codeverse`,
+    sampleInput: '"CODEVIVA Academy C++ Masterclass"',
+    expectedOutput: `Input String: "CODEVIVA Academy C++ Masterclass"\nLength:       33 characters\nTotal Vowels: 11\nSubstring:    CODEVIVA`,
     keyConcepts: ['std::string class', 'std::tolower()', 'Range-based for loop', 'substr() method'],
     published: true
   },
@@ -350,7 +350,7 @@ int main() {
 
 class Academic {
 public:
-    std::string institution = "CODEVERSE University";
+    std::string institution = "CODEVIVA University";
 };
 
 class Researcher : virtual public Academic {
@@ -391,7 +391,7 @@ int main() {
       'Only one unified copy of institution is present.'
     ],
     sampleInput: '(Professor instance)',
-    expectedOutput: `Professor: Dr. Elena Vance at CODEVERSE University\nDelivering C++ Advanced Architecture lecture.\nPublishing research paper in IEEE journal.`,
+    expectedOutput: `Professor: Dr. Elena Vance at CODEVIVA University\nDelivering C++ Advanced Architecture lecture.\nPublishing research paper in IEEE journal.`,
     keyConcepts: ['Multiple inheritance', 'Diamond problem', 'virtual base class'],
     published: true
   },
@@ -545,7 +545,7 @@ int main() {
 
     // String Stack
     CustomStack<std::string> strStack;
-    strStack.push("Codeverse");
+    strStack.push("CODEVIVA");
     strStack.push("Academy");
     std::cout << "Top of strStack: " << strStack.top() << "\\n";
     return 0;

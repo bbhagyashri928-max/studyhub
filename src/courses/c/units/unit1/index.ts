@@ -1,4 +1,4 @@
-import { Unit, Quiz } from '@/types';
+﻿import { Unit, Quiz } from '@/types';
 
 export const cUnit1: Unit = {
   id: 'c-unit-1',
@@ -138,7 +138,7 @@ int main(void) {
        Demonstrating the fundamental building blocks of C */
        
     printf("============================================\\n");
-    printf("Welcome to CODEVERSE C Programming Academy!\\n");
+    printf("Welcome to CODEVIVA C Programming Academy!\\n");
     printf("Developed by: Dennis Ritchie (1972, Bell Labs)\\n");
     printf("Applications: Operating Systems, Compilers, DBs\\n");
     printf("============================================\\n");
@@ -300,7 +300,7 @@ int main(void) {
     // Character and String Constants
     char ch = 'A';          // ASCII 65
     char newline = '\\n';    // Escape sequence
-    char str[] = "CODEVERSE";
+    char str[] = "CODEVIVA";
     
     // Real constants in fractional and exponential scientific format
     float pi = 3.14159f;
@@ -378,7 +378,7 @@ int main(void) {
 #include <stdio.h>
 
 // 1. Defining Symbolic Constants with #define (Preprocessor)
-#define COLLEGE_NAME "CODEVERSE ACADEMY"
+#define COLLEGE_NAME "CODEVIVA ACADEMY"
 #define MAX_ATTEMPTS 3
 
 // 2. Global Variable (Extern by default across files)
@@ -417,7 +417,7 @@ int main(void) {
     return 0;
 }`,
         lineByLineExplanation: [
-          { line: '#define COLLEGE_NAME "CODEVERSE ACADEMY"', explanation: 'Pre-compiler textual macro substitution. Semicolons must never be placed at the end.' },
+          { line: '#define COLLEGE_NAME "CODEVIVA ACADEMY"', explanation: 'Pre-compiler textual macro substitution. Semicolons must never be placed at the end.' },
           { line: 'static int persistentCalls = 0;', explanation: 'Allocated in the data segment; retains its value between function calls and initializes to 0.' },
           { line: 'auto int localCalls = 0;', explanation: 'Allocated on the stack frame; destroyed every time the function finishes executing.' },
           { line: 'const double TUITION_FEE = 4500.50;', explanation: 'Creates a type-safe read-only constant; attempts to reassign trigger compile-time errors.' },

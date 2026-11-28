@@ -1,4 +1,4 @@
-import { Stage } from '@/types';
+﻿import { Stage } from '@/types';
 
 /**
  * High-fidelity, syllabus-accurate stages for C Unit 5:
@@ -26,7 +26,7 @@ export const cUnit5CustomStages: Stage[] = [
       ],
       "syntax": "// Standard User-Defined Function Outline:\nreturn_type function_name(parameter_list) {\n    // executable statements\n    return value;\n}",
       "realLifeExample": "A commercial restaurant kitchen: The executive chef (main) delegates slicing to the prep cook, grilling to the grill chef, and plating to the pastry chef rather than cooking all 50 meals single-handedly.",
-      "codeSnippet": "#include <stdio.h>\n\n// Modular helper function\nvoid printCompanyHeader(void) {\n    printf(\"***************************************\\n\");\n    printf(\"   CODEVERSE EDUCATIONAL TECHNOLOGIES  \\n\");\n    printf(\"***************************************\\n\");\n}\n\nint main(void) {\n    // Reusing the function 2 times without duplicating print statements\n    printCompanyHeader();\n    printf(\"System Initialized successfully.\\n\\n\");\n    printCompanyHeader();\n    printf(\"Generating Student Reports...\\n\");\n    return 0;\n}",
+      "codeSnippet": "#include <stdio.h>\n\n// Modular helper function\nvoid printCompanyHeader(void) {\n    printf(\"***************************************\\n\");\n    printf(\"   CODEVIVA EDUCATIONAL TECHNOLOGIES  \\n\");\n    printf(\"***************************************\\n\");\n}\n\nint main(void) {\n    // Reusing the function 2 times without duplicating print statements\n    printCompanyHeader();\n    printf(\"System Initialized successfully.\\n\\n\");\n    printCompanyHeader();\n    printf(\"Generating Student Reports...\\n\");\n    return 0;\n}",
       "lineByLineExplanation": [
         {
           "line": "void printCompanyHeader(void)",
@@ -37,7 +37,7 @@ export const cUnit5CustomStages: Stage[] = [
           "explanation": "Transfers program counter to the function body, executes it, and returns back to the next line in main()."
         }
       ],
-      "expectedOutput": "***************************************\n   CODEVERSE EDUCATIONAL TECHNOLOGIES  \n***************************************\nSystem Initialized successfully.\n\n***************************************\n   CODEVERSE EDUCATIONAL TECHNOLOGIES  \n***************************************\nGenerating Student Reports...",
+      "expectedOutput": "***************************************\n   CODEVIVA EDUCATIONAL TECHNOLOGIES  \n***************************************\nSystem Initialized successfully.\n\n***************************************\n   CODEVIVA EDUCATIONAL TECHNOLOGIES  \n***************************************\nGenerating Student Reports...",
       "pointsToRemember": [
         "Functions reduce program length and eliminate copy-pasted code.",
         "Debugging becomes localized: if an equation is wrong, you only need to fix its dedicated function.",
@@ -377,7 +377,7 @@ export const cUnit5CustomStages: Stage[] = [
       ],
       "syntax": "void printStudentCard(char name[], int roll, float gpa) {\n    // uses input arguments to format output\n}",
       "realLifeExample": "A postal mailbox: You drop an addressed envelope into the slot (arguments in), but the mailbox does not hand you anything back.",
-      "codeSnippet": "#include <stdio.h>\n\n// Category 2: Arguments In, No Return Value\nvoid printEmployeeBadge(int id, const char *name, const char *dept) {\n    printf(\"+---------------------------------+\\n\");\n    printf(\"| CODEVERSE TECH CORP BADGE       |\\n\");\n    printf(\"| Employee ID: #%-18d |\\n\", id);\n    printf(\"| Name:        %-18s |\\n\", name);\n    printf(\"| Department:  %-18s |\\n\", dept);\n    printf(\"+---------------------------------+\\n\");\n}\n\nint main(void) {\n    printEmployeeBadge(101, \"Sophia Patel\", \"Robotics\");\n    printf(\"\\n\");\n    printEmployeeBadge(102, \"Alex Morgan\", \"AI Systems\");\n    return 0;\n}",
+      "codeSnippet": "#include <stdio.h>\n\n// Category 2: Arguments In, No Return Value\nvoid printEmployeeBadge(int id, const char *name, const char *dept) {\n    printf(\"+---------------------------------+\\n\");\n    printf(\"| CODEVIVA TECH CORP BADGE       |\\n\");\n    printf(\"| Employee ID: #%-18d |\\n\", id);\n    printf(\"| Name:        %-18s |\\n\", name);\n    printf(\"| Department:  %-18s |\\n\", dept);\n    printf(\"+---------------------------------+\\n\");\n}\n\nint main(void) {\n    printEmployeeBadge(101, \"Sophia Patel\", \"Robotics\");\n    printf(\"\\n\");\n    printEmployeeBadge(102, \"Alex Morgan\", \"AI Systems\");\n    return 0;\n}",
       "lineByLineExplanation": [
         {
           "line": "void printEmployeeBadge(int id, ...)",
@@ -388,7 +388,7 @@ export const cUnit5CustomStages: Stage[] = [
           "explanation": "Invokes the function with specific employee data."
         }
       ],
-      "expectedOutput": "+---------------------------------+\n| CODEVERSE TECH CORP BADGE       |\n| Employee ID: #101                |\n| Name:        Sophia Patel       |\n| Department:  Robotics           |\n+---------------------------------+\n\n+---------------------------------+\n| CODEVERSE TECH CORP BADGE       |\n| Employee ID: #102                |\n| Name:        Alex Morgan        |\n| Department:  AI Systems         |\n+---------------------------------+",
+      "expectedOutput": "+---------------------------------+\n| CODEVIVA TECH CORP BADGE       |\n| Employee ID: #101                |\n| Name:        Sophia Patel       |\n| Department:  Robotics           |\n+---------------------------------+\n\n+---------------------------------+\n| CODEVIVA TECH CORP BADGE       |\n| Employee ID: #102                |\n| Name:        Alex Morgan        |\n| Department:  AI Systems         |\n+---------------------------------+",
       "pointsToRemember": [
         "Category 2 functions allow dynamic behavior tailored to different inputs.",
         "Caller cannot check calculation outcomes because no value is returned."
@@ -1203,7 +1203,7 @@ export const cUnit5CustomStages: Stage[] = [
       ],
       "syntax": "typedef struct { double real; double img; } Complex;\nComplex add(Complex a, Complex b);\nComplex multiply(Complex a, Complex b);",
       "realLifeExample": "An electrical engineering CAD simulator: AC sinusoidal currents and voltages are modeled as complex impedances (R + jX) and passed between circuit simulation functions.",
-      "codeSnippet": "#include <stdio.h>\n\ntypedef struct {\n    double real;\n    double img;\n} Complex;\n\n// Function to add two complex numbers\nComplex addComplex(Complex a, Complex b) {\n    Complex res;\n    res.real = a.real + b.real;\n    res.img  = a.img  + b.img;\n    return res;\n}\n\n// Function to multiply two complex numbers: (a+bi)(c+di) = (ac-bd) + (ad+bc)i\nComplex multComplex(Complex a, Complex b) {\n    Complex res;\n    res.real = (a.real * b.real) - (a.img * b.img);\n    res.img  = (a.real * b.img)  + (a.img * b.real);\n    return res;\n}\n\nvoid printComplex(const char *label, Complex c) {\n    printf(\"%s = %.1f + %.1fi\\n\", label, c.real, c.img);\n}\n\nint main(void) {\n    printf(\"=== CODEVERSE CAPSTONE: COMPLEX NUMBER ENGINE ===\\n\");\n    Complex z1 = {3.0, 2.0}; // 3 + 2i\n    Complex z2 = {1.0, 4.0}; // 1 + 4i\n\n    printComplex(\"Operand 1 (z1)\", z1);\n    printComplex(\"Operand 2 (z2)\", z2);\n\n    Complex sum  = addComplex(z1, z2);\n    Complex prod = multComplex(z1, z2);\n\n    printf(\"\\n--- Computed Results ---\\n\");\n    printComplex(\"Sum (z1 + z2)     \", sum);   // (3+1) + (2+4)i = 4 + 6i\n    printComplex(\"Product (z1 * z2) \", prod);  // (3*1 - 2*4) + (3*4 + 2*1)i = -5 + 14i\n    return 0;\n}",
+      "codeSnippet": "#include <stdio.h>\n\ntypedef struct {\n    double real;\n    double img;\n} Complex;\n\n// Function to add two complex numbers\nComplex addComplex(Complex a, Complex b) {\n    Complex res;\n    res.real = a.real + b.real;\n    res.img  = a.img  + b.img;\n    return res;\n}\n\n// Function to multiply two complex numbers: (a+bi)(c+di) = (ac-bd) + (ad+bc)i\nComplex multComplex(Complex a, Complex b) {\n    Complex res;\n    res.real = (a.real * b.real) - (a.img * b.img);\n    res.img  = (a.real * b.img)  + (a.img * b.real);\n    return res;\n}\n\nvoid printComplex(const char *label, Complex c) {\n    printf(\"%s = %.1f + %.1fi\\n\", label, c.real, c.img);\n}\n\nint main(void) {\n    printf(\"=== CODEVIVA CAPSTONE: COMPLEX NUMBER ENGINE ===\\n\");\n    Complex z1 = {3.0, 2.0}; // 3 + 2i\n    Complex z2 = {1.0, 4.0}; // 1 + 4i\n\n    printComplex(\"Operand 1 (z1)\", z1);\n    printComplex(\"Operand 2 (z2)\", z2);\n\n    Complex sum  = addComplex(z1, z2);\n    Complex prod = multComplex(z1, z2);\n\n    printf(\"\\n--- Computed Results ---\\n\");\n    printComplex(\"Sum (z1 + z2)     \", sum);   // (3+1) + (2+4)i = 4 + 6i\n    printComplex(\"Product (z1 * z2) \", prod);  // (3*1 - 2*4) + (3*4 + 2*1)i = -5 + 14i\n    return 0;\n}",
       "lineByLineExplanation": [
         {
           "line": "Complex addComplex(Complex a, Complex b)",
@@ -1218,7 +1218,7 @@ export const cUnit5CustomStages: Stage[] = [
           "explanation": "Passes the calculated whole structure to the display helper function."
         }
       ],
-      "expectedOutput": "=== CODEVERSE CAPSTONE: COMPLEX NUMBER ENGINE ===\nOperand 1 (z1) = 3.0 + 2.0i\nOperand 2 (z2) = 1.0 + 4.0i\n\n--- Computed Results ---\nSum (z1 + z2)      = 4.0 + 6.0i\nProduct (z1 * z2)  = -5.0 + 14.0i",
+      "expectedOutput": "=== CODEVIVA CAPSTONE: COMPLEX NUMBER ENGINE ===\nOperand 1 (z1) = 3.0 + 2.0i\nOperand 2 (z2) = 1.0 + 4.0i\n\n--- Computed Results ---\nSum (z1 + z2)      = 4.0 + 6.0i\nProduct (z1 * z2)  = -5.0 + 14.0i",
       "pointsToRemember": [
         "Functions can return entire structures directly, providing a clean way to return multiple related data fields.",
         "This capstone integrates functions, return values, structures, typedef, and member manipulation into a unified software system."

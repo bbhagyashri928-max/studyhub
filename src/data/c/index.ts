@@ -1,5 +1,5 @@
-/**
- * CODEVERSE C Programming Data Module
+﻿/**
+ * CODEVIVA C Programming Data Module
  * Dedicated data source for C units, lessons, quizzes, and practical code exercises.
  */
 export { cCourse, cUnits, cQuizzes, cPracticals } from '@/courses/c';

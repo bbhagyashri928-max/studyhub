@@ -1,4 +1,4 @@
-export interface GameStep {
+﻿export interface GameStep {
   id: number;
   world: number;
   worldTitle: string;
@@ -576,10 +576,10 @@ int main() {
     printf("%zu %s\\n", strlen(greeting), greeting);
     return 0;
 }`,
-      options: ['4 Code', '5 verse', '9 Codeverse', '10 Codeverse'],
+      options: ['4 Code', '5 verse', '9 CODEVIVA', '10 CODEVIVA'],
       correctIndex: 2,
-      hint: '"Code" (4) + "verse" (5) = "Codeverse" (9 characters). strlen excludes \'\\0\'.',
-      explanation: 'strcat appends "verse" onto "Code", resulting in "Codeverse". strlen counts visible characters (9).'
+      hint: '"Code" (4) + "verse" (5) = "CODEVIVA" (9 characters). strlen excludes \'\\0\'.',
+      explanation: 'strcat appends "verse" onto "Code", resulting in "CODEVIVA". strlen counts visible characters (9).'
     },
     xp: 100,
     coins: 25

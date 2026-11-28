@@ -31,7 +31,7 @@ const KEYS = {
 export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
   {
     id: 'user-student-1',
-    email: 'bhagyashri.bhise@codeverse.edu',
+    email: 'bhagyashri.bhise@codeviva.edu',
     fullName: 'Bhagyashri Bhise',
     studentId: 'CV-2024-8841',
     role: 'STUDENT',
@@ -46,7 +46,7 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
   },
   {
     id: 'user-student-2',
-    email: 'sophia.patel@codeverse.edu',
+    email: 'sophia.patel@codeviva.edu',
     fullName: 'Sophia Patel',
     studentId: 'CV-2024-9122',
     role: 'STUDENT',
@@ -61,12 +61,12 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
   },
   {
     id: 'user-admin-1',
-    email: 'admin@codeverse.edu',
+    email: 'admin@codeviva.edu',
     fullName: 'Prof. Elena Vance',
     studentId: 'FACULTY-001',
     role: 'ADMIN',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-    bio: 'Senior Director of Computer Science Curriculum at CODEVERSE Academy.',
+    bio: 'Senior Director of Computer Science Curriculum at CodeViva Academy.',
     status: 'ACTIVE',
     streakDays: 14,
     lastActiveDate: new Date().toISOString().split('T')[0],
@@ -80,7 +80,7 @@ export const SEED_USERS: (UserProfile & { passwordHash: string })[] = [
 export const SEED_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 'ann-1',
-    title: 'Welcome to CODEVERSE Academy Fall Semester',
+    title: 'Welcome to CodeViva Academy Fall Semester',
     content: 'All C and C++ curriculum modules, interactive practical labs, and unit certification quizzes are now live.',
     category: 'academic',
     author: 'Prof. Elena Vance',
@@ -156,7 +156,7 @@ function saveToStorage<T>(key: string, data: T): void {
 export const db = {
   // Initialization
   init: () => {
-    const DB_VERSION = 'codeverse_c_cpp_exclusive_v11';
+    const DB_VERSION = 'codeviva_c_cpp_exclusive_v12';
     if (localStorage.getItem('codeverse_curriculum_version') !== DB_VERSION) {
       saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits]);
       saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes]);

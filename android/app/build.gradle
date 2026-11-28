@@ -6,10 +6,10 @@ configurations.configureEach {
 }
 
 android {
-    namespace = "com.codeverse.studyapp"
+    namespace = "com.codeviva.studyapp"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.codeverse.studyapp"
+        applicationId "com.codeviva.studyapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

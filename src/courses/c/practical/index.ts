@@ -1,4 +1,4 @@
-import { PracticalProgram } from '@/types';
+﻿import { PracticalProgram } from '@/types';
 
 export const cPracticals: PracticalProgram[] = [
   {
@@ -7,13 +7,13 @@ export const cPracticals: PracticalProgram[] = [
     category: 'Basic Programs',
     title: 'Hello World and Console Output',
     difficulty: 'Beginner',
-    problemStatement: 'Write a C program to print "Hello, World! Welcome to CODEVERSE Academy" on the console with newline formatting.',
+    problemStatement: 'Write a C program to print "Hello, World! Welcome to CODEVIVA Academy" on the console with newline formatting.',
     sourceCode: `#include <stdio.h>
 
 int main() {
     // Print formal greeting to standard output
     printf("Hello, World!\\n");
-    printf("Welcome to CODEVERSE C Programming Academy.\\n");
+    printf("Welcome to CODEVIVA C Programming Academy.\\n");
     return 0;
 }`,
     explanation: [
@@ -24,7 +24,7 @@ int main() {
       'return 0 signals clean termination to the operating system.'
     ],
     sampleInput: '(None required)',
-    expectedOutput: `Hello, World!\nWelcome to CODEVERSE C Programming Academy.`,
+    expectedOutput: `Hello, World!\nWelcome to CODEVIVA C Programming Academy.`,
     keyConcepts: ['#include directive', 'main() entrypoint', 'printf() formatting', 'Return code 0'],
     published: true
   },
@@ -491,7 +491,7 @@ void reverseString(char str[]) {
 }
 
 int main() {
-    char word[] = "CODEVERSE";
+    char word[] = "CODEVIVA";
     printf("Original String: %s\\n", word);
 
     reverseString(word);
@@ -505,8 +505,8 @@ int main() {
       'Increment left and decrement right until they cross in the middle.',
       'Operates in-place with O(1) auxiliary memory.'
     ],
-    sampleInput: '"CODEVERSE"',
-    expectedOutput: `Original String: CODEVERSE\nReversed String: ESREVEDOC`,
+    sampleInput: '"CODEVIVA"',
+    expectedOutput: `Original String: CODEVIVA\nReversed String: ESREVEDOC`,
     keyConcepts: ['Two-pointer technique', 'In-place string modification', 'strlen() computation'],
     published: true
   },
@@ -640,16 +640,16 @@ int main() {
 
 int main() {
     // 1. Write file
-    FILE *fOut = fopen("codeverse_sample.txt", "w");
+    FILE *fOut = fopen("CODEVIVA_sample.txt", "w");
     if (fOut == NULL) {
         printf("Could not create file!\\n");
         return 1;
     }
-    fprintf(fOut, "CODEVERSE Master Academy\\nC Programming Module\\nStatus: Verified\\n");
+    fprintf(fOut, "CODEVIVA Master Academy\\nC Programming Module\\nStatus: Verified\\n");
     fclose(fOut);
 
     // 2. Read file back
-    FILE *fIn = fopen("codeverse_sample.txt", "r");
+    FILE *fIn = fopen("CODEVIVA_sample.txt", "r");
     if (fIn == NULL) {
         printf("Could not open file for reading!\\n");
         return 1;
@@ -670,7 +670,7 @@ int main() {
       'Reopen in "r" read mode and read each line securely using fgets() into a buffer.'
     ],
     sampleInput: '(File stream I/O)',
-    expectedOutput: `Content read from disk:\n>> CODEVERSE Master Academy\n>> C Programming Module\n>> Status: Verified`,
+    expectedOutput: `Content read from disk:\n>> CODEVIVA Master Academy\n>> C Programming Module\n>> Status: Verified`,
     keyConcepts: ['fopen() modes ("w", "r")', 'fprintf()', 'fgets() buffer safety', 'fclose()'],
     published: true
   }

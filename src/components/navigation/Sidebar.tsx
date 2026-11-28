@@ -47,21 +47,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Brand / Logo Header (Matches Reference) */}
-        <div className="px-6 py-5 border-b border-[#1A2B49] flex items-center justify-between">
+        {/* Brand / Logo Header (CodeViva) */}
+        <div className="px-5 py-4 border-b border-[#1A2B49] flex items-center justify-between">
           <div
             onClick={() => handleItemClick(isAdmin ? 'admin-overview' : 'dashboard')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-400 to-amber-200 flex items-center justify-center text-navy-950 font-black text-base shadow-sm">
-              &lt;/&gt;
+            <div className="w-10 h-10 rounded-xl overflow-hidden shadow-md flex-shrink-0 bg-navy-950 border border-slate-700/60 p-0.5">
+              <img src="/logo-icon.jpg" alt="CodeViva Logo" className="w-full h-full object-contain rounded-lg" />
             </div>
             <div>
               <span className="font-extrabold text-lg tracking-wider text-white block leading-tight">
-                CODE<span className="text-amber-300">VERSE</span>
+                Code<span className="text-cyan-400">Viva</span>
               </span>
-              <span className="text-[10px] text-slate-400 tracking-wider font-semibold block uppercase">
-                Learn. Practice. Master.
+              <span className="text-[10px] text-slate-400 tracking-wider font-semibold block">
+                Learn • Practice • Grow
               </span>
             </div>
           </div>

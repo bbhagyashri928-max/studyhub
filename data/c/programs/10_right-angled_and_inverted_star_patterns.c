@@ -1,5 +1,5 @@
-/**
- * CODEVERSE Practical Lab Exercise
+﻿/**
+ * CODEVIVA Practical Lab Exercise
  * ID: c-pr-10
  * Category: Patterns
  * Title: Right-Angled and Inverted Star Patterns

@@ -1,5 +1,5 @@
-/**
- * CODEVERSE C++ Programming Data Module
+﻿/**
+ * CODEVIVA C++ Programming Data Module
  * Dedicated data source for C++ units, OOP lessons, quizzes, and practical code exercises.
  */
 export { cppCourse, cppUnits, cppQuizzes, cppPracticals } from '@/courses/cpp';
