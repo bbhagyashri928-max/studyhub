@@ -317,14 +317,14 @@ int main(void) {
     content: {
       explanation: 'To find the largest or smallest element in an array, assume the first element `array[0]` is the extreme. Then iterate through the rest of the array (from index 1 to size - 1), updating the extreme whenever a larger (or smaller) element is found.',
       definitions: [
-        'Extremes Algorithm: Comparing elements sequentially to maintain the current minimum and maximum values.'
+        'Element Extremes: Iterating through an array to record the minimum and maximum stored values.'
       ],
-      syntax: `Algorithm:
-largest = array[0];
-smallest = array[0];
-For i = 1 to size - 1:
-   if (array[i] > largest)  largest = array[i]
-   if (array[i] < smallest) smallest = array[i]`,
+      syntax: `// C Array Min & Max Traversal Syntax:
+int min = array[0], max = array[0];
+for (int i = 1; i < size; i++) {
+    if (array[i] > max) max = array[i];
+    if (array[i] < min) min = array[i];
+}`,
       realLifeExample: 'Looking for the tallest student in a classroom: you start with the first student, compare their height to each classmate one by one, and track whoever is taller.',
       codeSnippet: `#include <stdio.h>
 
@@ -626,7 +626,7 @@ int main(void) {
         'Matrix Multiplication Formula: $M_{ij} = \\sum_{k=0}^{cols-1} (A_{ik} \\times B_{kj})$',
         'Condition: Number of columns in Matrix A must equal number of rows in Matrix B.'
       ],
-      syntax: `Triple-Nested Loop Algorithm:
+      syntax: `// C 2D Matrix Multiplication Syntax:
 for (int i = 0; i < r; i++) {
     for (int j = 0; j < c; j++) {
         m[i][j] = 0;
@@ -1292,7 +1292,7 @@ int main(void) {
         'Frequency Count: Iterating over `str[i] != \'\\0\'` and incrementing a counter when `str[i] == target`.',
         'strrev(str): Built-in function in `<string.h>` that reverses a string in-place.'
       ],
-      syntax: `Frequency Algorithm:
+      syntax: `// C String Character Frequency Counting Syntax:
 int count = 0;
 for (int i = 0; str[i] != '\\0'; i++) {
     if (str[i] == ch) count++;
@@ -1346,8 +1346,8 @@ int main(void) {
     unitId: 'c-unit-4',
     courseId: 'c',
     stageNumber: 6,
-    title: 'Stage 6: Capstone Algorithms: String Swapping with Pointers & Palindromes',
-    subtitle: 'Capstone Algorithms Level 6',
+    title: 'Stage 6: String Swapping with Pointers & Palindromes',
+    subtitle: 'Advanced Strings & Pointers Level 6',
     published: true,
     createdAt: '2024-11-20T10:00:00Z',
     updatedAt: '2024-11-20T10:00:00Z',
@@ -1357,7 +1357,7 @@ int main(void) {
         'Palindrome: A string that is identical when read forward or in reverse order.',
         'Pointer Swap: Exchanging the memory addresses of two pointer variables: `char *temp = str1; str1 = str2; str2 = temp;`.'
       ],
-      syntax: `Palindrome Two-Pointer Algorithm:
+      syntax: `// C Two-Pointer Palindrome Verification Syntax:
 int l = 0, h = strlen(str) - 1;
 while (l < h) {
     if (str[l] != str[h]) return false;

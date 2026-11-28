@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Topic, Stage, CourseId } from '@/types';
 import { db } from '@/services/db';
+import { getStageGameInfo } from '@/components/games/ConceptGameHub';
 import { 
-  ChevronRight, ChevronDown, Check, Lock, Sparkles, Circle
+  ChevronRight, ChevronDown, Check, Lock, Sparkles, Circle, Gamepad2
 } from 'lucide-react';
 
 interface TopicStageAccordionProps {
@@ -96,14 +97,22 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
         <div className="px-3 sm:px-6 pb-5 pt-3 border-t border-slate-100 dark:border-navy-900/60 bg-[#FBFBFA]/60 dark:bg-navy-950/40">
           
           <div className="space-y-3">
-            <div className="flex flex-col xs:flex-row xs:items-center justify-between text-xs text-slate-400 font-medium gap-1">
-              <span className="flex items-center gap-1.5 font-bold text-teal-600 dark:text-teal-400">
-                <span>🎮 Concept Games & Labs ({stages.length} Steps)</span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium gap-1.5 pb-1 border-b border-slate-100 dark:border-navy-900/40">
+              <span className="flex items-center gap-1.5 font-bold text-teal-700 dark:text-teal-400">
+                <Gamepad2 className="w-3.5 h-3.5 text-teal-500" />
+                <span>Stage Learning Sequence ({stages.length} Steps)</span>
               </span>
-              <span className="text-[11px] text-slate-400">Click a stage to play & practice</span>
+              <div className="flex items-center gap-2 text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 overflow-x-auto no-scrollbar">
+                <span className="font-semibold text-slate-400">Game Modes:</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">⚡ Flowchart</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-teal-500/10 text-teal-600 dark:text-teal-400">🧩 Sorter</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">🧠 RAM</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400">🐛 Bug</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">🎯 Predictor</span>
+              </div>
             </div>
 
-            {/* Responsive Numbered Rectangular Stage Grid (12 cols desktop, 6-8 tablet, 4 mobile) */}
+            {/* Responsive Numbered Rectangular Stage Grid */}
             <div className="grid grid-cols-4 xs:grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-11 xl:grid-cols-12 gap-2 sm:gap-2.5">
               {stages.map((stage) => {
                 const isCompleted = progress.completedStageIds.includes(stage.id);
@@ -112,14 +121,15 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
                   stage.stageNumber === 1 || 
                   progress.completedStageIds.includes(stages[stage.stageNumber - 2]?.id)
                 );
+                const gameInfo = getStageGameInfo(stage);
 
                 return (
                   <button
                     key={stage.id}
                     disabled={!isUnlocked}
                     onClick={() => isUnlocked && onSelectStage(stage, stages)}
-                    title={`${stage.title}${!isUnlocked ? ' (Locked - complete prior stage first)' : ''}`}
-                    className={`relative w-full h-11 sm:h-12 rounded-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm font-bold transition-all duration-150 select-none ${
+                    title={`Stage ${stage.stageNumber}: ${stage.title} • Game: ${gameInfo.label}${!isUnlocked ? ' (Locked - complete prior stage first)' : ''}`}
+                    className={`relative w-full h-12 sm:h-14 rounded-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm font-bold transition-all duration-150 select-none group/stage ${
                       isCurrent
                         ? 'bg-[#0B4B52] text-white border-2 border-teal-300 ring-2 ring-teal-400/50 shadow-md hover:scale-105'
                         : isCompleted
@@ -137,14 +147,19 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
                     )}
 
                     {/* Stage Number & Content */}
-                    <span className="leading-none">{stage.stageNumber}</span>
+                    <span className="leading-none text-xs sm:text-sm">{stage.stageNumber}</span>
 
-                    {/* Lock Icon for Locked stages (Matches Reference Screenshot) */}
+                    {/* Mini Game Icon Badge */}
+                    <span className="text-[10px] leading-none mt-1 opacity-80 group-hover/stage:scale-110 transition-transform">
+                      {gameInfo.icon}
+                    </span>
+
+                    {/* Lock Icon for Locked stages */}
                     {!isUnlocked && (
-                      <Lock className="w-2.5 h-2.5 text-slate-400 mt-1" />
+                      <Lock className="w-2.5 h-2.5 text-slate-400 absolute bottom-1" />
                     )}
 
-                    {/* Circular Checkmark badge for completed stages (Matches Reference) */}
+                    {/* Circular Checkmark badge for completed stages */}
                     {isCompleted && (
                       <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-2xs ring-1 ring-white dark:ring-navy-900">
                         ✓

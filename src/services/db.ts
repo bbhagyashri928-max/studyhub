@@ -156,7 +156,7 @@ function saveToStorage<T>(key: string, data: T): void {
 export const db = {
   // Initialization
   init: () => {
-    const DB_VERSION = 'codeviva_c_cpp_exclusive_v12';
+    const DB_VERSION = 'codeviva_stages_games_v13';
     if (localStorage.getItem('codeverse_curriculum_version') !== DB_VERSION) {
       saveToStorage(KEYS.UNITS, [...cUnits, ...cppUnits]);
       saveToStorage(KEYS.QUIZZES, [...cQuizzes, ...cppQuizzes]);

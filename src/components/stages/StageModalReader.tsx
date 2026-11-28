@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Stage, CourseId } from '@/types';
 import { db } from '@/services/db';
 import confetti from 'canvas-confetti';
-import { ConceptGameHub } from '@/components/games/ConceptGameHub';
+import { ConceptGameHub, getStageGameInfo } from '@/components/games/ConceptGameHub';
 import { HandsOnCodeLab } from '@/components/games/HandsOnCodeLab';
 import { 
   X, CheckCircle2, ChevronLeft, ChevronRight, BookOpen, 
@@ -45,6 +45,7 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
   const currentIndex = sortedStages.findIndex(s => s.id === stage.id);
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < sortedStages.length - 1;
+  const stageGame = React.useMemo(() => getStageGameInfo(stage), [stage]);
 
   const handleMarkCompleted = () => {
     db.markStageCompleted(userId, courseId, stage.id);
@@ -182,13 +183,16 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
               {/* Game Callout Banner */}
               <div className="p-4 rounded-2xl bg-gradient-to-r from-teal-500/15 via-teal-500/5 to-transparent border border-teal-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-500 flex items-center justify-center text-lg">
-                    🎮
+                  <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center text-xl flex-shrink-0">
+                    {stageGame.icon}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-navy-900 dark:text-white">Learn this concept through play!</h4>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      Interactive mini-game available: Memory Visualizer, Bug Hunter, and Flowchart Runner.
+                    <h4 className="text-xs font-bold text-navy-900 dark:text-white flex items-center gap-1.5">
+                      <span>Interactive Stage Game: {stageGame.label}</span>
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-mono bg-teal-500/20 text-teal-600 dark:text-teal-300 font-bold">XP Bonus</span>
+                    </h4>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      {stageGame.desc}
                     </p>
                   </div>
                 </div>
@@ -197,7 +201,7 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
                   className="px-3.5 py-1.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm flex-shrink-0"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Play Game Now →</span>
+                  <span>Play {stageGame.label} →</span>
                 </button>
               </div>
 
