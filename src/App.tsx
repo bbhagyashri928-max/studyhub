@@ -47,6 +47,27 @@ export const AppContent: React.FC = () => {
   const [activeUnitId, setActiveUnitId] = useState<string | null>(null);
   const [activeTopicId, setActiveTopicId] = useState<string | undefined>(undefined);
 
+  // Check for URL parameters on load (e.g. ?course=c&unit=c-unit-1)
+  React.useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const unitParam = params.get('unit');
+      const courseParam = params.get('course');
+      if (unitParam) {
+        setActiveUnitId(unitParam);
+        if (courseParam) {
+          setCurrentRoute(`course-${courseParam}`);
+        } else {
+          setCurrentRoute('unit-reader');
+        }
+      } else if (courseParam) {
+        setCurrentRoute(`course-${courseParam}`);
+      }
+    } catch (e) {
+      // Ignore URL parsing errors on restricted environments
+    }
+  }, []);
+
   // If user is not logged in, render authentication screens
   if (!isAuthenticated) {
     if (authView === 'signup') {
@@ -76,6 +97,20 @@ export const AppContent: React.FC = () => {
       setActiveUnitId(unitId);
       setActiveTopicId(topicId);
       setCurrentRoute('unit-reader');
+      return;
+    }
+
+    if (route.startsWith('course-c?unit=')) {
+      const unitId = route.split('?unit=')[1];
+      setActiveUnitId(unitId);
+      setCurrentRoute('course-c');
+      return;
+    }
+
+    if (route.startsWith('course-cpp?unit=')) {
+      const unitId = route.split('?unit=')[1];
+      setActiveUnitId(unitId);
+      setCurrentRoute('course-cpp');
       return;
     }
 
@@ -181,6 +216,7 @@ export const AppContent: React.FC = () => {
         return (
           <CourseView
             courseId="c"
+            initialUnitId={activeUnitId || undefined}
             onNavigate={handleNavigate}
             onOpenUnit={handleOpenUnit}
           />
@@ -189,6 +225,7 @@ export const AppContent: React.FC = () => {
         return (
           <CourseView
             courseId="cpp"
+            initialUnitId={activeUnitId || undefined}
             onNavigate={handleNavigate}
             onOpenUnit={handleOpenUnit}
           />
@@ -214,7 +251,7 @@ export const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-ivory-200 dark:bg-navy-950 flex transition-colors">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-ivory-200 dark:bg-navy-950 flex transition-colors">
       
       {/* Permanent / Drawer Sidebar */}
       <Sidebar
@@ -225,7 +262,7 @@ export const AppContent: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
+      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden lg:pl-64">
         {/* Header Bar */}
         <Header
           onToggleMobileNav={() => setIsMobileNavOpen(!isMobileNavOpen)}
@@ -233,7 +270,7 @@ export const AppContent: React.FC = () => {
         />
 
         {/* Scrollable Page Body */}
-        <main className="flex-1 pb-16">
+        <main className="flex-1 w-full max-w-full overflow-x-hidden pb-16">
           {renderCurrentView()}
         </main>
       </div>

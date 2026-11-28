@@ -24,13 +24,14 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileNav, onNavigate })
 
   return (
     <>
-      <header className="sticky top-0 z-30 h-16 bg-white/90 dark:bg-navy-900/90 backdrop-blur-md border-b border-navy-100 dark:border-navy-800 px-4 sm:px-6 flex items-center justify-between transition-colors">
+      <header className="sticky top-0 z-30 pt-safe bg-white/95 dark:bg-navy-900/95 backdrop-blur-md border-b border-navy-100 dark:border-navy-800 px-3 sm:px-6 flex items-center justify-between transition-colors min-h-[4rem] w-full max-w-full overflow-hidden">
         
         {/* Left: Mobile hamburger & Search bar trigger */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 pr-2">
           <button
             onClick={onToggleMobileNav}
-            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-navy-800 rounded-xl lg:hidden transition-colors"
+            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-navy-800 rounded-xl lg:hidden transition-colors flex-shrink-0"
+            aria-label="Open navigation menu"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -38,20 +39,20 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileNav, onNavigate })
           {/* Global Search Button - Pill shaped to match reference */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50/80 dark:bg-navy-950 border border-slate-200/90 dark:border-navy-700 text-xs text-slate-400 hover:text-navy-900 dark:hover:text-white hover:border-teal-500 transition-all w-52 sm:w-80 md:w-[420px] justify-between shadow-soft-sm"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-slate-50/80 dark:bg-navy-950 border border-slate-200/90 dark:border-navy-700 text-xs text-slate-400 hover:text-navy-900 dark:hover:text-white hover:border-teal-500 transition-all flex-1 max-w-[190px] xs:max-w-[240px] sm:max-w-xs md:max-w-[420px] justify-between shadow-soft-sm min-w-0"
           >
-            <div className="flex items-center gap-2.5">
-              <Search className="w-4 h-4 text-slate-400" />
-              <span className="truncate">Search topics, programs, or concepts...</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
+              <span className="truncate text-[11px] sm:text-xs">Search topics...</span>
             </div>
-            <kbd className="hidden sm:inline-flex items-center font-mono text-[10px] bg-white dark:bg-navy-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-navy-700 text-slate-500 shadow-2xs">
+            <kbd className="hidden sm:inline-flex items-center font-mono text-[10px] bg-white dark:bg-navy-800 px-2 py-0.5 rounded-md border border-slate-200 dark:border-navy-700 text-slate-500 shadow-2xs flex-shrink-0">
               Ctrl + K
             </kbd>
           </button>
         </div>
 
         {/* Right: Actions, Streaks, Notifications & Profile */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           
           {/* Daily Streak Indicator */}
           <div

@@ -37,7 +37,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const totalCompletedPracticals = cProgress.completedPracticalIds.length + cppProgress.completedPracticalIds.length;
 
   return (
-    <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-in fade-in duration-200">
+    <div className="max-w-[1520px] w-full max-w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-5 sm:space-y-6 overflow-x-hidden animate-in fade-in duration-200">
       
       {/* =========================================================================
           1. TOP HERO BANNER (Matches Uploaded Mockup StudyHub Banner)

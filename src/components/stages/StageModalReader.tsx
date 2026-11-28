@@ -122,10 +122,10 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
         </div>
 
         {/* Learning Modality Tab Navigation (Concept, Game, Hands-on Lab) */}
-        <div className="px-6 py-2.5 bg-slate-100 dark:bg-navy-950/80 border-b border-navy-100 dark:border-navy-800 flex items-center gap-2">
+        <div className="px-3 sm:px-6 py-2 sm:py-2.5 bg-slate-100 dark:bg-navy-950/80 border-b border-navy-100 dark:border-navy-800 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
           <button
             onClick={() => setActiveTab('concept')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all whitespace-nowrap flex-shrink-0 ${
               activeTab === 'concept'
                 ? 'bg-white dark:bg-navy-800 text-teal-600 dark:text-teal-400 shadow-sm border border-navy-200 dark:border-navy-700'
                 : 'text-slate-500 hover:text-navy-900 dark:hover:text-slate-200'
@@ -137,7 +137,7 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
 
           <button
             onClick={() => setActiveTab('game')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all relative ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all relative whitespace-nowrap flex-shrink-0 ${
               activeTab === 'game'
                 ? 'bg-teal-500 text-slate-950 shadow-sm font-extrabold'
                 : 'text-slate-500 hover:text-teal-500 dark:hover:text-teal-300'
@@ -150,7 +150,7 @@ export const StageModalReader: React.FC<StageModalReaderProps> = ({
 
           <button
             onClick={() => setActiveTab('lab')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 transition-all whitespace-nowrap flex-shrink-0 ${
               activeTab === 'lab'
                 ? 'bg-white dark:bg-navy-800 text-emerald-600 dark:text-emerald-400 shadow-sm border border-navy-200 dark:border-navy-700'
                 : 'text-slate-500 hover:text-navy-900 dark:hover:text-slate-200'

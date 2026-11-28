@@ -80,7 +80,7 @@ export const TopicReader: React.FC<TopicReaderProps> = ({
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 items-start max-w-7xl mx-auto px-4 sm:px-6 py-6">
+    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start max-w-7xl w-full max-w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 overflow-x-hidden">
       
       {/* Left Sidebar: Topics Navigation List */}
       <aside className="w-full lg:w-80 flex-shrink-0 bg-white dark:bg-navy-900 rounded-2xl border border-navy-100 dark:border-navy-800 p-5 shadow-soft lg:sticky lg:top-20">

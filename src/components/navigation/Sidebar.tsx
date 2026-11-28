@@ -43,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-40 w-64 bg-[#0B1528] text-white flex flex-col border-r border-[#192A47] transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 left-0 bottom-0 z-40 w-64 max-w-[80vw] bg-[#0B1528] text-white flex flex-col border-r border-[#192A47] transition-transform duration-300 ease-in-out overflow-hidden lg:translate-x-0 ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -153,7 +153,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 ].map((u) => (
                   <button
                     key={u.id}
-                    onClick={() => handleItemClick('course-c')}
+                    onClick={() => handleItemClick(`course-c?unit=${u.id}`)}
                     className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-teal-300 hover:bg-[#12233D] transition-colors block"
                   >
                     {u.label}
@@ -215,7 +215,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 ].map((u) => (
                   <button
                     key={u.id}
-                    onClick={() => handleItemClick('course-cpp')}
+                    onClick={() => handleItemClick(`course-cpp?unit=${u.id}`)}
                     className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-slate-400 hover:text-purple-300 hover:bg-[#12233D] transition-colors block"
                   >
                     {u.label}

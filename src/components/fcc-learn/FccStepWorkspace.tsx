@@ -184,7 +184,7 @@ export const FccStepWorkspace: React.FC<FccStepWorkspaceProps> = ({
   const progressPercent = Math.round((currentStepNumber / currentProject.totalSteps) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0A0E17] text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#0A0E17] text-slate-100 flex flex-col font-sans">
       
       {/* =========================================================================
           TOP NAV / PROGRESS HEADER (freeCodeCamp Style)

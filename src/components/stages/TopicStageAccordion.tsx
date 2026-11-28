@@ -37,9 +37,9 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
       {/* Accordion Header Row (Matches Reference Mockup) */}
       <div 
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 sm:px-6 py-3.5 flex items-center justify-between cursor-pointer select-none hover:bg-slate-50/80 dark:hover:bg-navy-900/60 transition-colors group"
+        className="w-full px-3.5 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between cursor-pointer select-none hover:bg-slate-50/80 dark:hover:bg-navy-900/60 transition-colors group"
       >
-        <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+        <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
           {/* Chevron */}
           <div className="text-slate-500 group-hover:text-teal-600 transition-colors flex-shrink-0">
             {isExpanded ? (
@@ -65,24 +65,24 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
           </div>
 
           {/* Topic Title */}
-          <span className="font-bold text-sm sm:text-base text-navy-900 dark:text-slate-100 truncate group-hover:text-teal-600 dark:group-hover:text-teal-300 transition-colors">
+          <span className="font-bold text-xs sm:text-sm md:text-base text-navy-900 dark:text-slate-100 line-clamp-1 group-hover:text-teal-600 dark:group-hover:text-teal-300 transition-colors">
             {topic.title}
           </span>
         </div>
 
         {/* Right Status Pill (Matches Reference Mockup: Completed / Not Started + Lock) */}
-        <div className="flex items-center gap-2.5 flex-shrink-0 ml-2">
+        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
           {isTopicFullyCompleted ? (
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+            <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
               Completed
             </span>
           ) : isTopicStarted ? (
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800/60">
+            <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200 dark:border-teal-800/60">
               {completedCount}/{stages.length} Done
             </span>
           ) : (
-            <div className="flex items-center gap-1.5">
-              <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-navy-900 dark:text-slate-400 border border-slate-200/80 dark:border-navy-800">
+            <div className="flex items-center gap-1">
+              <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-navy-900 dark:text-slate-400 border border-slate-200/80 dark:border-navy-800">
                 Not Started
               </span>
               <Lock className="w-3.5 h-3.5 text-slate-400" />
@@ -93,18 +93,18 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
 
       {/* Expanded State: Numbered Stage Grid (Exact Layout from Reference Image) */}
       {isExpanded && (
-        <div className="px-4 sm:px-6 pb-6 pt-3 border-t border-slate-100 dark:border-navy-900/60 bg-[#FBFBFA]/60 dark:bg-navy-950/40">
+        <div className="px-3 sm:px-6 pb-5 pt-3 border-t border-slate-100 dark:border-navy-900/60 bg-[#FBFBFA]/60 dark:bg-navy-950/40">
           
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+            <div className="flex flex-col xs:flex-row xs:items-center justify-between text-xs text-slate-400 font-medium gap-1">
               <span className="flex items-center gap-1.5 font-bold text-teal-600 dark:text-teal-400">
-                <span>🎮 Interactive Concept Games & Labs ({stages.length} Steps)</span>
+                <span>🎮 Concept Games & Labs ({stages.length} Steps)</span>
               </span>
-              <span className="text-[11px] text-slate-400">Click any stage to play & practice</span>
+              <span className="text-[11px] text-slate-400">Click a stage to play & practice</span>
             </div>
 
             {/* Responsive Numbered Rectangular Stage Grid (12 cols desktop, 6-8 tablet, 4 mobile) */}
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-11 xl:grid-cols-12 gap-2 sm:gap-2.5">
+            <div className="grid grid-cols-4 xs:grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-11 xl:grid-cols-12 gap-2 sm:gap-2.5">
               {stages.map((stage) => {
                 const isCompleted = progress.completedStageIds.includes(stage.id);
                 const isUnlocked = db.isStageUnlocked(userId, courseId, stage, stages);
@@ -119,7 +119,7 @@ export const TopicStageAccordion: React.FC<TopicStageAccordionProps> = ({
                     disabled={!isUnlocked}
                     onClick={() => isUnlocked && onSelectStage(stage, stages)}
                     title={`${stage.title}${!isUnlocked ? ' (Locked - complete prior stage first)' : ''}`}
-                    className={`relative w-11 h-12 sm:w-12 sm:h-12 rounded-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm font-bold transition-all duration-150 select-none ${
+                    className={`relative w-full h-11 sm:h-12 rounded-xl flex flex-col items-center justify-center font-mono text-xs sm:text-sm font-bold transition-all duration-150 select-none ${
                       isCurrent
                         ? 'bg-[#0B4B52] text-white border-2 border-teal-300 ring-2 ring-teal-400/50 shadow-md hover:scale-105'
                         : isCompleted
