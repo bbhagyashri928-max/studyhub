@@ -3,7 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { 
   Home, BarChart3, Bookmark, 
   User, Settings, LogOut, ChevronDown, ChevronRight, 
-  Rocket, Code, Terminal, Sparkles, Gamepad2
+  Rocket, Code, Terminal, Sparkles, Gamepad2, Trophy
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -254,6 +254,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <BarChart3 className="w-4 h-4 text-slate-400" />
             <span>My Progress</span>
+          </button>
+
+          {/* 6. Leaderboard */}
+          <button
+            onClick={() => handleItemClick('leaderboard')}
+            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+              currentRoute === 'leaderboard'
+                ? 'bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30'
+                : 'text-slate-300 hover:bg-[#13223B] hover:text-white'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Trophy className={`w-4 h-4 ${currentRoute === 'leaderboard' ? 'text-amber-400' : 'text-slate-400'}`} />
+              <span>Leaderboard</span>
+            </div>
+            <span className="text-[9px] font-bold uppercase bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30">
+              XP
+            </span>
           </button>
 
           {/* 6. Bookmarks */}

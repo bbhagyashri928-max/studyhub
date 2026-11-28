@@ -6,6 +6,7 @@ import { CourseId } from '@/types';
 // Components
 import { Header } from '@/components/common/Header';
 import { Sidebar } from '@/components/navigation/Sidebar';
+import { BottomNav } from '@/components/navigation/BottomNav';
 import { TopicReader } from '@/components/learning/TopicReader';
 
 // Pages
@@ -18,6 +19,7 @@ import { Bookmarks } from '@/pages/user/Bookmarks';
 import { Progress } from '@/pages/user/Progress';
 import { Profile } from '@/pages/user/Profile';
 import { Settings } from '@/pages/user/Settings';
+import { Leaderboard } from '@/pages/user/Leaderboard';
 import { CGameView } from '@/pages/user/CGameView';
 import { CppGameView } from '@/pages/user/CppGameView';
 import { FccStepWorkspace } from '@/components/fcc-learn/FccStepWorkspace';
@@ -245,6 +247,8 @@ export const AppContent: React.FC = () => {
         return <Profile />;
       case 'settings':
         return <Settings />;
+      case 'leaderboard':
+        return <Leaderboard onNavigate={handleNavigate} />;
       default:
         return <Dashboard onNavigate={handleNavigate} />;
     }
@@ -269,10 +273,16 @@ export const AppContent: React.FC = () => {
           onNavigate={handleNavigate}
         />
 
-        {/* Scrollable Page Body */}
-        <main className="flex-1 w-full max-w-full overflow-x-hidden pb-16">
+        {/* Scrollable Page Body with generous bottom margin to clear the bottom dock */}
+        <main className="flex-1 w-full max-w-full overflow-x-hidden pb-28 sm:pb-32">
           {renderCurrentView()}
         </main>
+
+        {/* Attractive Single-Row 5-Option Horizontal Bottom Navigation Dock */}
+        <BottomNav
+          currentRoute={currentRoute}
+          onNavigate={handleNavigate}
+        />
       </div>
 
     </div>
